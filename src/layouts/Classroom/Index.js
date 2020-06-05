@@ -37,14 +37,6 @@ class Classroom extends React.Component {
     };
   }
   componentWillMount(){
-console.log(this.props.match.params.classroomId); 
-    //?Check if user is authenticated
-    if(this.state.currentUser==null){
-      this.props.history.push('/');
-                      window
-                    .location
-                    .reload();
-    }
     //?Check if user is a member/creator of this class
     UserService
     .checkclassroommember(this.state.currentUser.id,this.state.classroom)

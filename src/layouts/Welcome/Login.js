@@ -39,6 +39,11 @@ const Login = (props) => {
     const clearloginerror = () => {
         setmessage('');
     }
+    const {from} = props.location.state || {
+        from: {
+            pathname: '/'
+        }
+    }
     const handleLogin = (e) => {
         e.preventDefault();
         setloginbutton('Wait...');
@@ -47,9 +52,13 @@ const Login = (props) => {
         AuthService
             .login(email, password)
             .then(() => {
-                props
-                    .history
-                    .push("/in");
+                from
+                    ? props
+                        .history
+                        .push(from)
+                    : props
+                        .history
+                        .push("/in");
                 window
                     .location
                     .reload();

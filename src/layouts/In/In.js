@@ -31,14 +31,7 @@ class In extends React.Component {
         currentUser: AuthService.getCurrentUser()
     };
   }
-  componentWillMount(){
-    if(this.state.currentUser==null){
-      this.props.history.push('/');
-                      window
-                    .location
-                    .reload();
-    }
-  }
+  
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";

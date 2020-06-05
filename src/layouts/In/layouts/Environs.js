@@ -58,7 +58,7 @@ const Environs = (props) => {
                 if (Object.keys(response.data).length === 0) {
                     setnoenvirons(
                         <Alert color="warning">
-                            No Environments Found
+                            You've not created any environment.
                         </Alert>
                     )
 

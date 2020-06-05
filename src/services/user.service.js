@@ -108,6 +108,16 @@ class UserService {
             headers: authHeader()
         });
     }
+    addfromexcel(test, data) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'test/' + test + '/questionsfromexcel',
+            data: {
+                datas:data
+            },
+            headers: authHeader()
+        });
+    }
 }
 
 export default new UserService();

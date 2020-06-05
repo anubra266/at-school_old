@@ -68,7 +68,7 @@ const Classrooms = (props) => {
                 if (Object.keys(response.data).length === 0) {
                     setnoclassrooms(
                         <Alert color="warning">
-                            No Classrooms Found
+                            You've not created any Classroom
                         </Alert>
                     )
 
@@ -94,7 +94,7 @@ const Classrooms = (props) => {
                 if (Object.keys(response.data).length === 0) {
                     setnoclassroomsjoined(
                         <Alert color="warning">
-                            No Classrooms Found
+                            You've not joined any Classroom.
                         </Alert>
                     )
 

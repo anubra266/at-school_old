@@ -31,11 +31,143 @@ import {
     InputGroupAddon,
     Modal
 } from "reactstrap";
+import {OutTable, ExcelRenderer} from 'react-excel-renderer';
 
 import UserService from "../../../services/user.service";
 import AuthService from "../../../services/auth.service";
 var parse = require('html-react-parser');
+const loader = <Card>
+    <CardHeader>
+        <Row>
+            <Col md="10">
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <a href="#">Tests</a>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem active>Test</BreadcrumbItem>
+                    <BreadcrumbItem active>
+                        Title</BreadcrumbItem>
+                </Breadcrumb>
+            </Col>
 
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <Row>
+            <Col sm="4">
+                <p className="title">
+                    Count: 3 Question(s)
+                </p>
+            </Col>
+            <Col sm="4">
+                <p className="title">
+                    Instruction: Do this
+                </p>
+            </Col>
+        </Row>
+        <Row>
+            <Col sm="4">
+                <p className="title">
+                    Duration: 5 Minutes
+                </p>
+            </Col>
+            <Col sm="4">
+                <p className="title">
+                    Deadline: date
+                </p>
+            </Col>
+        </Row>
+        <Row>
+            <Col sm="10">
+
+                <Form>
+                    <FormGroup tag="fieldset">
+                        <div className="upload-butn-wrapper">
+                            <div className="butn">Import from Excel</div>
+                        </div><br/>
+                        <Label>
+                            <strong>Excel contents should be in order:{" "}</strong>
+                            Question, Options (Correct Option first).
+                            <br/>
+                            First Row will be Ignored, as it is considered header.
+                        </Label>
+
+                    </FormGroup>
+                    <FormGroup><br/>
+                        <p className="title">1. Type your Question Here{" "}
+                            <label>
+                                - you can insert pictures and tables.😊{" "}
+                                <Button color="primary" size="sm">Preview</Button>
+                            </label>
+
+                        </p>
+                        <CKEditor editor={ClassicEditor}/>
+
+                    </FormGroup>
+                    <FormGroup tag="fieldset">
+                        <p className="title">Your Options{" "}
+
+                            <label>
+                                Insert correct answer in (A). Options would be shuffled during test
+
+                            </label>
+                        </p>
+
+                        <FormGroup>
+                            <Label>
+                                <InputGroup>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>A</InputGroupText>
+                                    </InputGroupAddon>
+
+                                    <Input/>
+                                </InputGroup>
+                            </Label>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>
+                                <InputGroup>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>B</InputGroupText>
+                                    </InputGroupAddon>
+
+                                    <Input/>
+                                </InputGroup>
+                            </Label>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>
+                                <InputGroup>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>C</InputGroupText>
+                                    </InputGroupAddon>
+
+                                    <Input/>
+                                </InputGroup>
+                            </Label>
+                        </FormGroup>
+                        <FormGroup>
+                            <Label>
+                                <InputGroup>
+                                    <InputGroupAddon addonType="prepend">
+                                        <InputGroupText>D</InputGroupText>
+                                    </InputGroupAddon>
+
+                                    <Input/>
+                                </InputGroup>
+                            </Label>
+                        </FormGroup>
+                    </FormGroup>
+                    <FormGroup>
+                        <Button color="info" size="sm">Add Question</Button>
+                    </FormGroup>
+                </Form>
+                {/*parse(question)*/}
+            </Col>
+        </Row>
+    </CardBody>
+
+</Card>;
 const Test = ({match, history}) => {
     const notify = (title, message, type) => {
         store.addNotification({
@@ -158,8 +290,116 @@ const Test = ({match, history}) => {
     }
     const [preview,
         setpreview] = useState(false);
+    let randomString = Math
+        .random()
+        .toString(36);
+    const [uploadkey,
+        setuploadkey] = useState(randomString);
     const togglepreview = () => setpreview(!preview);
+    const [wait,
+        setwait] = useState(false);
 
+    const fileHandler = fileObj => {
+
+        if (!fileObj) {
+
+            notify('Upload Excel File', "No file uploaded!", 'danger')
+            setwait(false)
+
+            return false;
+        }
+        console.log("fileObj.type:", fileObj.type);
+        if (!(fileObj.type === "application/vnd.ms-excel" || fileObj.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
+            notify('Upload Excel File', "Unknown file format. Only Excel files are uploaded!", 'danger')
+            setwait(false)
+
+            return false;
+        }
+        const isLt2M = fileObj.size / 1024 / 1024 < 6;
+        if (!isLt2M) {
+            notify('Upload Excel File', "File can't be more than 5mb!", 'danger')
+            setwait(false)
+
+            return false;
+        }
+        //just pass the fileObj as parameter
+        ExcelRenderer(fileObj, (err, resp) => {
+            if (err) {
+                console.log(err);
+                setwait(false)
+
+            } else {
+                let newRows = [];
+                resp
+                    .rows
+                    .slice(1)
+                    .map((row, index) => {
+                        if (row && row !== "undefined") {
+                            //newRows.push({key: index, name: row[0], age: row[1], gender: row[2]});
+                            newRows.push({
+                                question: {
+                                    body: row[0]
+                                },
+                                options: [
+                                    {
+                                        body: row[1],
+                                        is_correct: true
+                                    }, {
+                                        body: row[2],
+                                        is_correct: false
+                                    }, {
+                                        body: row[3],
+                                        is_correct: false
+                                    }, {
+                                        body: row[4],
+                                        is_correct: false
+                                    }
+                                ]
+                            });
+                        }
+                    });
+                if (newRows.length === 0) {
+                    notify('Upload Excel File', "No data found in file!", 'danger')
+                    setuploadkey(randomString)
+                    setwait(false)
+
+                    return false;
+                } else {
+                    // this.setState({cols: resp.cols, rows: newRows, errorMessage: null});
+                    // setcols(resp.cols); console.log(resp.cols) setrows(newRows);
+                    // console.log(newRows); seterrormessage(null);
+                    console.log(newRows);
+
+                    UserService
+                        .addfromexcel(testId, newRows)
+                        .then((response) => {
+                            notify("Add Questions to Test", response.data, 'success');
+                            console.log(response.data);
+                            setuploadkey(randomString)
+                            setwait(false)
+
+                            return true;
+
+                        }, error => {
+                            const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                            notify("Add Questions to Test", resMessage + ' - Make sure no cell is empty', 'danger');
+                            setuploadkey(randomString)
+                            setwait(false)
+
+                            return false;
+                        });
+                }
+            }
+        });
+        return false;
+    }
+    const excelupload = (event) => {
+        let fileObj = event.target.files[0];
+        setwait(true)
+        //just pass the fileObj as parameter
+        fileHandler(fileObj);
+
+    }
     return (
         <div className="content">
 
@@ -178,13 +418,6 @@ const Test = ({match, history}) => {
                                                 <BreadcrumbItem active>
                                                     {test.title}</BreadcrumbItem>
                                             </Breadcrumb>
-                                        </Col>
-                                        <Col md="2">
-                                            <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                                <Link to={"/classroom/" + classroomId + "/tests"}>
-                                                    <Button tag="label" color="info" size="sm">Save Test</Button>
-                                                </Link>
-                                            </ButtonGroup>
                                         </Col>
 
                                     </Row>
@@ -218,12 +451,32 @@ const Test = ({match, history}) => {
                                     </Row>
                                     <Row>
                                         <Col sm="10">
+
                                             <Form method="POST" onSubmit={addquestion}>
+                                                <FormGroup tag="fieldset">
+                                                    <div className="upload-butn-wrapper">
+                                                        {wait === true
+                                                            ? <h1>Wait...</h1>
+                                                            : <button className="butn">Import from Excel</button>}
+                                                        <input
+                                                            key={uploadkey}
+                                                            type="file"
+                                                            name="excelfile"
+                                                            onChange={(e) => excelupload(e)}/>
+                                                    </div><br/>
+                                                    <Label>
+                                                        <strong>Excel contents should be in order:{" "}</strong>
+                                                        Question, Options (Correct Option first).
+                                                        <br/>
+                                                        First Row will be Ignored, as it is considered header.
+                                                    </Label>
+
+                                                </FormGroup>
                                                 <FormGroup><br/>
                                                     <p className="title">{test.questions.length + 1}. Type your Question Here{" "}
                                                         <label>
                                                             - you can insert pictures and tables.😊{" "}
-                                                            <Button onClick={togglepreview} color="info" size="sm">Preview</Button>
+                                                            <Button onClick={togglepreview} color="primary" size="sm">Preview</Button>
                                                         </label>
                                                         <Modal
                                                             isOpen={preview}
@@ -345,6 +598,11 @@ const Test = ({match, history}) => {
                                                 </FormGroup>
                                                 <FormGroup>
                                                     <Button color="info" size="sm" disabled={loading}>Add Question</Button>
+                                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
+                                                        <Link to={"/classroom/" + classroomId + "/tests"}>
+                                                            <Button color="info" size="sm">Save Test</Button>
+                                                        </Link>
+                                                    </ButtonGroup>
                                                 </FormGroup>
                                             </Form>
                                             {/*parse(question)*/}
@@ -353,8 +611,8 @@ const Test = ({match, history}) => {
                                 </CardBody>
 
                             </Card>
-                        : <Skeleton/>
-}
+                        : loader}
+
                 </Col>
             </Row>
         </div>
