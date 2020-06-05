@@ -5,8 +5,12 @@
   "homepage": "https://demos.creative-tim.com/black-dashboard-react/#/admin/dashboard",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^19.0.2",
+    "@ckeditor/ckeditor5-image": "^19.0.1",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "@ckeditor/ckeditor5-upload": "^19.0.1",
+    "@diasraphael/ck-editor5-base64uploadadapter": "^2.0.2",
     "@types/react": "16.9.23",
+    "@wiris/mathtype-ckeditor5": "^7.20.0",
     "animate.css": "^4.1.0",
     "axios": "^0.19.2",
     "chart.js": "2.9.3",

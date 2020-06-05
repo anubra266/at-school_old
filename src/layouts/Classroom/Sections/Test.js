@@ -7,11 +7,11 @@ import classNames from "classnames";
 import {store} from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import * as QuillTableUI from 'quill-table-ui'
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
 
-// reactstrap components
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'; reactstrap
+// components
 import {
     Card,
     CardHeader,
@@ -28,16 +28,14 @@ import {
     Input,
     InputGroup,
     InputGroupText,
-    InputGroupAddon
+    InputGroupAddon,
+    Modal
 } from "reactstrap";
 
 import UserService from "../../../services/user.service";
 import AuthService from "../../../services/auth.service";
 var parse = require('html-react-parser');
 
-Quill.register({
-    'modules/tableUI': QuillTableUI
-  }, true)
 const Test = ({match, history}) => {
     const notify = (title, message, type) => {
         store.addNotification({
@@ -90,73 +88,9 @@ const Test = ({match, history}) => {
     });
     const [question,
         setquestion] = useState('');
-    const modules = {
-        // imageResize: {   displaySize: true },
-        table: true,
-        tableUI: true,
-        toolbar: [
-            [
-                {
-                    'header': '1'
-                }, {
-                    'header': '2'
-                }, {
-                    'font': []
-                }
-            ],
-            [
-                {
-                    size: []
-                }
-            ],
-            [
-                {
-                    'color': []
-                }, {
-                    'background': []
-                }
-            ],
-            [
-                'bold', 'italic', 'underline', 'strike', 'blockquote'
-            ],
-            [
-                {
-                    'script': 'sub'
-                }, {
-                    'script': 'super'
-                }
-            ],
-            [
-                {
-                    'list': 'ordered'
-                }, {
-                    'list': 'bullet'
-                }, {
-                    'indent': '-1'
-                }, {
-                    'indent': '+1'
-                }
-            ],
-            [
-                'table', 'link', 'image', 'video'
-            ],
-            ['clean']
-        ]
-    }
+    const [questioneditor,
+        setquestioneditor] = useState();
 
-    const formats = [
-        'header',
-        'bold',
-        'italic',
-        'underline',
-        'strike',
-        'blockquote',
-        'list',
-        'bullet',
-        'indent',
-        'link',
-        'image'
-    ]
     const [option1,
         setoption1] = useState('');
     const [option2,
@@ -178,6 +112,7 @@ const Test = ({match, history}) => {
     const addquestion = (e) => {
         e.preventDefault();
         setloading(true);
+
         if (question === "") {
             notify("Add Questions to Test", 'Fill all fields', 'danger');
         } else {
@@ -210,15 +145,21 @@ const Test = ({match, history}) => {
                     setoption3("");
                     setoption4("");
                     setanswer('');
+                    questioneditor.setData("");
+                    setloading(false);
                 }, error => {
                     const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                     notify("Add Questions to Test", resMessage, 'danger');
                     console.log(resMessage);
-                })
-
+                    setloading(false);
+                });
         }
-        setloading(false);
+
     }
+    const [preview,
+        setpreview] = useState(false);
+    const togglepreview = () => setpreview(!preview);
+
     return (
         <div className="content">
 
@@ -240,7 +181,9 @@ const Test = ({match, history}) => {
                                         </Col>
                                         <Col md="2">
                                             <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                                <Button tag="label" color="info" size="sm">Save Test</Button>
+                                                <Link to={"/classroom/" + classroomId + "/tests"}>
+                                                    <Button tag="label" color="info" size="sm">Save Test</Button>
+                                                </Link>
                                             </ButtonGroup>
                                         </Col>
 
@@ -279,21 +222,41 @@ const Test = ({match, history}) => {
                                                 <FormGroup><br/>
                                                     <p className="title">{test.questions.length + 1}. Type your Question Here{" "}
                                                         <label>
-                                                            - you can insert pictures
+                                                            - you can insert pictures and tables.😊{" "}
+                                                            <Button onClick={togglepreview} color="info" size="sm">Preview</Button>
                                                         </label>
+                                                        <Modal
+                                                            isOpen={preview}
+                                                            toggle={togglepreview}
+                                                            className={classNames + " modals"}>
+                                                            <Card>
+                                                                <CardBody>
+                                                                    <h3>
+                                                                        Question Preview
+                                                                    </h3>
+                                                                    {parse(question)}
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Modal>
                                                     </p>
-                                                    <ReactQuill
-                                                        value={question}
-                                                        onChange={setquestion}
-                                                        modules={modules}
-                                                        formats={formats}
-                                                        placeholder={'Write something...'}></ReactQuill>
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        onInit={editor => {
+                                                        setquestioneditor(editor);
+                                                    }}
+                                                        onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setquestion(data)
+                                                    }}/>
+
                                                 </FormGroup>
                                                 <FormGroup tag="fieldset">
                                                     <p className="title">Your Options{" "}
 
                                                         <label>
-                                                            Insert correct answer in (A). Options would be shuffled during test</label>
+                                                            Insert correct answer in (A). Options would be shuffled during test
+
+                                                        </label>
                                                     </p>
 
                                                     <FormGroup>
