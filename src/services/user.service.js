@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = 'http://localhost:8000/api/';
+const API_URL = 'http://classroom.anubra.tech/api/';
 
 class UserService {
 
@@ -79,12 +79,13 @@ class UserService {
         });
 
     }
-    createnewtest(classroom, title, instruction, duration, deadline) {
+    createnewtest(classroom, title, type, instruction, duration, deadline) {
         return axios({
             method: 'POST',
             url: API_URL + 'classroom/' + classroom + '/tests',
             data: {
                 title: title,
+                type: type,
                 instruction: instruction,
                 duration: duration,
                 deadline: deadline
@@ -115,6 +116,16 @@ class UserService {
             data: {
                 datas:data
             },
+            headers: authHeader()
+        });
+    }
+    gettests(classroom) {
+        return axios.get(API_URL + 'tests/'+classroom, {
+            headers: authHeader()
+        });
+    }
+    gettestcontent(testId) {
+        return axios.get(API_URL + 'test/'+testId+'/questions', {
             headers: authHeader()
         });
     }

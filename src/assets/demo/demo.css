@@ -1,3 +1,6 @@
+.test-type{
+  text-transform: capitalize;
+}
 .upload-butn-wrapper {
   position: relative;
   overflow: hidden;
@@ -26,7 +29,7 @@
 .loader,
 .loader:before,
 .loader:after {
-  background: #ffffff;
+  background: #3268dd;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
