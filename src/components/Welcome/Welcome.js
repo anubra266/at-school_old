@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
 import Footer from "../Footer.js";
 import classNames from "classnames";
@@ -34,14 +34,23 @@ import NavBar from "./Navbar.js"
 import OrgAdmin from "./OrgAdmin.js"
 import EduHead from "./EduHead.js"
 import Student from "./Student.js"
-
+import UserService from "../../services/user.service.js"
 const Welcome = ({location}) => {
+    const [user,
+        setuser] = useState({});
+    useEffect(() => {
+        UserService
+            .getUser()
+            .then(response => {
+                setuser(response.data);
+            });
+    });
 
     return (
         <div>
             <div className="wrapper">
                 <div className="main-panel">
-                    <NavBar/>
+                    <NavBar user={user}/>
                     <div className="content">
                         <Row>
                             <Col md="9">
