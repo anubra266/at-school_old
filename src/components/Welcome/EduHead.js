@@ -24,7 +24,7 @@ const EduHead = () => {
             <CardHeader onClick={toggle}>
                 <h5 className="title ee">Join an Organization</h5>
             </CardHeader>
-            <Modal isOpen={modal} toggle={toggle} className={className}>
+            <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Join an Organization</ModalHeader>
                 <ModalBody>
                     <Row>

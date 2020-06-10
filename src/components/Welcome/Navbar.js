@@ -2,18 +2,25 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import {Link} from "react-router-dom";
-import notify from "../notify.js"
-import AuthService from "../../services/auth.service.js"
-// reactstrap components
 import {
     Button,
     Collapse,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown,
+    Input,
+    InputGroup,
     NavbarBrand,
     Navbar,
+    NavLink,
     Nav,
-    Container
+    Container,
+    Modal,
+    ButtonGroup
 } from "reactstrap";
-
+import notify from "../notify.js"
+import AuthService from "../../services/auth.service.js"
 class LandingNavbar extends React.Component {
     constructor(props) {
         super(props);
@@ -57,9 +64,12 @@ class LandingNavbar extends React.Component {
     };
     logout = () => {
         AuthService.logout();
-        window.location.reload();
+        window
+            .location
+            .reload();
     }
     render() {
+        const {user} = this.props;
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
@@ -95,15 +105,31 @@ class LandingNavbar extends React.Component {
                         </button>
                         <Collapse navbar isOpen={this.state.collapseOpen}>
                             <Nav className="ml-auto" navbar>
-
-                                <Button
-                                    onClick={() => this.logout()}
-                                    className="btn-fill"
-                                    color="primary"
-                                    type="submit">
-                                    Logout
-                                </Button>
-
+                                <InputGroup className="search-bar">
+                                    <Button color="link" id="search-button">
+                                        {user.id?(user.firstName + " " + (user.lastName)):''}
+                                    </Button>
+                                </InputGroup>
+                                <UncontrolledDropdown nav>
+                                    <DropdownToggle
+                                        caret
+                                        color="default"
+                                        data-toggle="dropdown"
+                                        nav
+                                        onClick={e => e.preventDefault()}>
+                                        <div className="photo">
+                                            <img
+                                                src={user.id?notify.APP_URL() + 'storage/images/' + user.profile_image:require("assets/img/default-avatar.png")}
+                                                alt="Profile"/>
+                                        </div>
+                                        <b className="caret d-lg-block d-xl-block"/>
+                                    </DropdownToggle>
+                                    <DropdownMenu className="dropdown-navbar" right tag="ul">
+                                        <NavLink tag="li">
+                                            <DropdownItem className="nav-item" onClick={() => this.logout()}>Log out</DropdownItem>
+                                        </NavLink>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
                                 <li className="separator d-lg-none"/>
                             </Nav>
                         </Collapse>

@@ -34,17 +34,9 @@ import NavBar from "./Navbar.js"
 import OrgAdmin from "./OrgAdmin.js"
 import EduHead from "./EduHead.js"
 import Student from "./Student.js"
-import UserService from "../../services/user.service.js"
-const Welcome = ({location}) => {
-    const [user,
-        setuser] = useState({});
-    useEffect(() => {
-        UserService
-            .getUser()
-            .then(response => {
-                setuser(response.data);
-            });
-    });
+//import UserService from "../../services/user.service.js"
+const Welcome = (props) => {
+    const user = props.user;
 
     return (
         <div>

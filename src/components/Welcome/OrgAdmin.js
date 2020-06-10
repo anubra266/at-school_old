@@ -13,12 +13,29 @@ import {
     Button
 } from "reactstrap";
 import className from "classnames";
-
-const OrgAdmin = () => {
+import notify from "../notify.js"
+import UserService from "../../services/user.service";
+const OrgAdmin = (props) => {
     const [modal,
         setModal] = useState(false);
+    const [loading,
+        setloading] = useState(false);
+    const [name,
+        setname] = useState('');
+    const [address,
+        setaddress] = useState('');
 
     const toggle = () => setModal(!modal);
+
+    const createorganization = (e) => {
+        e.preventDefault();
+        setloading(true);
+        UserService.createorganization(name, address, true).then(response=>{
+            notify.user('Register an Organization','Organization Registered Successfully!','success');
+            props.history.push("/in");
+            window.location.reload();
+        })
+    }
     return (
         <Card className="welct">
             <CardHeader onClick={toggle}>
@@ -29,40 +46,46 @@ const OrgAdmin = () => {
                 isOpen={modal}
                 toggle={toggle}
                 className={className + ""}>
-                <ModalHeader toggle={toggle}>Join a Classroom</ModalHeader>
+                <ModalHeader toggle={toggle}>Register an Organization</ModalHeader>
                 <ModalBody>
 
-                <form>
-                <FormGroup>
-                    <Label for="name">Organization Name</Label>
-                    <Input
-                        style={{
-                        color: "black"
-                    }}
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Birtong University"/>
-                </FormGroup>
-                
-                <FormGroup>
-                    <Label for="address">Organization Address</Label>
-                    <Input
-                        style={{
-                        color: "black"
-                    }}
-                        type="text"
-                        name="address"
-                        id="address"
-                        placeholder="44, Raspet Estate, Bilfol, Murkey"/>
-                </FormGroup>
-                
-                <ModalFooter>
-                <Button color="primary" type="submit">Create</Button>{' '}
-                <Button color="secondary" onClick={toggle}>Cancel</Button>
-            </ModalFooter>
+                    <form onSubmit={createorganization}>
+                        <FormGroup>
+                            <Label for="name">Organization Name</Label>
+                            <Input
+                                style={{
+                                color: "black"
+                            }}
+                                type="text"
+                                name="name"
+                                id="name"
+                                value={name}
+                                required
+                                onChange={(e) => setname(e.target.value)}
+                                placeholder="Birtong University"/>
+                        </FormGroup>
 
-            </form>
+                        <FormGroup>
+                            <Label for="address">Organization Address</Label>
+                            <Input
+                                style={{
+                                color: "black"
+                            }}
+                                type="text"
+                                name="address"
+                                id="address"
+                                value={address}
+                                required
+                                onChange={(e) => setaddress(e.target.value)}
+                                placeholder="44, Raspet Estate, Bilfol, Murkey"/>
+                        </FormGroup>
+
+                        <ModalFooter>
+                            <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
+
+                    </form>
 
                 </ModalBody>
             </Modal>

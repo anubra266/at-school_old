@@ -62,6 +62,8 @@ const Register = ({location, history}) => {
         setprofile_image] = useState(null);
     const [src,
         setsrc] = useState(null);
+    const [image_name,
+        setimage_name] = useState('');
     const [scale,
         setscale] = useState(1.2);
     const [loading,
@@ -102,6 +104,7 @@ const Register = ({location, history}) => {
 
         }, false)
         reader.readAsDataURL(image)
+        setimage_name(image.name);
     }
     const upload_profile_image = (e) => {
         let image = e.target.files[0];
@@ -129,8 +132,8 @@ const Register = ({location, history}) => {
     const handleRegister = (e) => {
         e.preventDefault();
         setloading(true)
-        if (!profile_image) {
-            notify.user('Registration', 'You must upload a picture 😠', 'danger')
+        if (image_name==="default-avatar.png") {
+            notify.user('Registration', 'Upload another Image!', 'danger')
             setloading(false)
         } else {
             AuthService
@@ -141,7 +144,7 @@ const Register = ({location, history}) => {
                     AuthService
                         .login(email, password)
                         .then(() => {
-                            history.push("/welcome");
+                            history.push("/in");
                             window
                                 .location
                                 .reload();

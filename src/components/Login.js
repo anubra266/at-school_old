@@ -31,11 +31,11 @@ const Login = ({
         setloading] = useState(false);
     const {from} = location.state || {
         from: {
-            pathname: '/welcome'
+            pathname: '/in'
         }
     }
     useEffect(() => {
-        from.pathname !== "/welcome"
+        from.pathname !== "/in"
             ? notify.user('Login', 'You are logged out! Login to continue', 'info')
             : console.log("");
     },[]);
@@ -49,7 +49,7 @@ const Login = ({
                 notify.user('Login', 'Login successful. Redirecting you...', 'success')
                 from
                     ? history.push(from)
-                    : history.push("/welcome");
+                    : history.push("/in");
                 window
                     .location
                     .reload();

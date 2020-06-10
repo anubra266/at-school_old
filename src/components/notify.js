@@ -5,6 +5,9 @@ class notify {
     appname() {
         return 'CLASSROOMS';
     }
+    APP_URL(){
+        return 'http://localhost:8000/';
+    }
     user(title, message, type) {
         store.addNotification({
             title: title, message: message, type: type, // 'default', 'success', 'info', 'warning'

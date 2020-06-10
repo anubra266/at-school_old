@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Welcome from "../components/Welcome/Welcome.js"
 
 // TODO: Import all private routes here and add in export object.
 
@@ -20,6 +20,7 @@ const OnlyForHeadOfOperation = () => (
   );
   
   export {
+    Welcome,
     OnlyForHeadOfOperation,
     HeadOfOperationAndManager,
     OnlyForManager,

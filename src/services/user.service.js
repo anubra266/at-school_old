@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-
-const API_URL = 'http://localhost:8000/api/';
+import notify from "../components/notify";
+const API_URL = notify.APP_URL()+'api/';
 
 class UserService {
 
@@ -10,6 +10,19 @@ class UserService {
             headers: authHeader()
         });
     }
+    createorganization(name, address, first_time) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'organization',
+            data: {
+                name,
+                address,
+                first_time
+            },
+            headers: authHeader()
+        }, );
+    }
+    
     // getStudents() {
     //     return axios.get(API_URL + 'students', {
     //         headers: authHeader()

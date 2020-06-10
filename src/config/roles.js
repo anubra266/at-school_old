@@ -1,5 +1,13 @@
 export default {
     //role name as a key.
+    new: {
+      routes: [
+        {
+          component: 'Welcome',
+          url: '/welcome'
+        }
+      ],
+    },
      headOfOperation: {
         routes: [
           {
@@ -25,15 +33,7 @@ export default {
           {
             component: 'OnlyForManager',
             url: '/manager-only'
-          },
-          {
-            component: 'HeadOfOperationManagerAndHeadCashier',
-            url: '/hoo-manager-head-cashier'
-          }
-        ],
-      },
-      headCashier: {
-        routes: [
+          }, 
           {
             component: 'HeadOfOperationManagerAndHeadCashier',
             url: '/hoo-manager-head-cashier'
