@@ -3,7 +3,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import {Link} from "react-router-dom";
-
+import notify from "./notify.js";
 // reactstrap components
 import {
     Button,
@@ -73,7 +73,7 @@ class LandingNavbar extends React.Component {
                                 </button>
                             </div>
                             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                                CLASSROOMS
+                                {notify.appname()}
                             </NavbarBrand>
                         </div>
                         <button

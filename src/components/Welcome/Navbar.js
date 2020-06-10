@@ -1,9 +1,9 @@
-
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import {Link} from "react-router-dom";
-
+import notify from "../notify.js"
+import AuthService from "../../services/auth.service.js"
 // reactstrap components
 import {
     Button,
@@ -55,6 +55,10 @@ class LandingNavbar extends React.Component {
             modalSearch: !this.state.modalSearch
         });
     };
+    logout = () => {
+        AuthService.logout();
+        window.location.reload();
+    }
     render() {
         return (
             <div>
@@ -73,7 +77,7 @@ class LandingNavbar extends React.Component {
                                 </button>
                             </div>
                             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                                CLASSROOMS
+                                {notify.appname()}
                             </NavbarBrand>
                         </div>
                         <button
@@ -92,12 +96,13 @@ class LandingNavbar extends React.Component {
                         <Collapse navbar isOpen={this.state.collapseOpen}>
                             <Nav className="ml-auto" navbar>
 
-                               
-                                        <Link to="/register">
-                                            <Button className="btn-fill" color="primary" type="submit">
-                                                Logout
-                                            </Button>
-                                        </Link>
+                                <Button
+                                    onClick={() => this.logout()}
+                                    className="btn-fill"
+                                    color="primary"
+                                    type="submit">
+                                    Logout
+                                </Button>
 
                                 <li className="separator d-lg-none"/>
                             </Nav>

@@ -2,7 +2,10 @@ import {store} from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
 class notify {
-     user(title, message, type){
+    appname() {
+        return 'CLASSROOMS';
+    }
+    user(title, message, type) {
         store.addNotification({
             title: title, message: message, type: type, // 'default', 'success', 'info', 'warning'
             insert: "top", // where to add the notification to another
@@ -18,6 +21,7 @@ class notify {
             }
         })
     }
+
 }
 
 export default new notify();
