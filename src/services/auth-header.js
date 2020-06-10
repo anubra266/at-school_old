@@ -1,5 +1,5 @@
 export default function authHeader() {
-    const user = JSON.parse(localStorage.getItem('cbt-app'));
+    const user = JSON.parse(localStorage.getItem('classrooms-app'));
   
     if (user && user.accessToken) {
       return { Authorization: 'Bearer ' + user.accessToken };
@@ -7,3 +7,4 @@ export default function authHeader() {
       return {};
     }
   }
+  
