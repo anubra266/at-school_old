@@ -39,15 +39,15 @@ const OrgAdmin = (props) => {
                 setTimeout(() => {
                     props
                         .history
-                        .push("/in/orghome");
+                        .push("/in/home");
                     window
                         .location
                         .reload();
                 }, 3000);
             }, error => {
-
-                notify.user('Register an Organization', error.message, 'info');
-                setloading(true);
+                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Register an Organization', errMsg, 'danger');
+                setloading(false);
 
             })
     }

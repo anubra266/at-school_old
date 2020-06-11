@@ -50,7 +50,7 @@ const Educator = () => {
                                 style={{
                                 color: "black"
                             }}
-                                type="number"
+                                type="text"
                                 name="code"
                                 id="code"
                                 placeholder="17633-2673-383"/>
