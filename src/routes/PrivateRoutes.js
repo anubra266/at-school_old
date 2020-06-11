@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Route, Link, Redirect} from "react-router-dom";
+import {Route, Link, Redirect, Switch} from "react-router-dom";
 import {uniqBy} from 'lodash';
 import rolesConfig from '../config/roles';
 import * as Routes from './index';
@@ -11,22 +11,25 @@ const PrivateRoutes = ({
     user
 },) => {
 
+    //*get roles from db
+    const user_roles = user.roles;
+    const user_roles_arr = user_roles.reduce((acc, nxt) => {
+        acc.push(nxt.role);
+        return acc;
+    }, []);
+    // user roles
+    const roles = [
+        ...user_roles_arr,
+        'everyone'
+    ];
     const getRoutes = () => {
-
-        const user_roles = user.roles;
-        const new_roles = user_roles && user_roles.reduce((acc, nxt) => {
-            acc.push(nxt.role);
-            return acc;
-        }, []);
-        // user roles
-        const roles = new_roles && [...[new_roles]];
-
-        let allowedRoutes = roles && roles.reduce((acc, role) => {
+        let allowedRoutes = roles.reduce((acc, role) => {
             return [
                 ...acc,
                 ...rolesConfig[role].routes
             ]
         }, []);
+
         allowedRoutes = uniqBy(allowedRoutes, 'component');
         return allowedRoutes.map(({component, url}) => (<ReRoute
             key={component}
@@ -45,7 +48,16 @@ const PrivateRoutes = ({
 
     return (
         <div>
-            {getRoutes()}
+            <Switch>
+                {getRoutes()}
+                <Route
+                    path="/in/:anything"
+                    render={(props) => (
+                    <h1>404 error</h1>
+                )}/> {roles.indexOf('new') !== -1
+                    ? <Redirect to="/in/welcome"/>
+                    : <Redirect to="/in/home"/>}
+            </Switch>
         </div>
     )
 };

@@ -144,7 +144,7 @@ const Register = ({location, history}) => {
                     AuthService
                         .login(email, password)
                         .then(() => {
-                            history.push("/in");
+                            history.push("/in/welcome");
                             window
                                 .location
                                 .reload();

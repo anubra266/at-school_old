@@ -15,8 +15,8 @@ const OnlyForHeadOfOperation = () => (
   const HeadOfOperationManagerAndHeadCashier = () => (
     <h1>HeadOfOperation Manager And HeadCashier</h1>
   );
-  const CommonRoute = () => (
-    <h1>Common Route</h1>
+  const Home = () => (
+    <h1>Home</h1>
   );
   
   export {
@@ -25,6 +25,6 @@ const OnlyForHeadOfOperation = () => (
     HeadOfOperationAndManager,
     OnlyForManager,
     HeadOfOperationManagerAndHeadCashier,
-    CommonRoute
+    Home
   }
   

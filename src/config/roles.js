@@ -1,51 +1,52 @@
 export default {
     //role name as a key.
-    new: {
-      routes: [
-        {
-          component: 'Welcome',
-          url: '/welcome'
-        }
-      ],
-    },
-     headOfOperation: {
+    new : {
         routes: [
-          {
-            component: 'OnlyForHeadOfOperation', 
-            url: '/only-for-head-of-operation'
-          },
-          {
-            component: 'HeadOfOperationAndManager', 
-            url: '/hoo-manager'
-          },
-          {
-            component: 'HeadOfOperationManagerAndHeadCashier', 
-            url: '/hoo-manager-head-cashier'
-          }
-        ],
-      },
-      manager: {
-        routes: [
-          {
-            component: 'HeadOfOperationAndManager',
-            url: '/hoo-manager'
-          },
-          {
-            component: 'OnlyForManager',
-            url: '/manager-only'
-          }, 
-          {
-            component: 'HeadOfOperationManagerAndHeadCashier',
-            url: '/hoo-manager-head-cashier'
-          }
-        ],
-      },
-      common: {
-        routes: [
-          {
-            component: 'CommonRoute',
-            url: '/common-component'
-          }
+            {
+                component: 'Welcome',
+                url: '/welcome'
+            }
         ]
-      }
+    },
+    everyone : {
+        routes: [
+            {
+                component: 'Home',
+                url: '/home'
+            }
+        ]
+    },
+    orgadmin : {
+        routes: [
+            {
+                component: 'OnlyForHeadOfOperation',
+                url: '/orghome'
+            }
+        ]
+    },
+    dephead : {
+        routes: [
+            {
+                component: 'OnlyForHeadOfOperation',
+                url: '/orghome'
+            }
+        ]
+    },
+    educator : {
+        routes: [
+            {
+                component: 'OnlyForHeadOfOperation',
+                url: '/orghome'
+            }
+        ]
+    },
+    student : {
+        routes: [
+            {
+                component: 'OnlyForHeadOfOperation',
+                url: '/orghome'
+            }
+        ]
     }
+
+}

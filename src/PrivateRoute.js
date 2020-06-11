@@ -8,27 +8,32 @@ const PrivateRoute = ({
     ...rest
 }) => {
     const [user,
-        setuser] = useState({});
+        setuser] = useState(null);
     useEffect(() => {
         UserService
             .getUser()
             .then(response => {
                 setuser(response.data);
             });
-    },[]);
+    }, []);
 
     return (
-        <Route
-            {...rest}
-            render={(props) => (AuthService.getCurrentUser() !== null
-            ? <Component {...props} user={user}/>
-            : <Redirect
-                to={{
-                pathname: '/login',
-                state: {
-                    from: props.location
-                }
-            }}/>)}/>
+        <div>
+            <Route
+                {...rest}
+                render={(props) => (AuthService.getCurrentUser() !== null
+                ? user
+                    ? <Component {...props} user={user}/>
+                    : <a>loading...</a>
+                : <Redirect
+                    to={{
+                    pathname: '/login',
+                    state: {
+                        from: props.location
+                    }
+                }}/>)}/>
+        </div>
+
     );
 }
 

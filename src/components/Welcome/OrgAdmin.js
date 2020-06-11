@@ -30,11 +30,26 @@ const OrgAdmin = (props) => {
     const createorganization = (e) => {
         e.preventDefault();
         setloading(true);
-        UserService.createorganization(name, address, true).then(response=>{
-            notify.user('Register an Organization','Organization Registered Successfully!','success');
-            props.history.push("/in");
-            window.location.reload();
-        })
+        UserService
+            .createorganization(name, address, true)
+            .then(response => {
+
+                notify.user('Register an Organization', 'Organization Registered Successfully!', 'success');
+                notify.user('Register an Organization', 'Redirecting you...!', 'info');
+                setTimeout(() => {
+                    props
+                        .history
+                        .push("/in/orghome");
+                    window
+                        .location
+                        .reload();
+                }, 3000);
+            }, error => {
+
+                notify.user('Register an Organization', error.message, 'info');
+                setloading(true);
+
+            })
     }
     return (
         <Card className="welct">
