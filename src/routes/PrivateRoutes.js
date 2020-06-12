@@ -14,7 +14,7 @@ import Footer from "./private/Footer.js";
 import Sidebar from "./private/Sidebar.js";
 
 import TRoutes from "./routes.js";
-import routes from "../config/roles.js"
+import routes from "../roles/roles.js"
 import logo from "assets/img/react-logo.png";
 import AuthService from "../services/auth.service";
 var ps;

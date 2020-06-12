@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Route, Link, Redirect, Switch, withRouter} from "react-router-dom";
 import {uniqBy} from 'lodash';
-import rolesConfig from '../config/roles';
+import rolesConfig from '../roles/roles';
 import * as Routes from './routes_list';
 
 // For removing duplicate entries.

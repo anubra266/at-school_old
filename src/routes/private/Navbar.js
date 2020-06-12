@@ -37,7 +37,7 @@ import {
     Modal,
     ButtonGroup
 } from "reactstrap";
-
+import notify from "../../services/notify";
 class InNavbar extends React.Component {
     constructor(props) {
         super(props);
@@ -80,6 +80,7 @@ class InNavbar extends React.Component {
         });
     };
     render() {
+        const {user} = this.props;
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
@@ -97,7 +98,7 @@ class InNavbar extends React.Component {
                                 </button>
                             </div>
                             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                               <strong>AC </strong>-  {this.props.brandText}
+                                {notify.appname()}
                             </NavbarBrand>
                         </div>
                         <button
@@ -116,39 +117,38 @@ class InNavbar extends React.Component {
                         <Collapse navbar isOpen={this.state.collapseOpen}>
                             <Nav className="ml-auto" navbar>
 
-
-                                <li>
-                                <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                <Button tag="label" color="info" size="sm"> {this.props.user.firstName}</Button>
-                            </ButtonGroup>
-                                   
-                                </li>
+                                <InputGroup className="search-bar">
+                                    <Button color="link" id="search-button">
+                                        
+                                    {user.firstName + " " + (user.lastName)}
+                                    </Button>
+                                </InputGroup>
                                 <UncontrolledDropdown nav>
-                                <DropdownToggle
-                                    caret
-                                    color="default"
-                                    data-toggle="dropdown"
-                                    nav
-                                    onClick={e => e.preventDefault()}>
-                                    <div className="photo">
-                                        <img alt="..." src={require("assets/img/anime3.png")}/>
-                                    </div>
-                                    <b className="caret d-lg-block d-xl-block"/>
-                                    <p className="d-lg-none">Log out</p>
-                                </DropdownToggle>
-                                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                                    <NavLink tag="li">
-                                        <DropdownItem className="nav-item">Profile</DropdownItem>
-                                    </NavLink>
-                                    <NavLink tag="li">
-                                        <DropdownItem className="nav-item">Settings</DropdownItem>
-                                    </NavLink>
-                                    <DropdownItem divider tag="li"/>
-                                    <NavLink tag="li">
-                                        <DropdownItem className="nav-item">Log out</DropdownItem>
-                                    </NavLink>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
+                                    <DropdownToggle
+                                        caret
+                                        color="default"
+                                        data-toggle="dropdown"
+                                        nav
+                                        onClick={e => e.preventDefault()}>
+                                        <div className="photo">
+                                            <img alt="..." src={notify.APP_URL() + 'storage/images/' + user.profile_image||require("assets/img/default-avatar.png")}/>
+                                            </div>
+                                        <b className="caret d-lg-block d-xl-block"/>
+                                        <p className="d-lg-none">Log out</p>
+                                    </DropdownToggle>
+                                    <DropdownMenu className="dropdown-navbar" right tag="ul">
+                                        <NavLink tag="li">
+                                            <DropdownItem className="nav-item">Profile</DropdownItem>
+                                        </NavLink>
+                                        <NavLink tag="li">
+                                            <DropdownItem className="nav-item">Settings</DropdownItem>
+                                        </NavLink>
+                                        <DropdownItem divider tag="li"/>
+                                        <NavLink tag="li">
+                                            <DropdownItem className="nav-item">Log out</DropdownItem>
+                                        </NavLink>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
                                 <UncontrolledDropdown nav>
                                     <DropdownToggle caret color="default" data-toggle="dropdown" nav>
                                         <div className="notification d-lg-block d-xl-block"/>
@@ -180,32 +180,6 @@ class InNavbar extends React.Component {
                                             <DropdownItem className="nav-item">
                                                 Another one
                                             </DropdownItem>
-                                        </NavLink>
-                                    </DropdownMenu>
-                                </UncontrolledDropdown>
-                                <UncontrolledDropdown nav>
-                                    <DropdownToggle
-                                        caret
-                                        color="default"
-                                        data-toggle="dropdown"
-                                        nav
-                                        onClick={e => e.preventDefault()}>
-                                        <div className="photo">
-                                            <img alt="..." src={require("assets/img/anime3.png")}/>
-                                        </div>
-                                        <b className="caret d-lg-block d-xl-block"/>
-                                        <p className="d-lg-none">Log out</p>
-                                    </DropdownToggle>
-                                    <DropdownMenu className="dropdown-navbar" right tag="ul">
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Profile</DropdownItem>
-                                        </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Settings</DropdownItem>
-                                        </NavLink>
-                                        <DropdownItem divider tag="li"/>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Log out</DropdownItem>
                                         </NavLink>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>

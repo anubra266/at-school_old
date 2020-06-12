@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authHeader from './auth-header';
-import notify from "../components/notify";
+import notify from "./notify";
 const API_URL = notify.APP_URL() + 'api/';
 
 class UserService {

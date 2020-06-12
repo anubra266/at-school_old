@@ -3,7 +3,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import {Link} from "react-router-dom";
-import notify from "./notify.js";
+import notify from "../services/notify.js";
 // reactstrap components
 import {
     Button,

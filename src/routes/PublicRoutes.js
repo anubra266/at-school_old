@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
 import Landing from '../components/Landing/Landing.js';
-import Login from '../components/Login.js';
-import Register from '../components/Register.js';
+import Login from '../components/Landing/Login.js';
+import Register from '../components/Landing/Register.js';
 
 const PublicRoutes = ({match}) => (
     <div>

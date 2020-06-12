@@ -14,8 +14,8 @@ import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 import Welcome from "./components/Welcome/Welcome.js";
 
-import NoAuthRoute from "./NoAuthRoute.js";
-import PrivateRoute from "./PrivateRoute.js";
+import NoAuthRoute from "./routes/HOC/NoAuthRoute.js";
+import PrivateRoute from "./routes/HOC/PrivateRoute.js";
 
 const hist = createBrowserHistory();
 

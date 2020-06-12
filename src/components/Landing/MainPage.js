@@ -1,5 +1,5 @@
 import React from "react";
-import Login from "../subLogin.js"
+import Login from "./subLogin.js"
 // reactstrap components
 import {Row, Col} from "reactstrap";
 

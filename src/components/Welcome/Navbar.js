@@ -19,7 +19,7 @@ import {
     Modal,
     ButtonGroup
 } from "reactstrap";
-import notify from "../notify.js"
+import notify from "../../services/notify.js"
 import AuthService from "../../services/auth.service.js"
 class LandingNavbar extends React.Component {
     constructor(props) {

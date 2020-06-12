@@ -18,8 +18,8 @@
 import React, {useState, useEffect, useRef} from "react";
 import AvatarEditor from 'react-avatar-editor'
 
-import Navbar from "./Navbar.js";
-import Footer from "./Footer.js";
+import Navbar from "../Navbar.js";
+import Footer from "../Footer.js";
 // reactstrap components
 import {
     Button,
@@ -36,9 +36,9 @@ import {
 } from "reactstrap";
 import ReactPhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/material.css';
-import PasswordInput from "./PasswordStrength/Password-Input";
-import AuthService from "../services/auth.service";
-import notify from "./notify";
+import PasswordInput from "../PasswordStrength/Password-Input";
+import AuthService from "../../services/auth.service";
+import notify from "../../services/notify";
 
 const Register = ({location, history}) => {
 

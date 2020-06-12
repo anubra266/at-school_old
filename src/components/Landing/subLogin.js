@@ -1,11 +1,11 @@
 
 import React, {useState} from "react";
 import { withRouter } from "react-router-dom";
-import notify from "./notify";
-import AuthService from "../services/auth.service";
+import notify from "../../services/notify";
+import AuthService from "../../services/auth.service";
 
-import Navbar from "./Navbar.js";
-import Footer from "./Footer.js";
+import Navbar from "../Navbar.js";
+import Footer from "../Footer.js";
 // reactstrap components
 import {
     Button,

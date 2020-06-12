@@ -13,7 +13,7 @@ import {
     Button
 } from "reactstrap";
 import className from "classnames";
-import notify from "../notify.js"
+import notify from "../../services/notify.js"
 import UserService from "../../services/user.service";
 
 const Student = (props) => {

@@ -10,7 +10,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 // reactstrap components
 import {Nav, NavLink as ReactstrapNavLink} from "reactstrap";
 import {uniqBy} from 'lodash';
-import rolesConfig from '../../config/roles.js';
+import rolesConfig from '../../roles/roles.js';
 var ps;
 
 class InSidebar extends React.Component {
