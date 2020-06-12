@@ -16,6 +16,7 @@
 
 */
 import React from "react";
+import {Link} from "react-router-dom"
 // nodejs library that concatenates classes
 import classNames from "classnames";
 
@@ -38,6 +39,8 @@ import {
     ButtonGroup
 } from "reactstrap";
 import notify from "../../services/notify";
+import {uniqBy} from 'lodash';
+import rolesConfig from '../../roles/roles.js';
 class InNavbar extends React.Component {
     constructor(props) {
         super(props);
@@ -79,8 +82,9 @@ class InNavbar extends React.Component {
             modalSearch: !this.state.modalSearch
         });
     };
+    
     render() {
-        const {user} = this.props;
+        const {user, thislayout, logout, brandText} = this.props;
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
@@ -98,7 +102,7 @@ class InNavbar extends React.Component {
                                 </button>
                             </div>
                             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                                {notify.appname()}
+                                {notify.appname()} {" - "+brandText}
                             </NavbarBrand>
                         </div>
                         <button
@@ -119,8 +123,8 @@ class InNavbar extends React.Component {
 
                                 <InputGroup className="search-bar">
                                     <Button color="link" id="search-button">
-                                        
-                                    {user.firstName + " " + (user.lastName)}
+
+                                        {user.firstName + " " + (user.lastName)}
                                     </Button>
                                 </InputGroup>
                                 <UncontrolledDropdown nav>
@@ -131,21 +135,22 @@ class InNavbar extends React.Component {
                                         nav
                                         onClick={e => e.preventDefault()}>
                                         <div className="photo">
-                                            <img alt="..." src={notify.APP_URL() + 'storage/images/' + user.profile_image||require("assets/img/default-avatar.png")}/>
-                                            </div>
+                                            <img
+                                                alt="..."
+                                                src={notify.APP_URL() + 'storage/images/' + user.profile_image || require("assets/img/default-avatar.png")}/>
+                                        </div>
                                         <b className="caret d-lg-block d-xl-block"/>
                                         <p className="d-lg-none">Log out</p>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-navbar" right tag="ul">
                                         <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Profile</DropdownItem>
-                                        </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Settings</DropdownItem>
+                                            <Link to={thislayout + "/profile-settings"}>
+                                                <DropdownItem className="nav-item">Settings</DropdownItem>
+                                            </Link>
                                         </NavLink>
                                         <DropdownItem divider tag="li"/>
                                         <NavLink tag="li">
-                                            <DropdownItem className="nav-item">Log out</DropdownItem>
+                                            <DropdownItem className="nav-item" onClick={logout}>Log out</DropdownItem>
                                         </NavLink>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>

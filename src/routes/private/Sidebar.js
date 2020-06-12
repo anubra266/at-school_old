@@ -9,8 +9,6 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // reactstrap components
 import {Nav, NavLink as ReactstrapNavLink} from "reactstrap";
-import {uniqBy} from 'lodash';
-import rolesConfig from '../../roles/roles.js';
 var ps;
 
 class InSidebar extends React.Component {
@@ -31,7 +29,6 @@ class InSidebar extends React.Component {
             : "";
     }
     componentDidMount() {
-        console.log(this.props.routes)
         if (navigator.platform.indexOf("Win") > -1) {
             ps = new PerfectScrollbar(this.refs.sidebar, {
                 suppressScrollX: true,
@@ -52,22 +49,8 @@ class InSidebar extends React.Component {
     };
 
     render() {
-        const {bgColor, routes, user, thislayout} = this.props;
-        const user_roles = user.roles;
-        const user_roles_arr = user_roles.reduce((acc, nxt) => {
-            acc.push(nxt.role);
-            return acc;
-        }, []);
-
-        // user roles
-        const roles = [...user_roles_arr];
-        let allowedRoutes = roles.reduce((acc, role) => {
-            return [
-                ...acc,
-                ...rolesConfig[role].routes
-            ]
-        }, []);
-        allowedRoutes = uniqBy(allowedRoutes, 'component');
+        const {bgColor, routes, user, thislayout, allowedRoutes} = this.props;
+        
 
         return (
             <div className="sidebar" data={bgColor}>

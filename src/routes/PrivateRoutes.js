@@ -17,6 +17,8 @@ import TRoutes from "./routes.js";
 import routes from "../roles/roles.js"
 import logo from "assets/img/react-logo.png";
 import AuthService from "../services/auth.service";
+import {uniqBy} from 'lodash';
+//import rolesConfig from '../../roles/roles.js';
 var ps;
 
 class In extends React.Component {
@@ -94,14 +96,54 @@ class In extends React.Component {
         this.setState({backgroundColor: color});
     };
     getBrandText = path => {
+        const {currentUser} = this.state;
+        const user_roles = currentUser.roles;
+        const user_roles_arr = user_roles.reduce((acc, nxt) => {
+            acc.push(nxt.role);
+            return acc;
+        }, []);
 
-        return "Classrooms";
+        // user roles
+        const roles = [...user_roles_arr];
+        let allowedRoutes = roles.reduce((acc, role) => {
+            return [
+                ...acc,
+                ...routes[role].routes
+            ]
+        }, []);
+        allowedRoutes = uniqBy(allowedRoutes, 'url');
+        for (let i = 0; i < allowedRoutes.length; i++) {
+            if (
+              this.props.location.pathname.indexOf(
+                allowedRoutes[i].layout + allowedRoutes[i].url
+              ) !== -1
+            ) {
+              return allowedRoutes[i].name;
+            }
+          }
+          return "Classroomsss";
     };
     logOut() {
         AuthService.logout();
+        window.location.reload();
     }
     render() {
         const {currentUser} = this.state;
+        const user_roles = currentUser.roles;
+        const user_roles_arr = user_roles.reduce((acc, nxt) => {
+            acc.push(nxt.role);
+            return acc;
+        }, []);
+
+        // user roles
+        const roles = [...user_roles_arr];
+        let allowedRoutes = roles.reduce((acc, role) => {
+            return [
+                ...acc,
+                ...routes[role].routes
+            ]
+        }, []);
+        allowedRoutes = uniqBy(allowedRoutes, 'url');
         return (
             <div>
                 <div className="wrapper">
@@ -112,10 +154,10 @@ class In extends React.Component {
                         text: currentUser.name
                     }}
                         toggleSidebar={this.toggleSidebar}
-                        data={currentUser}
                         logout={this.logOut}
                         routes={routes}
                         user={currentUser}
+                        allowedRoutes={allowedRoutes}
                         thislayout="/in"/>
                     <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
                         <AdminNavbar
@@ -124,6 +166,7 @@ class In extends React.Component {
                             toggleSidebar={this.toggleSidebar}
                             sidebarOpened={this.state.sidebarOpened}
                             user={currentUser}
+                            thislayout="/in"
                             logout={this.logOut}/>
 
                         <TRoutes user={currentUser} thislayout="/in" />
