@@ -15,7 +15,7 @@ export default {
                 url: '/organizations',
                 name: 'Organizations',
                 icon: "tim-icons icon-istanbul",
-                layout: "/in"
+                layout: "/in/dashboard"
             }
         ]
     },
@@ -26,7 +26,7 @@ export default {
                 url: '/environs',
                 name: 'Environs',
                 icon: "tim-icons icon-bank",
-                layout: "/in"
+                layout: "/in/dashboard"
             }
         ]
     },
@@ -37,7 +37,7 @@ export default {
                 url: '/classrooms',
                 name: 'Classrooms',
                 icon: "tim-icons icon-molecule-40",
-                layout: "/in"
+                layout: "/in/dashboard"
             }
         ]
     },
@@ -48,21 +48,21 @@ export default {
                 url: '/home',
                 name: 'Home',
                 icon: "tim-icons icon-chart-pie-36",
-                layout: "/in"
+                layout: "/in/dashboard"
             },
             {
                 component: 'Classes',
                 url: '/classes',
                 name: 'Classes',
                 icon: "tim-icons icon-paper",
-                layout: "/in"
+                layout: "/in/dashboard"
             },
             {
                 component: 'Settings',
                 url: '/profile-settings',
                 name: 'Settings',
                 icon: "tim-icons icon-settings-gear-63",
-                layout: "/in"
+                layout: "/in/dashboard"
             }
         ]
     }

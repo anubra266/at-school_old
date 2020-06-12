@@ -1,183 +1,21 @@
 import React from "react";
 import {Route, Switch, Redirect} from "react-router-dom";
 
+import Dashboard from "./Dashboard.js";
+import Classroom from "./Classroom.js";
+
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
 
-// javascript plugin used to create scrollbars on windows
-import PerfectScrollbar from "perfect-scrollbar";
 
-// core components
-import AdminNavbar from "./private/Navbar.js";
-import Footer from "./private/Footer.js"; 
-import Sidebar from "./private/Sidebar.js";
+const PrivateRoutes = ({user})=>{
 
-import TRoutes from "./routes.js";
-import routes from "../roles/roles.js"
-import logo from "assets/img/react-logo.png";
-import AuthService from "../services/auth.service";
-import {uniqBy} from 'lodash';
-//import rolesConfig from '../../roles/roles.js';
-var ps;
-
-class In extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            backgroundColor: "blue",
-            sidebarOpened: document 
-                .documentElement
-                .className
-                .indexOf("nav-open") !== -1,
-            currentUser: this.props.user
-        };
-    }
-
-    componentDidMount() {
-        if (navigator.platform.indexOf("Win") > -1) {
-            document.documentElement.className += " perfect-scrollbar-on";
-            document
-                .documentElement
-                .classList
-                .remove("perfect-scrollbar-off");
-            ps = new PerfectScrollbar(this.refs.mainPanel, {suppressScrollX: true});
-            let tables = document.querySelectorAll(".table-responsive");
-            for (let i = 0; i < tables.length; i++) {
-                ps = new PerfectScrollbar(tables[i]);
-            }
-        }
-    }
-    componentWillUnmount() {
-        if (navigator.platform.indexOf("Win") > -1) {
-            ps.destroy();
-            document.documentElement.className += " perfect-scrollbar-off";
-            document
-                .documentElement
-                .classList
-                .remove("perfect-scrollbar-on");
-        }
-    }
-    componentDidUpdate(e) {
-        if (e.history.action === "PUSH") {
-            if (navigator.platform.indexOf("Win") > -1) {
-                let tables = document.querySelectorAll(".table-responsive");
-                for (let i = 0; i < tables.length; i++) {
-                    ps = new PerfectScrollbar(tables[i]);
-                }
-            }
-            document.documentElement.scrollTop = 0;
-            document.scrollingElement.scrollTop = 0;
-            this.refs.mainPanel.scrollTop = 0;
-        }
-    }
-    // this function opens and closes the sidebar on small devices
-    toggleSidebar = () => {
-        document
-            .documentElement
-            .classList
-            .toggle("nav-open");
-        this.setState({
-            sidebarOpened: !this.state.sidebarOpened
-        });
-    };
-    getRoutes = routes => {
-        return routes.map((prop, key) => {
-
-            if (prop.layout === "/in") {
-                return (<Route path={prop.layout + prop.path} component={prop.component} key={key}/>);
-
-            } else {
-                return null;
-            }
-        });
-    };
-    handleBgClick = color => {
-        this.setState({backgroundColor: color});
-    };
-    getBrandText = path => {
-        const {currentUser} = this.state;
-        const user_roles = currentUser.roles;
-        const user_roles_arr = user_roles.reduce((acc, nxt) => {
-            acc.push(nxt.role);
-            return acc;
-        }, []);
-
-        // user roles
-        const roles = [...user_roles_arr];
-        let allowedRoutes = roles.reduce((acc, role) => {
-            return [
-                ...acc,
-                ...routes[role].routes
-            ]
-        }, []);
-        allowedRoutes = uniqBy(allowedRoutes, 'url');
-        for (let i = 0; i < allowedRoutes.length; i++) {
-            if (
-              this.props.location.pathname.indexOf(
-                allowedRoutes[i].layout + allowedRoutes[i].url
-              ) !== -1
-            ) {
-              return allowedRoutes[i].name;
-            }
-          }
-          return "Classroomsss";
-    };
-    logOut() {
-        AuthService.logout();
-        window.location.reload();
-    }
-    render() {
-        const {currentUser} = this.state;
-        const user_roles = currentUser.roles;
-        const user_roles_arr = user_roles.reduce((acc, nxt) => {
-            acc.push(nxt.role);
-            return acc;
-        }, []);
-
-        // user roles
-        const roles = [...user_roles_arr];
-        let allowedRoutes = roles.reduce((acc, role) => {
-            return [
-                ...acc,
-                ...routes[role].routes
-            ]
-        }, []);
-        allowedRoutes = uniqBy(allowedRoutes, 'url');
-        return (
-            <div>
-                <div className="wrapper">
-                    <Sidebar
-                        {...this.props}
-                        bgColor={this.state.backgroundColor}
-                        logo={{
-                        text: currentUser.name
-                    }}
-                        toggleSidebar={this.toggleSidebar}
-                        logout={this.logOut}
-                        routes={routes}
-                        user={currentUser}
-                        allowedRoutes={allowedRoutes}
-                        thislayout="/in"/>
-                    <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
-                        <AdminNavbar
-                            {...this.props}
-                            brandText={this.getBrandText(this.props.location.pathname)}
-                            toggleSidebar={this.toggleSidebar}
-                            sidebarOpened={this.state.sidebarOpened}
-                            user={currentUser}
-                            thislayout="/in"
-                            logout={this.logOut}/>
-
-                        <TRoutes user={currentUser} thislayout="/in" />
-
-                        <Footer fluid/>
-                    </div>
-                </div>
-            </div>
-
-        );
-    }
+    return (
+        <Switch>
+            <Route path="/in/dashboard" render={(props)=>(<Dashboard {...props} user={user} />)} />
+            <Route path="/in/classroom/:slug" render={(props)=>(<Classroom {...props} user={user} />)} />
+        </Switch>
+    )
 }
-
-export default In;
+export default PrivateRoutes

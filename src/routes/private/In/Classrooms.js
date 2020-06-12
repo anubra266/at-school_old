@@ -145,14 +145,16 @@ const Classrooms = ({user}) => {
                                                 <tbody>
                                                     {classrooms.map((classroom, key) => {
                                                         return (
-                                                            <Link to={classroom.slug}>
-                                                                <tr>
-                                                                    <th scope="row">{key + 1}</th>
-                                                                    <td>{classroom.name}</td>
-                                                                    <td>{classroom.code}</td>
-                                                                    <td>{classroom.users.length}</td>
-                                                                </tr>
-                                                            </Link>
+                                                            <tr>
+                                                                <th scope="row">{key + 1}</th>
+                                                                <td>
+                                                                    <Link to={"/in/classroom/"+classroom.slug}>
+                                                                        {classroom.name}
+                                                                    </Link>
+                                                                </td>
+                                                                <td>{classroom.code}</td>
+                                                                <td>{classroom.users.length}</td>
+                                                            </tr>
                                                         )
                                                     })}
                                                 </tbody>
