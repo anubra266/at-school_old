@@ -8,43 +8,23 @@ export default {
             }
         ]
     },
-    everyone : {
-        routes: [
-            {
-                component: 'Home',
-                url: '/home'
-            }
-        ]
-    },
     orgadmin : {
-        routes: [
-            {
-                component: 'OnlyForHeadOfOperation',
-                url: '/orghome'
-            }
-        ]
+        routes: []
     },
     dephead : {
-        routes: [
-            {
-                component: 'OnlyForHeadOfOperation',
-                url: '/orghome'
-            }
-        ]
+        routes: []
     },
     educator : {
-        routes: [
-            {
-                component: 'OnlyForHeadOfOperation',
-                url: '/orghome'
-            }
-        ]
+        routes: []
     },
     student : {
         routes: [
             {
-                component: 'OnlyForHeadOfOperation',
-                url: '/orghome'
+                component: 'Home',
+                url: '/home',
+                name: 'Home',
+                icon: "tim-icons icon-chart-pie-36",
+                layout: "/in"
             }
         ]
     }

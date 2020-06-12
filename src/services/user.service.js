@@ -32,6 +32,29 @@ class UserService {
             headers: authHeader()
         },);
     }
+    createclassroom(name, code, first_time) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'classroom',
+            data: {
+                name,
+                code,
+                first_time
+            },
+            headers: authHeader()
+        },);
+    }
+    joinclassroom(code, first_time) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'classroom/join',
+            data: {
+                code,
+                first_time
+            },
+            headers: authHeader()
+        },);
+    }
 
     // getStudents() {     return axios.get(API_URL + 'students', {         headers:
     // authHeader()     }); } getTeachers() {     return axios.get(API_URL +

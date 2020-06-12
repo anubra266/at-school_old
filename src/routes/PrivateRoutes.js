@@ -1,65 +1,140 @@
-import React, {useState, useEffect} from 'react';
-import {Route, Link, Redirect, Switch} from "react-router-dom";
-import {uniqBy} from 'lodash';
-import rolesConfig from '../config/roles';
-import * as Routes from './index';
+import React from "react";
+import {Route, Switch, Redirect} from "react-router-dom";
 
-// For removing duplicate entries.
+import "assets/scss/black-dashboard-react.scss";
+import "assets/demo/demo.css";
+import "assets/css/nucleo-icons.css";
 
-const PrivateRoutes = ({
-    match,
-    user
-},) => {
+// javascript plugin used to create scrollbars on windows
+import PerfectScrollbar from "perfect-scrollbar";
 
-    //*get roles from db
-    const user_roles = user.roles;
-    const user_roles_arr = user_roles.reduce((acc, nxt) => {
-        acc.push(nxt.role);
-        return acc;
-    }, []);
-    // user roles
-    const roles = [
-        ...user_roles_arr,
-        'everyone'
-    ];
-    const getRoutes = () => {
-        let allowedRoutes = roles.reduce((acc, role) => {
-            return [
-                ...acc,
-                ...rolesConfig[role].routes
-            ]
-        }, []);
+// core components
+import AdminNavbar from "./private/Navbar.js";
+import Footer from "./private/Footer.js"; 
+import Sidebar from "./private/Sidebar.js";
 
-        allowedRoutes = uniqBy(allowedRoutes, 'component');
-        return allowedRoutes.map(({component, url}) => (<ReRoute
-            key={component}
-            path={`${match.path}${url}`}
-            component={Routes[component]}/>))
+import TRoutes from "./routes.js";
+import routes from "../config/roles.js"
+import logo from "assets/img/react-logo.png";
+import AuthService from "../services/auth.service";
+var ps;
+
+class In extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            backgroundColor: "blue",
+            sidebarOpened: document 
+                .documentElement
+                .className
+                .indexOf("nav-open") !== -1,
+            currentUser: this.props.user
+        };
     }
 
-    const ReRoute = ({
-        component: Component,
-        ...rest
-    }) => {
-        return (
-            <Route {...rest} render={(props) => (<Component {...props} user={user}/>)}/>
-        );
+    componentDidMount() {
+        if (navigator.platform.indexOf("Win") > -1) {
+            document.documentElement.className += " perfect-scrollbar-on";
+            document
+                .documentElement
+                .classList
+                .remove("perfect-scrollbar-off");
+            ps = new PerfectScrollbar(this.refs.mainPanel, {suppressScrollX: true});
+            let tables = document.querySelectorAll(".table-responsive");
+            for (let i = 0; i < tables.length; i++) {
+                ps = new PerfectScrollbar(tables[i]);
+            }
+        }
+    }
+    componentWillUnmount() {
+        if (navigator.platform.indexOf("Win") > -1) {
+            ps.destroy();
+            document.documentElement.className += " perfect-scrollbar-off";
+            document
+                .documentElement
+                .classList
+                .remove("perfect-scrollbar-on");
+        }
+    }
+    componentDidUpdate(e) {
+        if (e.history.action === "PUSH") {
+            if (navigator.platform.indexOf("Win") > -1) {
+                let tables = document.querySelectorAll(".table-responsive");
+                for (let i = 0; i < tables.length; i++) {
+                    ps = new PerfectScrollbar(tables[i]);
+                }
+            }
+            document.documentElement.scrollTop = 0;
+            document.scrollingElement.scrollTop = 0;
+            this.refs.mainPanel.scrollTop = 0;
+        }
+    }
+    // this function opens and closes the sidebar on small devices
+    toggleSidebar = () => {
+        document
+            .documentElement
+            .classList
+            .toggle("nav-open");
+        this.setState({
+            sidebarOpened: !this.state.sidebarOpened
+        });
     };
+    getRoutes = routes => {
+        return routes.map((prop, key) => {
 
-    return (
-        <div>
-            <Switch>
-                {getRoutes()}
-                <Route
-                    path="/in/:anything"
-                    render={(props) => (
-                    <h1>404 error</h1>
-                )}/> {roles.indexOf('new') !== -1
-                    ? <Redirect to="/in/welcome"/>
-                    : <Redirect to="/in/home"/>}
-            </Switch>
-        </div>
-    )
-};
+            if (prop.layout === "/in") {
+                return (<Route path={prop.layout + prop.path} component={prop.component} key={key}/>);
 
-export default PrivateRoutes;
+            } else {
+                return null;
+            }
+        });
+    };
+    handleBgClick = color => {
+        this.setState({backgroundColor: color});
+    };
+    getBrandText = path => {
+
+        return "Classrooms";
+    };
+    logOut() {
+        AuthService.logout();
+    }
+    render() {
+        const {currentUser} = this.state;
+        return (
+            <div>
+                <div className="wrapper">
+                    <Sidebar
+                        {...this.props}
+                        bgColor={this.state.backgroundColor}
+                        logo={{
+                        text: currentUser.name
+                    }}
+                        toggleSidebar={this.toggleSidebar}
+                        data={currentUser}
+                        logout={this.logOut}
+                        routes={routes}
+                        user={currentUser}
+                        thislayout="/in"/>
+                    <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
+                        <AdminNavbar
+                            {...this.props}
+                            brandText={this.getBrandText(this.props.location.pathname)}
+                            toggleSidebar={this.toggleSidebar}
+                            sidebarOpened={this.state.sidebarOpened}
+                            user={currentUser}
+                            logout={this.logOut}/>
+
+                        <TRoutes user={currentUser} thislayout="/in" />
+
+                        <Footer fluid/>
+                    </div>
+                </div>
+            </div>
+
+        );
+    }
+}
+
+export default In;

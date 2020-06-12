@@ -13,12 +13,44 @@ import {
     Button
 } from "reactstrap";
 import className from "classnames";
+import notify from "../notify.js"
+import UserService from "../../services/user.service";
 
-const Educator = () => {
+const Educator = (props) => {
     const [modal,
         setModal] = useState(false);
 
     const toggle = () => setModal(!modal);
+    const [name,
+        setname] = useState('');
+    const [code,
+        setcode] = useState('');
+    const [loading,
+        setloading] = useState(false);
+    const createclassroom = (e) => {
+        e.preventDefault();
+        setloading(true);
+        UserService
+            .createclassroom(name, code, true)
+            .then(response => {
+
+                notify.user('Create a Classroom', 'Classroom Created Successfully!', 'success');
+                notify.user('Create a Classroom', 'Redirecting you...!', 'info');
+                setTimeout(() => {
+                    props
+                        .history
+                        .push("/in/home");
+                    window
+                        .location
+                        .reload();
+                }, 3000);
+            }, error => {
+                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Create a Classroom', errMsg, 'danger');
+                setloading(false);
+
+            })
+    }
     return (
         <Card className="welct">
             <CardHeader onClick={toggle}>
@@ -32,7 +64,7 @@ const Educator = () => {
                 <ModalHeader toggle={toggle}>Create a Classroom</ModalHeader>
                 <ModalBody>
 
-                    <form>
+                    <form onSubmit={createclassroom}>
                         <FormGroup>
                             <Label for="name">Classroom Name</Label>
                             <Input
@@ -42,6 +74,9 @@ const Educator = () => {
                                 type="text"
                                 name="name"
                                 id="name"
+                                required
+                                value={name}
+                                onChange={(e)=>setname(e.target.value)}
                                 placeholder="MTH 101"/>
                         </FormGroup>
                         <FormGroup>
@@ -53,12 +88,15 @@ const Educator = () => {
                                 type="text"
                                 name="code"
                                 id="code"
+                                required
+                                value={code}
+                                onChange={(e)=>setcode(e.target.value)}
                                 placeholder="17633-2673-383"/>
                         </FormGroup>
                         <ModalFooter>
-                        <Button color="primary" type="submit">Create</Button>{' '}
-                        <Button color="secondary" onClick={toggle}>Cancel</Button>
-                    </ModalFooter>
+                            <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                            <Button color="secondary" onClick={toggle}>Cancel</Button>
+                        </ModalFooter>
 
                     </form>
 

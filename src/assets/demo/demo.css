@@ -1,3 +1,38 @@
+.pageloader {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.pageloader:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid rgb(82, 56, 228);
+  border-color: rgb(89, 42, 218) transparent rgb(47, 7, 190) transparent;
+  animation: pageloader 1.2s linear infinite;
+}
+@keyframes pageloader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loadstyle{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: transale(-50%,-50%);
+}
+.loadpage{
+  position:fixed;
+  height:100%;
+  width:100%;
+}
 .welct{
   text-align:center;
   cursor:pointer;

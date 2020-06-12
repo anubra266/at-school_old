@@ -45,7 +45,7 @@ const DepHead = (props) => {
                 }, 3000);
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-                notify.user('Create an Organization', errMsg, 'danger');
+                notify.user('Create an Environ', errMsg, 'danger');
                 setloading(false);
 
             })
