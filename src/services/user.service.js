@@ -68,6 +68,16 @@ class UserService {
             headers: authHeader()
         },);
     }
+    checkclassroomstatus(slug){
+        return axios({
+            method: 'POST',
+            url: API_URL + 'classroom/check',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
     createtheorytest(slug, title, deadline) {
         return axios({
             method: 'POST',
@@ -141,7 +151,16 @@ class UserService {
             headers: authHeader()
         });
     }
-    
+    getobjectivetests(slug) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'objectivetest/all/',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
     // getStudents() {     return axios.get(API_URL + 'students', {         headers:
     // authHeader()     }); } getTeachers() {     return axios.get(API_URL +
     // 'teachers', {         headers: authHeader()     }); } createenvirons(name,

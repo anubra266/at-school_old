@@ -24,18 +24,30 @@ import {
 import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
-
-
+var tests;
 const Tests = ({history, educator, slug}) => {
     const [theoryTests,
         settheoryTests] = useState(null);
+    const [objectiveTests,
+        setobjectiveTests] = useState(null);
+    const [allTests,
+        setallTests] = useState(null);
     useEffect(() => {
         UserService
             .gettheorytests(slug)
             .then(response => {
                 settheoryTests(response.data);
             });
-    }, [theoryTests]);
+        UserService
+            .getobjectivetests(slug)
+            .then(response => {
+                setobjectiveTests(response.data);
+                if (theoryTests && objectiveTests) {
+                    tests = theoryTests.concat(objectiveTests)
+                    setallTests(tests);
+                }
+            });
+    }, [theoryTests, objectiveTests]);
 
     const [createtest,
         setcreatetest] = useState(false);
@@ -70,15 +82,17 @@ const Tests = ({history, educator, slug}) => {
                     setdisabled(false);
                 });
         } else {
-            UserService.createobjecivetest(slug,title,duration,starttime,deadline).then(response=>{
-                const test = response.data;
+            UserService
+                .createobjecivetest(slug, title, duration, starttime, deadline)
+                .then(response => {
+                    const test = response.data;
                     notify.user('Create New Test', 'Test Created Successfully', 'success');
                     history.push("/in/classroom/" + slug + "/tests/questionso/" + test.id);
                     setdisabled(false);
-            }, error => {
+                }, error => {
 
-                setdisabled(false);
-            });
+                    setdisabled(false);
+                });
         }
     }
     return (
@@ -200,18 +214,28 @@ const Tests = ({history, educator, slug}) => {
                         <CardBody className="all-icons">
 
                             <Row>
-                                {theoryTests && theoryTests.map((test) => {
+                                {tests && tests.map((test) => {
                                     return (
                                         <Col sm="4">
                                             <Card body>
                                                 <CardTitle>
                                                     <strong>{test.title}</strong>
                                                 </CardTitle>
-                                                <CardText>Deadline: {new Date(test.deadline).toLocaleString()}
-                                                    <strong><br/>Theory Test</strong>
-
+                                                <CardText>
+                                                    {test.starttime
+                                                        ? <p>
+                                                                Duration:{" " + test.duration}<br/>
+                                                                Opens:{" " + new Date(test.starttime).toLocaleString()}<br/>
+                                                                Closes:{" " + new Date(test.deadline).toLocaleString()}<br/>
+                                                                <strong>Objective Test</strong>
+                                                            </p>
+                                                        : <p>
+                                                            Deadline: {new Date(test.deadline).toLocaleString()}
+                                                            <strong><br/>Theory Test</strong>
+                                                        </p>
+}
                                                 </CardText>
-                                                        <Button type="submit" color="info" size="sm">View Test</Button>
+                                                <Button type="submit" color="info" size="sm">View Test</Button>
                                             </Card>
                                         </Col>
                                     )
