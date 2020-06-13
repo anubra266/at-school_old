@@ -9,7 +9,7 @@ import "assets/css/nucleo-icons.css";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
-import AdminNavbar from "./private/Navbar.js";
+import Navbar from "./private/Navbar.js";
 import Footer from "./private/Footer.js"; 
 import Sidebar from "./private/Sidebar.js";
 
@@ -181,7 +181,7 @@ class Dashboard extends React.Component {
                         allowedRoutes={allowedRoutes}
                         thislayout={this.state.layout}/>
                     <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
-                        <AdminNavbar
+                        <Navbar
                             {...this.props}
                             brandText={this.getBrandText(this.props.location.pathname)}
                             toggleSidebar={this.toggleSidebar}

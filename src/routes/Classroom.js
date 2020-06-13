@@ -9,9 +9,9 @@ import "assets/css/nucleo-icons.css";
 import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
-import AdminNavbar from "./private/Navbar.js";
+import Navbar from "./private/Navbar.js";
 import Footer from "./private/Footer.js";
-import Sidebar from "./private/Sidebar.js";
+import Sidebar from "./private/Classroom/Sidebar.js";
 
 //import TRoutes from "./routes.js";
 import routes from "../roles/roles.js"
@@ -19,6 +19,7 @@ import * as Routes from './routes_list';
 
 import logo from "assets/img/react-logo.png";
 import AuthService from "../services/auth.service";
+import UserService from "../services/user.service";
 import {uniqBy} from 'lodash';
 //import rolesConfig from '../../roles/roles.js';
 var ps;
@@ -33,11 +34,15 @@ class Classroom extends React.Component {
                 .className
                 .indexOf("nav-open") !== -1,
             currentUser: this.props.user,
-            layout: "/in/classroom"
+            layout: "/in/classroom",
+            educator:false
         };
     }
 
     componentDidMount() {
+        UserService.getclassroomrole(this.props.match.params.slug).then(response=>{
+            this.setState({educator:response.data})
+        });
         if (navigator.platform.indexOf("Win") > -1) {
             document.documentElement.className += " perfect-scrollbar-on";
             document
@@ -50,6 +55,7 @@ class Classroom extends React.Component {
                 ps = new PerfectScrollbar(tables[i]);
             }
         }
+        
     }
     componentWillUnmount() {
         if (navigator.platform.indexOf("Win") > -1) {
@@ -150,9 +156,9 @@ class Classroom extends React.Component {
             ...rest
         }) => {
             return (
-                <Route
+                <Route exact
                     {...rest}
-                    render={(props) => (<Component {...props} user={currentUser}/>)}/>
+                    render={(props) => (<Component {...props} educator={this.state.educator} slug={this.props.match.params.slug} user={currentUser}/>)}/>
             );
         };
         const getRoutes = () => {
@@ -165,6 +171,7 @@ class Classroom extends React.Component {
                 }
             })
         }
+         
         return (
             <div>
                 <div className="wrapper">
@@ -181,7 +188,7 @@ class Classroom extends React.Component {
                         allowedRoutes={allowedRoutes}
                         thislayout={this.state.layout}/>
                     <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
-                        <AdminNavbar
+                        <Navbar
                             {...this.props}
                             brandText={this.getBrandText(this.props.location.pathname)}
                             toggleSidebar={this.toggleSidebar}
@@ -189,7 +196,7 @@ class Classroom extends React.Component {
                             user={currentUser}
                             thislayout={this.state.layout}
                             logout={this.logOut}/>
-                            
+
                         {getRoutes()}
 
                         <Footer fluid/>

@@ -9953,8 +9953,7 @@ textarea {
   color: rgba(255, 255, 255, 0.8); }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.8); }
+  font-weight: 400;}
 
 a {
   color: #ba54f5;

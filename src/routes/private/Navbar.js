@@ -41,7 +41,7 @@ import {
 import notify from "../../services/notify";
 import {uniqBy} from 'lodash';
 import rolesConfig from '../../roles/roles.js';
-class InNavbar extends React.Component {
+class TheNavbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -129,7 +129,6 @@ class InNavbar extends React.Component {
                                 </InputGroup>
                                 <UncontrolledDropdown nav>
                                     <DropdownToggle
-                                        caret
                                         color="default"
                                         data-toggle="dropdown"
                                         nav
@@ -140,7 +139,6 @@ class InNavbar extends React.Component {
                                                 src={notify.APP_URL() + 'storage/images/' + user.profile_image || require("assets/img/default-avatar.png")}/>
                                         </div>
                                         <b className="caret d-lg-block d-xl-block"/>
-                                        <p className="d-lg-none">Log out</p>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-navbar" right tag="ul">
                                         <NavLink tag="li">
@@ -214,4 +212,4 @@ class InNavbar extends React.Component {
     }
 }
 
-export default InNavbar;
+export default TheNavbar;

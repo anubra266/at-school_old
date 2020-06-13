@@ -24,10 +24,19 @@ import {
 import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js"
 import className from "classnames";
+var tclassrooms;
 
+UserService
+    .getcreatedclassrooms()
+    .then(response => {
+        if (response.data.length > 0) {
+            tclassrooms = (response.data);
+        }
+    });
+    
 const Classrooms = ({user}) => {
     const [classrooms,
-        setclassrooms] = useState(null);
+        setclassrooms] = useState(tclassrooms);
     const [noclassrooms,
         setnoclassrooms] = useState(false);
     useEffect(() => {
@@ -148,7 +157,7 @@ const Classrooms = ({user}) => {
                                                             <tr>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
-                                                                    <Link to={"/in/classroom/"+classroom.slug}>
+                                                                    <Link to={"/in/classroom/" + classroom.slug}>
                                                                         {classroom.name}
                                                                     </Link>
                                                                 </td>

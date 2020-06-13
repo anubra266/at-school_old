@@ -3,6 +3,7 @@ import {Route, Redirect} from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 import Loading from "../../components/Loading";
+
 const PrivateRoute = ({
     component: Component,
     ...rest
