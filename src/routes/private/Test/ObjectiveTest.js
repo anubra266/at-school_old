@@ -14,7 +14,19 @@ import {
     CardText,
     Label,
     FormGroup,
-    CustomInput
+    CustomInput,
+    Collapse,
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    NavbarText
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
@@ -22,6 +34,10 @@ import UserService from "../../../services/user.service";
 var parse = require('html-react-parser');
 
 const ObjectiveTest = ({user, match}) => {
+    const [isOpen,
+        setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
     const [test,
         settest] = useState(null);
     const [cbt,
@@ -34,6 +50,10 @@ const ObjectiveTest = ({user, match}) => {
         UserService
             .getobjectivetest(match.params.test)
             .then(response => {
+                response.data.objectivequestions.forEach((question)=>{
+                    var objoptions = question.objectiveoptions;
+                    objoptions = objoptions.sort((a,b)=> 0.5 - Math.random())
+                });
                 settest(response.data);
                 const init_result = response
                     .data
@@ -55,13 +75,13 @@ const ObjectiveTest = ({user, match}) => {
         const question = choice[0];
         const answer = choice[1];
         var new_cbt = cbt;
-        cbt.reduce((acc,nxt,index)=>{
+        cbt.reduce((acc, nxt, index) => {
             const init_question = nxt.question;
-            if(init_question===question){
+            if (init_question === question) {
                 nxt.answer = answer;
                 new_cbt[index] = nxt;
             }
-        },{})
+        }, {})
         setcbt(new_cbt);
     }
     const submitobjectivequestions = (e) => {
@@ -74,18 +94,23 @@ const ObjectiveTest = ({user, match}) => {
             {cbt && console.log(cbt)}
             <Row>
                 <Col md="12">
-                    <Card>
-                        <CardHeader>
                             <Row>
-                                <Col md="10">
-                                    ObjectiveTest
-                                </Col>
-                                <Col md="2">
-                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                        <Button tag="label" color="info" size="sm">Timer</Button>
-                                    </ButtonGroup>
-                                </Col>
+                                <Navbar color="red" dark={true} fixed="true" expand="md">
+                                    <NavbarBrand href="#">Timer</NavbarBrand>
+                                    <NavbarToggler onClick={toggle}/>
+                                    <Collapse isOpen={isOpen} navbar>
+                                        <Nav className="mr-auto" navbar>
+                                            <NavItem>
+                                                <NavLink href="#/"> </NavLink>
+                                            </NavItem>
+                                        </Nav>
+                                        <NavbarText>{test&&test.title}</NavbarText>
+                                    </Collapse>
+                                </Navbar>
                             </Row>
+                            
+                    <Card>
+                    <CardHeader>
                         </CardHeader>
                         <CardBody className="all-icons"></CardBody>
                     </Card>

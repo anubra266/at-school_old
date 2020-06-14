@@ -56,7 +56,7 @@ export default {
                 dont_show:true
             }
         ]
-    },
+    }, 
     student : {
         routes: [
             {
