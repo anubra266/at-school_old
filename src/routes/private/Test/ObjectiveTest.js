@@ -52,8 +52,10 @@ const ObjectiveTest = ({user, match}) => {
             .then(response => {
                 response.data.objectivequestions.forEach((question)=>{
                     var objoptions = question.objectiveoptions;
-                    objoptions = objoptions.sort((a,b)=> 0.5 - Math.random())
+                    objoptions = objoptions.sort((a,b)=> 0.5 - Math.random());
                 });
+                response.data.objectivequestions.sort((a,b)=> 0.5 - Math.random());
+
                 settest(response.data);
                 const init_result = response
                     .data
