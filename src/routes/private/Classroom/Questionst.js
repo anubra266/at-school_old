@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import classNames from "classnames";
 
 // reactstrap components
 import {
@@ -14,22 +13,14 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     FormGroup,
-    Form,
-    Label,
-    Input,
-    InputGroup,
-    InputGroupText,
-    InputGroupAddon,
-    Modal
+    Form
 } from "reactstrap";
 import notify from "../../../services/notify.js";
-import className from "classnames";
 import UserService from "../../../services/user.service";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
 
 const Questiona = ({match, history}) => {
-    //const user = AuthService.getCurrentUser();
     const [test,
         settest] = useState(null);
     const [disabled,
@@ -105,7 +96,7 @@ const Questiona = ({match, history}) => {
                                                 editor={ClassicEditor}
                                                 onInit={editor => {
                                                 setquestioneditor(editor);
-                                                editor.setData('<h1><u>' + test.title + '</u></h1><br /><h3><span style="color:hsl(0,75%,60%);">Deadline: ' + new Date(test.deadline).toLocaleString() + '</span></h3><br /> You can continue here... Edit it to your taste😋');
+                                                editor.setData('<h1><u>' + test.title + '</u></h1><br /><h3><span style="color:hsl(0,75%,60%);">Deadline: ' + new Date(test.deadline).toLocaleString() + '</span></h3><br />Edit this to your taste😋');
                                             }}
                                                 onChange={(event, editor) => {
                                                 const data = editor.getData();

@@ -83,6 +83,22 @@ export default {
                 name: 'Tests',
                 icon: "tim-icons icon-paper",
                 layout: "/in/classroom"
+            },
+            {
+                component: 'TheoryTest',
+                url: '/theory/:test',
+                name: 'Theory Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show:true
+            },
+            {
+                component: 'ObjectiveTest',
+                url: '/objective/:test',
+                name: 'Objective Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show:true
             }
         ]
     }

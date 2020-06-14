@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import classNames from "classnames";
 
 // reactstrap components
 import {
@@ -68,6 +67,8 @@ const Classrooms = ({user}) => {
             .then(response => {
                 notify.user('Create a Classroom', 'Classroom Created Successfully!', 'success');
                 setloading(false);
+                setname('');
+                setcode('');
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 notify.user('Create a Classroom', errMsg, 'danger');

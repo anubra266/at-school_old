@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Route, Redirect, withRouter} from "react-router-dom";
-import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
-import Loading from "../../components/Loading";
 
 const ClassroomRoute = ({
     match,location,
@@ -17,7 +15,6 @@ const ClassroomRoute = ({
     useEffect(() => {
         UserService.checkclassroomstatus(slug).then(response=>{
             setstatus(response.data);
-            console.log(response.data);
         });
     }, []);
 

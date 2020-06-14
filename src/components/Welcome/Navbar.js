@@ -1,7 +1,6 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import {Link} from "react-router-dom";
 import {
     Button,
     Collapse,
@@ -9,15 +8,12 @@ import {
     DropdownMenu,
     DropdownItem,
     UncontrolledDropdown,
-    Input,
     InputGroup,
     NavbarBrand,
     Navbar,
     NavLink,
     Nav,
     Container,
-    Modal,
-    ButtonGroup
 } from "reactstrap";
 import notify from "../../services/notify.js"
 import AuthService from "../../services/auth.service.js"

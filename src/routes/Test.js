@@ -24,7 +24,7 @@ import {uniqBy} from 'lodash';
 //import rolesConfig from '../../roles/roles.js';
 var ps;
 
-class Classroom extends React.Component {
+class Test extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +34,7 @@ class Classroom extends React.Component {
                 .className
                 .indexOf("nav-open") !== -1,
             currentUser: this.props.user,
-            layout: "/in/classroom",
+            layout: "/in/test",
             educator: false
         };
     }
@@ -160,9 +160,10 @@ class Classroom extends React.Component {
         const getRoutes = () => {
             return allowedRoutes.map(({layout, component, url}) => {
                 if (layout === this.state.layout) {
+                    
                     return (<ReRoute
                         key={component}
-                        path={`${this.props.match.path}${url}`}
+                        path={this.state.layout+'/'+this.props.match.params.slug+url}
                         component={Routes[component]}/>)
                 }
 
@@ -203,4 +204,4 @@ class Classroom extends React.Component {
     }
 }
 
-export default Classroom;
+export default Test;

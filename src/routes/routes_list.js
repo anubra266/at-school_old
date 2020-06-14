@@ -12,6 +12,10 @@ import Tests from "./private/Classroom/Tests.js"
 import Questionst from "./private/Classroom/Questionst.js"
 import Questionso from "./private/Classroom/Questionso.js"
 
+import TheoryTest from "./private/Test/TheoryTest.js"
+import ObjectiveTest from "./private/Test/ObjectiveTest.js"
+
+
   export {
     Welcome,
     Home,
@@ -21,5 +25,7 @@ import Questionso from "./private/Classroom/Questionso.js"
     Tests,
     Questionst,
     Questionso,
+    TheoryTest,
+    ObjectiveTest,
   }
   

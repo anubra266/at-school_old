@@ -38,7 +38,7 @@ const Login = ({
         from.pathname !== "/in"
             ? notify.user('Login', 'You are logged out! Login to continue', 'info')
             : console.log("");
-    },[]);
+    },[from.pathname]);
     const handleLogin = (e) => {
         e.preventDefault();
         setloading(true);

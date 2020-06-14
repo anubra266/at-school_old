@@ -1,7 +1,5 @@
 import React from "react";
 
-import classNames from "classnames";
-
 // reactstrap components
 import {
     Card,
@@ -14,11 +12,8 @@ import {
     Table
 } from "reactstrap";
 
-import UserService from "../../../services/user.service";
-//import AuthService from "../../../services/auth.service";
 
 const Classes = ({user}) => {
-    //const user = AuthService.getCurrentUser();
 
     return (
         <div className="content">

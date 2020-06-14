@@ -4,8 +4,6 @@ import { withRouter } from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
 
-import Navbar from "../Navbar.js";
-import Footer from "../Footer.js";
 // reactstrap components
 import {
     Button,

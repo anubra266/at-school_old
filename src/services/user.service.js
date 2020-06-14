@@ -113,6 +113,16 @@ class UserService {
             headers: authHeader()
         },);
     }
+    submittherorytest(question_id,answer) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'theoryquestion/answer/' + question_id,
+            data: {
+                answer
+            },
+            headers: authHeader()
+        },);
+    }
     createobjecivetest(slug, title, duration, starttime, deadline) {
         return axios({
             method: 'POST',

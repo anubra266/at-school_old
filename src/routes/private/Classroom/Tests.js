@@ -1,7 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-import classNames from "classnames";
-
 // reactstrap components
 import {
     Card,
@@ -17,7 +15,6 @@ import {
     Modal,
     ModalBody,
     Form,
-    CardColumns,
     CardText,
     CardTitle
 } from "reactstrap";
@@ -25,13 +22,12 @@ import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
 var tests;
+
 const Tests = ({history, educator, slug}) => {
     const [theoryTests,
         settheoryTests] = useState(null);
     const [objectiveTests,
         setobjectiveTests] = useState(null);
-    const [allTests,
-        setallTests] = useState(null);
     useEffect(() => {
         UserService
             .gettheorytests(slug)
@@ -44,7 +40,6 @@ const Tests = ({history, educator, slug}) => {
                 setobjectiveTests(response.data);
                 if (theoryTests && objectiveTests) {
                     tests = theoryTests.concat(objectiveTests)
-                    setallTests(tests);
                 }
             });
     }, [theoryTests, objectiveTests]);
@@ -119,7 +114,6 @@ const Tests = ({history, educator, slug}) => {
                                                     }}>
                                                         Create New Test
                                                     </h3>
-
                                                     <Form onSubmit={handlecreatetest} action="POST">
                                                         <FormGroup>
                                                             <Label for="title">Test Title

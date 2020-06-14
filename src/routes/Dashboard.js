@@ -17,7 +17,6 @@ import Sidebar from "./private/Sidebar.js";
 import routes from "../roles/roles.js"
 import * as Routes from './routes_list';
 
-import logo from "assets/img/react-logo.png";
 import AuthService from "../services/auth.service";
 import {uniqBy} from 'lodash';
 //import rolesConfig from '../../roles/roles.js';
