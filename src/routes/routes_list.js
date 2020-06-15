@@ -14,6 +14,7 @@ import Questionso from "./private/Classroom/Questionso.js"
 
 import TheoryTest from "./private/Test/TheoryTest.js"
 import ObjectiveTest from "./private/Test/ObjectiveTest.js"
+import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
 
 
   export {
@@ -27,5 +28,6 @@ import ObjectiveTest from "./private/Test/ObjectiveTest.js"
     Questionso,
     TheoryTest,
     ObjectiveTest,
+    ObjectiveTestReview,
   }
-  
+   

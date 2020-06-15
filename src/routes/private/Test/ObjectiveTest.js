@@ -15,46 +15,40 @@ import {
     Label,
     FormGroup,
     CustomInput,
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
 var parse = require('html-react-parser');
 
-const ObjectiveTest = ({user, match}) => {
-    const [isOpen,
-        setIsOpen] = useState(false);
+const ObjectiveTest = ({user, match, history, className}) => {
 
-    const toggle = () => setIsOpen(!isOpen);
     const [test,
         settest] = useState(null);
     const [cbt,
         setcbt] = useState(null);
-    const [answer,
-        setanswer] = useState('');
     const [submitting,
         setsubmitting] = useState(false);
     useEffect(() => {
         UserService
             .getobjectivetest(match.params.test)
             .then(response => {
-                response.data.objectivequestions.forEach((question)=>{
-                    var objoptions = question.objectiveoptions;
-                    objoptions = objoptions.sort((a,b)=> 0.5 - Math.random());
-                });
-                response.data.objectivequestions.sort((a,b)=> 0.5 - Math.random());
+                response
+                    .data
+                    .objectivequestions
+                    .forEach((question) => {
+                        question
+                            .objectiveoptions
+                            .sort((a, b) => 0.5 - Math.random());
+                    });
+                response
+                    .data
+                    .objectivequestions
+                    .sort((a, b) => 0.5 - Math.random());
 
                 settest(response.data);
                 const init_result = response
@@ -62,11 +56,9 @@ const ObjectiveTest = ({user, match}) => {
                     .objectivequestions
                     .reduce((acc, question) => {
                         const question_id = question.id;
-                        const answer = null;
-                        const total = {
-                            question: question_id,
-                            answer: answer
-                        };
+                        const answer = 'unanswered';
+                        const total = {};
+                        total[question_id] = answer;
                         acc.push(total);
                         return acc
                     }, []);
@@ -77,50 +69,71 @@ const ObjectiveTest = ({user, match}) => {
         const question = choice[0];
         const answer = choice[1];
         var new_cbt = cbt;
-        cbt.reduce((acc, nxt, index) => {
-            const init_question = nxt.question;
-            if (init_question === question) {
-                nxt.answer = answer;
-                new_cbt[index] = nxt;
+        new_cbt.forEach(nquestion => {
+            if (question in nquestion) {
+                nquestion[question] = answer;
             }
-        }, {})
+        });
         setcbt(new_cbt);
+        console.log(new_cbt)
     }
+    const reviewtest = ()=>{
+        history.push('/in/test/' + slug + "/objective/" + match.params.test + "/review");
+    }
+    const goback=()=>{
+        history.push('/in/classroom/'+slug+"/tests");
+    }
+    const pat = match.path;
+    const patharr = pat.split('/');
+    const slug = patharr[3];
+    const [score,
+        setscore] = useState(null);
+    const [total,
+        settotal] = useState(null);
     const submitobjectivequestions = (e) => {
-        setsubmitting(false);
+        setsubmitting(true);
         e.preventDefault()
-
+        UserService
+            .submitobjectivestest(match.params.test, cbt)
+            .then(response => {
+                const rscore = response.data[0];
+                const rtotal = response.data[1];
+                setscore(rscore)
+                settotal(rtotal)
+                notify.user('Submit Test', 'Test Submitted Successfully', 'success');
+            }, error => {
+                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Submit Test', errMsg, 'danger');
+                setsubmitting(false);
+            })
     }
+    const [modal,
+        setModal] = useState(false);
+    const toggle = () => setModal(!modal);
     return (
         <div className="content">
-            {cbt && console.log(cbt)}
             <Row>
                 <Col md="12">
-                            <Row>
-                                <Navbar color="red" dark={true} fixed="true" expand="md">
-                                    <NavbarBrand href="#">Timer</NavbarBrand>
-                                    <NavbarToggler onClick={toggle}/>
-                                    <Collapse isOpen={isOpen} navbar>
-                                        <Nav className="mr-auto" navbar>
-                                            <NavItem>
-                                                <NavLink href="#/"> </NavLink>
-                                            </NavItem>
-                                        </Nav>
-                                        <NavbarText>{test&&test.title}</NavbarText>
-                                    </Collapse>
-                                </Navbar>
-                            </Row>
-                            
-                    <Card>
-                    <CardHeader>
-                        </CardHeader>
-                        <CardBody className="all-icons"></CardBody>
-                    </Card>
+                    <Row>
+                        <Card>
+                            <CardHeader></CardHeader>
+                            <CardBody className="all-icons">
+                                <strong>{test && test.title}</strong>
+                            </CardBody>
+
+                            <div class="timerr">
+                                <label>Timer</label><br/>
+                                <span class="minute">20</span>
+                                <span class="second">10</span>
+                            </div>
+                        </Card>
+                    </Row>
+
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <form method="POST" onSubmit={submitobjectivequestions}>
+                    <form method="POST">
                         {test && <div>
                             {test
                                 .objectivequestions
@@ -154,14 +167,55 @@ const ObjectiveTest = ({user, match}) => {
                                 <Col md="10"></Col>
                                 <Col md="2">
                                     <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                        <Button disabled={submitting} type="submit" color="info" size="sm">Submit</Button>
+                                        <Button
+                                            disabled={submitting}
+                                            onClick={toggle}
+                                            tag="label"
+                                            color="info"
+                                            size="sm">Finish</Button>
                                     </ButtonGroup>
                                 </Col>
                             </Row>
-                        </div>
-}
+                        </div>}
+                        <Modal
+                            isOpen={modal}
+                            toggle={toggle}
+                            className={className}
+                            backdrop={"static"}
+                            keyboard={false}>
+                            <ModalHeader>
+                                {score
+                                    ? "Submitted Successfuly. Click Review to see all answers"
+                                    : "Are you sure you want to Submit?"}
+                            </ModalHeader>
+                            <ModalBody>
+
+                                {score
+                                    ? <div className="aftertest">
+
+                                            <p className="info">You scored</p>
+                                            <p className="score">{score}</p>
+                                            <p className="percentage">{Math.round(eval(score / total * 100))}%</p>
+
+                                        </div>
+                                    : ''}
+                            </ModalBody>
+                            <ModalFooter>
+
+                                {score
+                                    ?<Button color="secondary" onClick={goback}>Finish</Button>
+                                    :<Button
+                                    color="primary"
+                                    onClick={submitobjectivequestions}
+                                    disabled={submitting}
+                                    type="submit">Yes</Button>}{' '} {score
+                                    ? <Button color="success" onClick={reviewtest}>Review Test</Button>
+                                    : <Button color="secondary" onClick={toggle}>Cancel</Button>}
+                            </ModalFooter>
+                        </Modal>
 
                     </form>
+
                 </Col>
             </Row>
         </div>

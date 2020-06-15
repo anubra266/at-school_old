@@ -99,6 +99,14 @@ export default {
                 icon: "tim-icons icon-paper",
                 layout: "/in/test",
                 dont_show:true
+            },
+            {
+                component: 'ObjectiveTestReview',
+                url: '/objective/:test/review',
+                name: 'Review Objective Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show:true
             }
         ]
     }

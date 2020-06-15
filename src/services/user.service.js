@@ -140,6 +140,9 @@ class UserService {
     getobjectivetest(id) {
         return axios.get(API_URL + 'objectivetest/' + id, {headers: authHeader()});
     }
+    getobjectivetestreview(id) {
+        return axios.get(API_URL + 'objectivetest/review/' + id, {headers: authHeader()});
+    }
     addobjectivequestion(test, question,options){
         return axios({
             method: 'POST',
@@ -170,6 +173,19 @@ class UserService {
             },
             headers: authHeader()
         },);
+    }
+    submitobjectivestest(test,cbt){
+        return axios({
+            method: 'POST',
+            url: API_URL + 'objectivetest/' + test,
+            data: {
+                cbt
+            },
+            headers: authHeader()
+        },);
+    }
+    getobjectivetestresult(id) {
+        return axios.get(API_URL + 'objectivetest/result/' + id, {headers: authHeader()});
     }
     // getStudents() {     return axios.get(API_URL + 'students', {         headers:
     // authHeader()     }); } getTeachers() {     return axios.get(API_URL +

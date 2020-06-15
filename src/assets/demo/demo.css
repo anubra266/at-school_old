@@ -1,4 +1,39 @@
+.aftertest{
+  text-align:center;
+  cursor:pointer;
+}
+.aftertest .score{
+  font-size: xx-large;
+}
+.aftertest .percentage{
+  font-size: large;
+}
 
+.timerr{
+  position:fixed;
+  top:30%;
+  right:0%;
+  z-index:100;
+  background: rgba(0, 0, 0, 0.486);
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding:10px 10px;
+  cursor:pointer;
+  color:white;
+}
+.timerr label{
+  font-size: large;
+  color:white
+}
+.timerr .minute{
+  font-size: xx-large;
+}
+.timerr .second{
+  font-size: large;
+}
+.timerr .minute:after{
+  content: ":";
+}
 .pageloader {
   display: inline-block;
   width: 80px;
