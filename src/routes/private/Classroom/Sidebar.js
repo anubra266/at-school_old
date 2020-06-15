@@ -50,15 +50,22 @@ class InSidebar extends React.Component {
 
     render() {
         const {bgColor, routes, user, thislayout, allowedRoutes} = this.props;
-        
 
         return (
             <div className="sidebar" data={bgColor}>
                 <div className="sidebar-wrapper" ref="sidebar">
 
                     <Nav>
+                        <li>
+                            <NavLink
+                                to={"/in/dashboard/classes" + this.props.match.params.slug + "/tests"}
+                                className="nav-link">
+                                <i className="tim-icons icon-double-left"/>
+                                <p>Back</p>
+                            </NavLink>
+                        </li>
                         {allowedRoutes.map((prop, key) => {
-                            if (prop.layout === thislayout&&!prop.dont_show) {
+                            if (prop.layout === thislayout && !prop.dont_show) {
 
                                 if (prop.redirect) 
                                     return null;
@@ -69,7 +76,7 @@ class InSidebar extends React.Component {
                                         : "")}
                                         key={key}>
                                         <NavLink
-                                            to={prop.layout+"/"+this.props.match.params.slug + prop.url}
+                                            to={prop.layout + "/" + this.props.match.params.slug + prop.url}
                                             className="nav-link"
                                             activeClassName="active"
                                             onClick={this.props.toggleSidebar}>
@@ -81,6 +88,7 @@ class InSidebar extends React.Component {
                             }
 
                         })}
+
                         <li>
                             <a href="/" onClick={this.props.logout}>
                                 <i className="tim-icons icon-button-power"/>

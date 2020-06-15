@@ -10,13 +10,17 @@ const PrivateRoute = ({
 }) => {
     const [user,
         setuser] = useState(null);
+
     useEffect(() => {
         UserService
             .getUser()
             .then(response => {
                 setuser(response.data);
+                
             });
     }, []);
+    
+    
 
     return (
         <div>
@@ -24,8 +28,8 @@ const PrivateRoute = ({
                 {...rest}
                 render={(props) => (AuthService.getCurrentUser() !== null
                 ? user
-                    ? <Component {...props} user={user}/>
-                    : <Loading />
+                    ?<Component {...props} user={user}/>
+                    : <Loading/>
                 : <Redirect
                     to={{
                     pathname: '/login',

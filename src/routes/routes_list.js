@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Welcome from "../components/Welcome/Welcome.js"
 
 import Home from "./private/In/Home.js"
 import Settings from "./private/In/Settings.js"
@@ -18,7 +17,6 @@ import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
 
 
   export {
-    Welcome,
     Home,
     Settings,
     Classrooms,

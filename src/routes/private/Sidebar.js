@@ -50,7 +50,6 @@ class InSidebar extends React.Component {
 
     render() {
         const {bgColor, routes, user, thislayout, allowedRoutes} = this.props;
-        
 
         return (
             <div className="sidebar" data={bgColor}>

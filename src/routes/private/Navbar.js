@@ -82,7 +82,7 @@ class TheNavbar extends React.Component {
                                 </button>
                             </div>
                             <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                                {notify.appname()} {" - "+brandText}
+                                {notify.appname()}
                             </NavbarBrand>
                         </div>
                         <button

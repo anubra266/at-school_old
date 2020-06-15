@@ -10,7 +10,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 
 // core components
 import Navbar from "./private/Navbar.js";
-import Footer from "./private/Footer.js"; 
+import Footer from "./private/Footer.js";
 import Sidebar from "./private/Sidebar.js";
 
 //import TRoutes from "./routes.js";
@@ -27,12 +27,12 @@ class Dashboard extends React.Component {
         super(props);
         this.state = {
             backgroundColor: "blue",
-            sidebarOpened: document 
+            sidebarOpened: document
                 .documentElement
                 .className
                 .indexOf("nav-open") !== -1,
             currentUser: this.props.user,
-            layout:"/in/dashboard"
+            layout: "/in/dashboard"
         };
     }
 
@@ -115,19 +115,17 @@ class Dashboard extends React.Component {
         }, []);
         allowedRoutes = uniqBy(allowedRoutes, 'url');
         for (let i = 0; i < allowedRoutes.length; i++) {
-            if (
-              this.props.location.pathname.indexOf(
-                allowedRoutes[i].layout + allowedRoutes[i].url
-              ) !== -1
-            ) {
-              return allowedRoutes[i].name;
+            if (this.props.location.pathname.indexOf(allowedRoutes[i].layout + allowedRoutes[i].url) !== -1) {
+                return allowedRoutes[i].name;
             }
-          }
-          return "";
+        }
+        return "";
     };
     logOut() {
         AuthService.logout();
-        window.location.reload();
+        window
+            .location
+            .reload();
     }
     render() {
         const {currentUser} = this.state;
@@ -151,10 +149,12 @@ class Dashboard extends React.Component {
             ...rest
         }) => {
             return (
-                <Route {...rest} render={(props) => (<Component {...props} user={currentUser}/>)}/>
+                <Route
+                    {...rest}
+                    render={(props) => (<Component {...props} user={currentUser}/>)}/>
             );
         };
-        const getRoutes = ()=>{
+        const getRoutes = () => {
             return allowedRoutes.map(({layout, component, url}) => {
                 if (layout === this.state.layout) {
                     return (<ReRoute
@@ -189,7 +189,10 @@ class Dashboard extends React.Component {
                             thislayout={this.state.layout}
                             logout={this.logOut}/>
 
-                        {getRoutes()}
+                        <Switch>
+                            {getRoutes()}
+                            <Redirect to="/in/dashboard/home"/>
+                        </Switch>
 
                         <Footer fluid/>
                     </div>

@@ -1,22 +1,61 @@
-import React from "react";
-import {Route, Switch } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {Route, Switch, Redirect} from "react-router-dom";
 
 import Dashboard from "./Dashboard.js";
-import Classroom from "./Classroom.js"; 
-import Test from "./Test.js"; 
+import Classroom from "./Classroom.js";
+import Test from "./Test.js";
 
+import Welcome from "../components/Welcome/Welcome.js"
 import ClassroomRoute from "../routes/HOC/ClassroomRoute.js"
 
- 
+import {uniqBy} from 'lodash';
+//import TRoutes from "./routes.js";
+import routes from "../roles/roles.js";
+import * as Routes from './routes_list.js';
 
-const PrivateRoutes = ({user})=>{
+const PrivateRoutes = ({user}) => {
 
+    const [newbie,
+        setnewbie] = useState(null);
+    useEffect(() => {
+        if (user) {
+
+            const currentUser = user;
+            const user_roles = currentUser.roles;
+            const user_roles_arr = user_roles.reduce((acc, nxt) => {
+                acc.push(nxt.role);
+                return acc;
+            }, []);
+
+            // user roles
+            const roles = [...user_roles_arr];
+
+            setnewbie(roles.indexOf('new'));
+            console.log(roles);
+        }
+    }, []);
     return (
+
         <Switch>
-            <Route path="/in/dashboard" render={(props)=>(<Dashboard {...props} user={user} />)} />
-            <ClassroomRoute path="/in/classroom/:slug" component={Classroom} user={user} />
-            <ClassroomRoute path="/in/test/:slug/:test_type/:test_id" component={Test} user={user} />
-            <Route render={(props)=>(<h1>404 error</h1>)} />
+        <Route
+        path="/in/welcome"
+        render={(props) => (<Welcome {...props} user={user}/>)}/>
+            {newbie && newbie === -1
+                ? <div><Route
+                        path="/in/dashboard"
+                        render={(props) => (<Dashboard {...props} user={user}/>)}/>
+                        <ClassroomRoute path="/in/classroom/:slug" component={Classroom} user={user}/>
+                        <ClassroomRoute
+                            path="/in/test/:slug/:test_type/:test_id"
+                            component={Test}
+                            user={user}/>
+                        <Route
+                            render={(props) => (
+                            <h1>404 error</h1>
+                        )}/>
+                    </div>
+                : <Redirect to="/in/welcome" />
+}
         </Switch>
     )
 }

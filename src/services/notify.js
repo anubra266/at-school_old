@@ -3,7 +3,7 @@ import 'react-notifications-component/dist/theme.css';
 
 class notify {
     appname() {
-        return 'CLASSROOMS';
+        return 'At-School';
     }
     APP_URL(){
         return 'http://localhost:8000/';
