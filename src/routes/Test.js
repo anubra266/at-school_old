@@ -11,7 +11,7 @@ import PerfectScrollbar from "perfect-scrollbar";
 // core components
 import Navbar from "./private/Navbar.js";
 import Footer from "./private/Footer.js";
-import Sidebar from "./private/Classroom/Sidebar.js";
+import Sidebar from "./private/Test/Sidebar.js";
 
 //import TRoutes from "./routes.js";
 import routes from "../roles/roles.js"

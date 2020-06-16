@@ -58,7 +58,7 @@ class InSidebar extends React.Component {
                     <Nav>
                         <li>
                             <NavLink
-                                to={"/in/dashboard/classes" + this.props.match.params.slug + "/tests"}
+                                to={"/in/dashboard/classrooms"}
                                 className="nav-link">
                                 <i className="tim-icons icon-double-left"/>
                                 <p>Back</p>

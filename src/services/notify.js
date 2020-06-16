@@ -3,10 +3,11 @@ import 'react-notifications-component/dist/theme.css';
 
 class notify {
     appname() {
-        return 'At-School';
+        return 'at-School';
     }
     APP_URL(){
-        return 'http://localhost:8000/';
+        //return 'https://at-school.xyz/api/';
+        return 'http://localhost/';
     }
     user(title, message, type) {
         store.addNotification({

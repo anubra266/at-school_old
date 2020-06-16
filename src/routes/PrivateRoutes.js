@@ -26,7 +26,7 @@ const PrivateRoutes = ({user}) => {
                 acc.push(nxt.role);
                 return acc;
             }, []);
-
+ 
             // user roles
             const roles = [...user_roles_arr];
 

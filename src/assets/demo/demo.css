@@ -1,3 +1,10 @@
+.testtab_active{
+  border:solid 3px grey;
+  background:rgba(128, 128, 128, 0.404);
+}
+.tabnav{
+  cursor:pointer
+}
 .aftertest{
   text-align:center;
   cursor:pointer;

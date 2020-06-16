@@ -25,21 +25,26 @@ import notify from "../../../services/notify.js"
 import className from "classnames";
 var tclassrooms; 
 var noclass;
+const orderclasses = ()=>{
+    UserService
+    .getjoinedclassrooms()
+    .then(response => {
+        if (response.data.length < 1) {
+            noclass = (true)
+        } else {
+            tclassrooms = (response.data);
+        }
+    });
+}
+orderclasses();
+
 const Classes = ({user}) => {
     const [classrooms,
         setclassrooms] = useState(tclassrooms);
     const [noclassrooms,
         setnoclassrooms] = useState(noclass);
     useEffect(() => {
-        UserService
-            .getjoinedclassrooms()
-            .then(response => {
-                if (response.data.length < 1) {
-                    noclass = (true)
-                } else {
-                    tclassrooms = (response.data);
-                }
-            });
+        orderclasses()
     }, [classrooms]);
     const [modal,
         setModal] = useState(false);

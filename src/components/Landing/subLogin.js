@@ -34,7 +34,7 @@ const Login = (props) => {
             .login(email, password)
             .then(() => {
                 notify.user('Login', 'Login successful. Redirecting you...', 'success')
-                props.history.push("/in");
+                props.history.push("/in/dashboard/home");
                 window
                     .location
                     .reload();

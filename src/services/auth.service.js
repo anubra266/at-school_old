@@ -1,6 +1,6 @@
 import axios from "axios";
-
-const API_URL = "http://localhost:8000/api/";
+import notify from "./notify";
+const API_URL = notify.APP_URL() + 'api/';
 
 class AuthService {
     login(email, password) {

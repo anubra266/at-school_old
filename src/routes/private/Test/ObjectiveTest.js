@@ -18,7 +18,8 @@ import {
     Modal,
     ModalHeader,
     ModalBody,
-    ModalFooter
+    ModalFooter,
+    Progress
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
@@ -104,8 +105,8 @@ const ObjectiveTest = ({user, match, history, className}) => {
             .then(response => {
                 const rscore = response.data[0];
                 const rtotal = response.data[1];
-                
-                if(response.data[1]){
+
+                if (response.data[1]) {
                     setscore(rscore)
                     settotal(rtotal)
                     notify.user('Submit Test', 'Test Submitted Successfully', 'success');
@@ -131,7 +132,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
     const stoptest = () => {
         //*Show Time up modal
         if (!modalfinish) {
-         setModalfinish(true);
+            setModalfinish(true);
         }
         // //*submit test submitobjectivequestions();
         submitobjectivequestions('time_up');
@@ -199,7 +200,17 @@ const ObjectiveTest = ({user, match, history, className}) => {
                         <Card>
                             <CardHeader></CardHeader>
                             <CardBody className="all-icons">
-                                <strong>{test && test.title}</strong>
+                                <Row>
+
+                                    <Col>
+                                        <strong>{test && test.title}</strong>
+                                    </Col>
+
+                                    <Col>
+                                        <strong>{test && test.duration + " minute(s)"}</strong>
+                                    </Col>
+                                </Row>
+
                             </CardBody>
 
                             <div class="timerr">
@@ -217,7 +228,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
 
                                             <p className="score">Time up!</p>
                                             <p className="percentage">Wait! Your Work is being submitted...</p>
-
+                                            <p><Progress animated color="danger" value="75" /></p>
                                         </div>
                                     </ModalBody>
                                 </Modal>

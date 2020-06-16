@@ -56,12 +56,13 @@ class InSidebar extends React.Component {
                 <div className="sidebar-wrapper" ref="sidebar">
 
                     <Nav>
+                    
                         {allowedRoutes.map((prop, key) => {
                             if (prop.layout === thislayout) {
 
                                 if (prop.redirect) 
                                     return null;
-                                return (
+                                return ( 
                                     <li
                                         className={this.activeRoute(prop.url) + (prop.pro
                                         ? " active-pro"

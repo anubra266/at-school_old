@@ -2,20 +2,24 @@ import React, {useState, useEffect} from "react";
 import {Route, Redirect, withRouter} from "react-router-dom";
 import UserService from "../../services/user.service";
 
+var user_status = "member";
+const checkstatus = (slug)=>{
+    UserService.checkclassroomstatus(slug).then(response=>{
+        user_status = (response.data);
+    });
+}
 const ClassroomRoute = ({
     match,location,
-    user,
+    user, 
     component: Component,
     ...rest
 }) => {
     const [status,
-        setstatus] = useState(null);
+        setstatus] = useState(user_status);
         const url = location.pathname;
         const slug = url.split('/')[3]
     useEffect(() => {
-        UserService.checkclassroomstatus(slug).then(response=>{
-            setstatus(response.data);
-        });
+        checkstatus(slug)
     }, []);
 
     return (
@@ -27,7 +31,7 @@ const ClassroomRoute = ({
                 ? <Component {...props} user={user} />
                 : <Redirect
                     to={{
-                    pathname: '/in',
+                    pathname: '/in/dashboard',
                     state: {
                         from: props.location
                     }

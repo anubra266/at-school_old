@@ -31,7 +31,7 @@ class Classroom extends React.Component {
             backgroundColor: "blue",
             sidebarOpened: document
                 .documentElement
-                .className
+                .className 
                 .indexOf("nav-open") !== -1,
             currentUser: this.props.user,
             layout: "/in/classroom",

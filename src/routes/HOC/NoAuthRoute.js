@@ -13,7 +13,7 @@ const NoAuthRoute = ({
             render={(props) => (AuthService.getCurrentUser() === null
             ? <Component {...props}/>
             : <Redirect to={{
-                pathname: '/in'
+                pathname: '/in/dashboard/'
             }}/>)}/>
     );
 };

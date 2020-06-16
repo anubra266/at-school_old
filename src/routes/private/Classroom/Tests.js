@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useLayoutEffect} from "react";
 
 // reactstrap components
 import {
@@ -15,34 +15,57 @@ import {
     Modal,
     ModalBody,
     Form,
-    CardText,
-    CardTitle
+    TabContent,
+    TabPane,
+    Nav,
+    NavItem,
+    NavLink,
+    CardTitle,
+    CardText
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
-var alltests;
 
-const Tests = ({history, educator, slug, match,location}) => {
+const Tests = ({history, educator, slug, match, location}) => {
+
     const [theoryTests,
         settheoryTests] = useState(null);
     const [objectiveTests,
         setobjectiveTests] = useState(null);
-    useEffect(() => {
-        UserService
-            .gettheorytests(slug)
-            .then(response => {
-                settheoryTests(response.data);
-            });
+    const [noobjective,
+        setnoobjective] = useState(false);
+    const [notheory,
+        setnotheory] = useState(false);
+
+    useLayoutEffect(() => {
+
         UserService
             .getobjectivetests(slug)
             .then(response => {
-                setobjectiveTests(response.data);
-                if (theoryTests && objectiveTests) {
-                    alltests = theoryTests.concat(objectiveTests)
+                if (response.data.length < 1) {
+                    setnoobjective(true);
+                    setobjectiveTests([]);
+                } else {
+                    setobjectiveTests(response.data);
                 }
             });
-    }, [theoryTests, objectiveTests]);
+    });
+    useLayoutEffect(() => {
+
+        UserService
+            .gettheorytests(slug)
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnotheory(true);
+                    settheoryTests([]);
+                } else {
+                    settheoryTests(response.data);
+                }
+
+            });
+
+    });
 
     const [createtest,
         setcreatetest] = useState(false);
@@ -90,13 +113,21 @@ const Tests = ({history, educator, slug, match,location}) => {
                 });
         }
     }
-    const taketest=(type,id)=>{
-        if(type==="objective"){
+    const taketest = (type, id) => {
+        if (type === "objective") {
             history.push("/in/test/" + slug + "/objective/" + id);
-        }else{
+        } else {
             history.push("/in/test/" + slug + "/theory/" + id);
         }
     }
+    const [activeTab,
+        setActiveTab] = useState('1');
+
+    const toggletype = tab => {
+        if (activeTab !== tab) 
+            setActiveTab(tab);
+        }
+    
     return (
         <div className="content">
 
@@ -214,34 +245,109 @@ const Tests = ({history, educator, slug, match,location}) => {
                         </CardHeader>
                         <CardBody className="all-icons">
 
-                            <Row>
-                                {alltests && alltests.map((test) => {
-                                    return (
-                                        <Col sm="4">
-                                            <Card body>
-                                                <CardTitle>
-                                                    <strong>{test.title}</strong>
-                                                </CardTitle>
-                                                <CardText>
-                                                    {test.starttime
-                                                        ? <p>
-                                                                Duration:{" " + test.duration}<br/>
-                                                                Opens:{" " + new Date(test.starttime).toLocaleString()}<br/>
-                                                                Closes:{" " + new Date(test.deadline).toLocaleString()}<br/>
-                                                                <strong>Objective Test</strong>
-                                                            </p>
-                                                        : <p>
-                                                            Deadline: {new Date(test.deadline).toLocaleString()}
-                                                            <strong><br/>Theory Test</strong>
-                                                        </p>
-}
-                                                </CardText>
-                                                <Button type="submit" color="info" size="sm" onClick={taketest(test.starttime?'objective':'theory',test.id)}>View Test</Button>
-                                            </Card>
-                                        </Col>
-                                    )
-                                })}
-                            </Row>
+                            <Nav tabs>
+                                <NavItem>
+                                    <NavLink
+                                        style={{
+                                        cursor: "pointer"
+                                    }}
+                                        className={activeTab === '1'
+                                        ? "testtab_active"
+                                        : ''}
+                                        onClick={() => {
+                                        toggletype('1');
+                                    }}>
+                                        Theory
+                                    </NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink
+                                        style={{
+                                        cursor: "pointer"
+                                    }}
+                                        className={activeTab === '2'
+                                        ? "testtab_active"
+                                        : ''}
+                                        onClick={() => {
+                                        toggletype('2');
+                                    }}>
+                                        Objective
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                            <TabContent activeTab={activeTab}>
+                                <TabPane tabId="1">
+                                    <Row>
+                                        {theoryTests
+                                            ? theoryTests.filter(theory => new Date(theory.deadline) > new Date()).map((test) => {
+                                                return (
+                                                    <Col sm="4">
+                                                        <Card body>
+                                                            <CardTitle>
+                                                                <strong>{test.title}</strong>
+                                                            </CardTitle>
+                                                            <CardTitle>
+                                                                <strong>Created:{" "}</strong>
+                                                                {new Date(test.created_at).toLocaleString()}</CardTitle>
+                                                            <CardTitle>
+                                                                <strong>Deadline:{" "}</strong>
+                                                                {new Date(test.deadline).toLocaleString()}</CardTitle>
+                                                            <Button
+                                                                tag="label"
+                                                                color="info"
+                                                                onClick={() => taketest('theory', test.id)}
+                                                                size="sm">View</Button>
+                                                        </Card>
+                                                    </Col>
+                                                )
+                                            })
+                                            : <span>Wait...</span>}
+                                            {notheory
+                                                ? <Col sm="12"><div>
+                                                        <span className="text-info">No Pending Tests!{" "}</span>
+                                                        They'll be here when available.</div> </Col>
+                                                : ''}
+                                    </Row>
+                                </TabPane>
+                                <TabPane tabId="2">
+                                    <Row>
+                                        {objectiveTests
+                                            ? objectiveTests.filter(objective => (new Date(objective.deadline) > new Date()) && (new Date(objective.starttime) <= new Date())).map((test) => {
+                                                return (
+
+                                                    <Col sm="4">
+                                                        <Card body>
+                                                            <CardTitle>
+                                                                <strong>{test.title}</strong>
+                                                            </CardTitle>
+                                                            <CardTitle>
+                                                                <strong>Created:{" "}</strong>
+                                                                {new Date(test.created_at).toLocaleString()}</CardTitle>
+                                                            <CardTitle>
+                                                                <strong>Deadline:{" "}</strong>
+                                                                {new Date(test.deadline).toLocaleString()}</CardTitle>
+                                                            <CardTitle>
+                                                                <strong>Duration:{" "}</strong>
+                                                                {test.duration + " "}Minutes</CardTitle>
+                                                            <CardTitle>{test.objectivequestions.length + " "}Questions</CardTitle>
+                                                            <Button
+                                                                tag="label"
+                                                                color="info"
+                                                                onClick={() => taketest('objective', test.id)}
+                                                                size="sm">View</Button>
+                                                        </Card>
+                                                    </Col>
+                                                )
+                                            })
+                                            : <span>Wait...</span>}
+                                            {noobjective
+                                                ? <Col sm="12"><div>
+                                                        <span className="text-info">No Pending Tests!{" "}</span>
+                                                        They'll be here when available.</div> </Col>
+                                                : ''}
+                                    </Row>
+                                </TabPane>
+                            </TabContent>
 
                         </CardBody>
                     </Card>

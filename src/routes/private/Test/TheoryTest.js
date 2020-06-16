@@ -42,7 +42,7 @@ const TheoryTest = ({user, match, history}) => {
     const slug = patharr[3];
     const submitTest = (e) => {
         setdisabled(true);
-        e.preventDefault();
+        e.preventDefault(); 
         const question_id = test.theoryquestions[0].id;
         UserService
             .submittherorytest(question_id, answer)

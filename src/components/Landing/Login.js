@@ -31,11 +31,11 @@ const Login = ({
         setloading] = useState(false);
     const {from} = location.state || {
         from: {
-            pathname: '/in'
+            pathname: '/in/dashboard'
         }
     }
     useEffect(() => {
-        from.pathname !== "/in"
+        from.pathname !== "/in/dashboard"
             ? notify.user('Login', 'You are logged out! Login to continue', 'info')
             : console.log("");
     },[from.pathname]);

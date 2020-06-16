@@ -71,7 +71,7 @@ class UserService {
             headers: authHeader()
         },);
     }
-    checkclassroomstatus(slug){
+    checkclassroomstatus(slug) {
         return axios({
             method: 'POST',
             url: API_URL + 'classroom/check',
@@ -116,7 +116,7 @@ class UserService {
             headers: authHeader()
         },);
     }
-    submittherorytest(question_id,answer) {
+    submittherorytest(question_id, answer) {
         return axios({
             method: 'POST',
             url: API_URL + 'theoryquestion/answer/' + question_id,
@@ -141,12 +141,14 @@ class UserService {
         },);
     }
     getobjectivetest(id) {
-        return axios.get(API_URL + 'objectivetest/' + id, {headers: authHeader()});
+        return axios.get(API_URL + 'objectivetest/' + id, {
+            headers: authHeader(),
+        });
     }
     getobjectivetestreview(id) {
         return axios.get(API_URL + 'objectivetest/review/' + id, {headers: authHeader()});
     }
-    addobjectivequestion(test, question,options){
+    addobjectivequestion(test, question, options) {
         return axios({
             method: 'POST',
             url: API_URL + 'objectivetest/' + test + '/question',
@@ -177,7 +179,7 @@ class UserService {
             headers: authHeader()
         },);
     }
-    submitobjectivestest(test,cbt){
+    submitobjectivestest(test, cbt) {
         return axios({
             method: 'POST',
             url: API_URL + 'objectivetest/' + test,
@@ -214,7 +216,7 @@ class UserService {
     // deadline: deadline         }, headers: authHeader()     }); } gettest(test) {
     //     return axios.get(API_URL + 'test/'+test, { headers: authHeader() }); }
     // addquestion(test, question, options) { return axios({        method: 'POST',
-    //       url: API_URL + 'test/' + test + '/question',       data: { question:
+    //      url: API_URL + 'test/' + test + '/question',       data: { question:
     // question, options: options         }, headers: authHeader()     }); }
     // addfromexcel(test, data) {     return axios({ method: 'POST',         url:
     // API_URL + 'test/' + test + '/questionsfromexcel',  data: { datas:data },
