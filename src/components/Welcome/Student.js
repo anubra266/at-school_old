@@ -36,7 +36,7 @@ const Student = (props) => {
                 setTimeout(() => {
                     props
                         .history
-                        .push("/in/dashboard/home");
+                        .push("/in/dashboard/classes");
                     window
                         .location
                         .reload();

@@ -71,13 +71,14 @@ export default {
                 name: 'Classes',
                 icon: "tim-icons icon-paper",
                 layout: "/in/dashboard"
-            }, {
+            },/* {
                 component: 'Settings',
                 url: '/profile-settings',
                 name: 'Settings',
                 icon: "tim-icons icon-settings-gear-63",
                 layout: "/in/dashboard"
-            }, {
+            },
+            */ {
                 component: 'Tests',
                 url: '/tests',
                 name: 'Tests',

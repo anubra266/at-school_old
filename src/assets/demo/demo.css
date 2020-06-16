@@ -25,13 +25,19 @@
   font-size: large;
   color:white
 }
-.timerr .minute{
+.timerr .hours{
   font-size: xx-large;
 }
-.timerr .second{
+.timerr .minutes{
+  font-size: xx-large;
+}
+.timerr .seconds{
   font-size: large;
 }
-.timerr .minute:after{
+.timerr .hours:after{
+  content: ":";
+}
+.timerr .minutes:after{
   content: ":";
 }
 .pageloader {

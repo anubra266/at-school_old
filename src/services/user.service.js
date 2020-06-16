@@ -58,6 +58,9 @@ class UserService {
     getcreatedclassrooms() {
         return axios.get(API_URL + 'classroom', {headers: authHeader()});
     }
+    getjoinedclassrooms() {
+        return axios.get(API_URL + 'classroom/student', {headers: authHeader()});
+    }
     getclassroomrole(slug) {
         return axios({
             method: 'POST',

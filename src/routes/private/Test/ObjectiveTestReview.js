@@ -58,13 +58,24 @@ const ObjectiveTestReview = ({user, match, history}) => {
     const back=()=>{
         history.push('/in/classroom/'+slug+"/tests");
     }
+
+
+
+
+
+
+
+
+
+    
     return (
         <div className="content">
             <Row>
                 <Col md="12">
                     <Row>
                         <Card>
-                            <CardHeader>Review</CardHeader>
+                            <CardHeader>Review
+                            </CardHeader>
                             <CardBody className="all-icons">
                                 <strong>{test && test.title}</strong>
                             </CardBody>
@@ -84,7 +95,7 @@ const ObjectiveTestReview = ({user, match, history}) => {
                                         <CardBody>
                                             <FormGroup>
                                                 <Label for="">
-                                                    <strong>{key + 1}{". "}</strong>{parse(question.question)}</Label>
+                                                    <strong>{key + 1}{". "}</strong>{parse(question.question)}  </Label>
                                                 <div>
                                                     {question
                                                         .objectiveoptions
@@ -98,6 +109,7 @@ const ObjectiveTestReview = ({user, match, history}) => {
                                                                     label={option.option}
                                                                     valid={option.is_correct === 1}
                                                                     invalid={(option.id === result[question.id]) && option.is_correct === 0}/></Col><Col>
+                                                                    {(result[question.id]===0)&&option.is_correct === 1?"❌ - Unanswered":''}
                                                                     {option.is_correct === 1&&(option.id === result[question.id])?"✔️":''}
                                                                     {(option.id === result[question.id]) && option.is_correct === 0?"❌":''}
                                                                     </Col>

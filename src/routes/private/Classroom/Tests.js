@@ -21,9 +21,9 @@ import {
 import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
-var tests;
+var alltests;
 
-const Tests = ({history, educator, slug}) => {
+const Tests = ({history, educator, slug, match,location}) => {
     const [theoryTests,
         settheoryTests] = useState(null);
     const [objectiveTests,
@@ -39,7 +39,7 @@ const Tests = ({history, educator, slug}) => {
             .then(response => {
                 setobjectiveTests(response.data);
                 if (theoryTests && objectiveTests) {
-                    tests = theoryTests.concat(objectiveTests)
+                    alltests = theoryTests.concat(objectiveTests)
                 }
             });
     }, [theoryTests, objectiveTests]);
@@ -88,6 +88,13 @@ const Tests = ({history, educator, slug}) => {
 
                     setdisabled(false);
                 });
+        }
+    }
+    const taketest=(type,id)=>{
+        if(type==="objective"){
+            history.push("/in/test/" + slug + "/objective/" + id);
+        }else{
+            history.push("/in/test/" + slug + "/theory/" + id);
         }
     }
     return (
@@ -208,7 +215,7 @@ const Tests = ({history, educator, slug}) => {
                         <CardBody className="all-icons">
 
                             <Row>
-                                {tests && tests.map((test) => {
+                                {alltests && alltests.map((test) => {
                                     return (
                                         <Col sm="4">
                                             <Card body>
@@ -229,7 +236,7 @@ const Tests = ({history, educator, slug}) => {
                                                         </p>
 }
                                                 </CardText>
-                                                <Button type="submit" color="info" size="sm">View Test</Button>
+                                                <Button type="submit" color="info" size="sm" onClick={taketest(test.starttime?'objective':'theory',test.id)}>View Test</Button>
                                             </Card>
                                         </Col>
                                     )

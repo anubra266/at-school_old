@@ -31,9 +31,7 @@ const Home = ({user}) => {
                                     Home 
                                 </Col>
                                 <Col md="2">
-                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                        <Button tag="label" color="info" size="sm">Create New Test</Button>
-                                    </ButtonGroup>
+                                   
                                 </Col>
                             </Row>
                         </CardHeader>

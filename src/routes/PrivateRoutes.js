@@ -31,19 +31,18 @@ const PrivateRoutes = ({user}) => {
             const roles = [...user_roles_arr];
 
             setnewbie(roles.indexOf('new'));
-            console.log(roles);
         }
     }, []);
     return (
+        <div>
 
-        <Switch>
-        <Route
-        path="/in/welcome"
-        render={(props) => (<Welcome {...props} user={user}/>)}/>
             {newbie && newbie === -1
-                ? <div><Route
-                        path="/in/dashboard"
-                        render={(props) => (<Dashboard {...props} user={user}/>)}/>
+
+                ? (
+                    <Switch>
+                        <Route
+                            path="/in/dashboard"
+                            render={(props) => (<Dashboard {...props} user={user}/>)}/>
                         <ClassroomRoute path="/in/classroom/:slug" component={Classroom} user={user}/>
                         <ClassroomRoute
                             path="/in/test/:slug/:test_type/:test_id"
@@ -53,10 +52,20 @@ const PrivateRoutes = ({user}) => {
                             render={(props) => (
                             <h1>404 error</h1>
                         )}/>
-                    </div>
-                : <Redirect to="/in/welcome" />
+                    </Switch>
+                )
+                : (
+                    <Switch>
+                        <Route
+                            path="/in/welcome"
+                            render={(props) => (<Welcome {...props} user={user}/>)}/>
+                            <Route
+                            render={(props) => (<Welcome {...props} user={user}/>)}/>
+                    </Switch>
+                )
 }
-        </Switch>
+
+        </div>
     )
 }
 export default PrivateRoutes

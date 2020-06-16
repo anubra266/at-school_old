@@ -33,6 +33,8 @@ const ObjectiveTest = ({user, match, history, className}) => {
         setcbt] = useState(null);
     const [submitting,
         setsubmitting] = useState(false);
+    const [duration,
+        setduration] = useState(false);
     useEffect(() => {
         UserService
             .getobjectivetest(match.params.test)
@@ -51,18 +53,20 @@ const ObjectiveTest = ({user, match, history, className}) => {
                     .sort((a, b) => 0.5 - Math.random());
 
                 settest(response.data);
+                setsecs(new Date().setSeconds(new Date().getSeconds() + (response.data.duration * 60)))
                 const init_result = response
                     .data
                     .objectivequestions
                     .reduce((acc, question) => {
                         const question_id = question.id;
-                        const answer = 'unanswered';
+                        const answer = 0;
                         const total = {};
                         total[question_id] = answer;
                         acc.push(total);
                         return acc
                     }, []);
                 setcbt(init_result)
+
             });
     }, []);
     const handleanswer = (choice) => {
@@ -75,13 +79,12 @@ const ObjectiveTest = ({user, match, history, className}) => {
             }
         });
         setcbt(new_cbt);
-        console.log(new_cbt)
     }
-    const reviewtest = ()=>{
+    const reviewtest = () => {
         history.push('/in/test/' + slug + "/objective/" + match.params.test + "/review");
     }
-    const goback=()=>{
-        history.push('/in/classroom/'+slug+"/tests");
+    const goback = () => {
+        history.push('/in/classroom/' + slug + "/tests");
     }
     const pat = match.path;
     const patharr = pat.split('/');
@@ -92,15 +95,26 @@ const ObjectiveTest = ({user, match, history, className}) => {
         settotal] = useState(null);
     const submitobjectivequestions = (e) => {
         setsubmitting(true);
-        e.preventDefault()
+        e === 'time_up'
+            ? console.log('')
+            : e.preventDefault()
+
         UserService
             .submitobjectivestest(match.params.test, cbt)
             .then(response => {
                 const rscore = response.data[0];
                 const rtotal = response.data[1];
-                setscore(rscore)
-                settotal(rtotal)
-                notify.user('Submit Test', 'Test Submitted Successfully', 'success');
+                
+                if(response.data[1]){
+                    setscore(rscore)
+                    settotal(rtotal)
+                    notify.user('Submit Test', 'Test Submitted Successfully', 'success');
+                    if (e === 'time_up') {
+                        setModalfinish(false);
+                        setModal(true)
+                    }
+
+                }
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 notify.user('Submit Test', errMsg, 'danger');
@@ -110,6 +124,73 @@ const ObjectiveTest = ({user, match, history, className}) => {
     const [modal,
         setModal] = useState(false);
     const toggle = () => setModal(!modal);
+
+    const [secs,
+        setsecs] = useState(new Date().setSeconds(new Date().getSeconds() + (0)));
+
+    const stoptest = () => {
+        //*Show Time up modal
+        if (!modalfinish) {
+         setModalfinish(true);
+        }
+        // //*submit test submitobjectivequestions();
+        submitobjectivequestions('time_up');
+    }
+    var start = 0;
+    const calculateTimeLeft = (seconds_duration = secs) => {
+        const duration_date = new Date();
+        duration_date.setSeconds(duration_date.getSeconds() + seconds_duration);
+        const difference = +secs - + new Date();
+        let timeLeft = {};
+
+        if (difference > 0) {
+            timeLeft = {
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                minutes: Math.floor((difference / 1000 / 60) % 60),
+                seconds: Math.floor((difference / 1000) % 60)
+            };
+        }
+        if (difference < 1 && start !== 0) {
+
+            stoptest()
+        }
+
+        if (seconds_duration !== new Date().setSeconds(new Date().getSeconds() + (0)) && difference > 0) {
+            start += 1
+        }
+
+        return timeLeft;
+    };
+    useEffect(() => {
+
+        test && setTimeout(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+        //return clearTimeout(starttest)
+    });
+    const [modalfinish,
+        setModalfinish] = useState(false);
+    const togglefinish = () => setModalfinish(!modalfinish);
+    const [timeLeft,
+        setTimeLeft] = useState(calculateTimeLeft());
+
+    const timerComponents = [];
+
+    Object
+        .keys(timeLeft)
+        .forEach(interval => {
+            if (!timeLeft[interval]) {
+                // if (interval === "seconds" && !timeLeft["minutes"] && !timeLeft["hours"] &&
+                // !timeLeft["days"]) {     setfinished(true); }
+                return;
+            }
+
+            timerComponents.push(
+                <span class={interval}>{timeLeft[interval]}</span>
+            );
+        });
+
     return (
         <div className="content">
             <Row>
@@ -122,9 +203,24 @@ const ObjectiveTest = ({user, match, history, className}) => {
                             </CardBody>
 
                             <div class="timerr">
-                                <label>Timer</label><br/>
-                                <span class="minute">20</span>
-                                <span class="second">10</span>
+                                <label>Timer</label><br/> {timerComponents.length
+                                    ? timerComponents
+                                    : 'wait...'}
+                                <Modal
+                                    isOpen={modalfinish}
+                                    toggle={togglefinish}
+                                    className={className}
+                                    backdrop={"static"}
+                                    keyboard={false}>
+                                    <ModalBody>
+                                        <div className="aftertest">
+
+                                            <p className="score">Time up!</p>
+                                            <p className="percentage">Wait! Your Work is being submitted...</p>
+
+                                        </div>
+                                    </ModalBody>
+                                </Modal>
                             </div>
                         </Card>
                     </Row>
@@ -203,12 +299,12 @@ const ObjectiveTest = ({user, match, history, className}) => {
                             <ModalFooter>
 
                                 {score
-                                    ?<Button color="secondary" onClick={goback}>Finish</Button>
-                                    :<Button
-                                    color="primary"
-                                    onClick={submitobjectivequestions}
-                                    disabled={submitting}
-                                    type="submit">Yes</Button>}{' '} {score
+                                    ? <Button color="secondary" onClick={goback}>Finish</Button>
+                                    : <Button
+                                        color="primary"
+                                        onClick={submitobjectivequestions}
+                                        disabled={submitting}
+                                        type="submit">Yes</Button>}{' '} {score
                                     ? <Button color="success" onClick={reviewtest}>Review Test</Button>
                                     : <Button color="secondary" onClick={toggle}>Cancel</Button>}
                             </ModalFooter>
