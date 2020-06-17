@@ -7,6 +7,7 @@ import Test from "./Test.js";
 
 import Welcome from "../components/Welcome/Welcome.js"
 import ClassroomRoute from "../routes/HOC/ClassroomRoute.js"
+import error404 from './error404.js';
 
 import {uniqBy} from 'lodash';
 //import TRoutes from "./routes.js";
@@ -26,7 +27,7 @@ const PrivateRoutes = ({user}) => {
                 acc.push(nxt.role);
                 return acc;
             }, []);
- 
+
             // user roles
             const roles = [...user_roles_arr];
 
@@ -48,10 +49,8 @@ const PrivateRoutes = ({user}) => {
                             path="/in/test/:slug/:test_type/:test_id"
                             component={Test}
                             user={user}/>
-                        <Route
-                            render={(props) => (
-                            <h1>404 error</h1>
-                        )}/>
+                        <Route component={error404}/>
+
                     </Switch>
                 )
                 : (
@@ -59,8 +58,7 @@ const PrivateRoutes = ({user}) => {
                         <Route
                             path="/in/welcome"
                             render={(props) => (<Welcome {...props} user={user}/>)}/>
-                            <Route
-                            render={(props) => (<Welcome {...props} user={user}/>)}/>
+                        <Route render={(props) => (<Welcome {...props} user={user}/>)}/>
                     </Switch>
                 )
 }
