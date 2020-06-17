@@ -91,7 +91,7 @@ class InSidebar extends React.Component {
 
                         <li>
                             <a href="/" onClick={this.props.logout}>
-                                <i className="tim-icons icon-button-power"/>
+                                <i className="tim-iconsicon-power_settings_new"/>
                                 <p>Logout</p>
                             </a>
                         </li>

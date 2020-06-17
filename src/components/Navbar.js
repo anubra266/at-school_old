@@ -1,7 +1,7 @@
-
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+
 import {Link} from "react-router-dom";
 import notify from "../services/notify.js";
 // reactstrap components
@@ -49,74 +49,79 @@ class LandingNavbar extends React.Component {
             collapseOpen: !this.state.collapseOpen
         });
     };
-    // this function is to open the Search modal
-    toggleModalSearch = () => {
-        this.setState({
-            modalSearch: !this.state.modalSearch
-        });
-    };
     render() {
         return (
             <div>
-                <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
-                    <Container fluid>
-                        <div className="navbar-wrapper">
-                            <div
-                                className={classNames("navbar-toggle d-inline", {toggled: this.props.sidebarOpened})}>
-                                <button
-                                    className="navbar-toggler"
-                                    type="button"
-                                    onClick={this.props.toggleSidebar}>
-                                    <span className="navbar-toggler-bar bar1"/>
-                                    <span className="navbar-toggler-bar bar2"/>
-                                    <span className="navbar-toggler-bar bar3"/>
-                                </button>
-                            </div>
-                            <NavbarBrand href="#pablo" onClick={e => e.preventDefault()}>
-                                {notify.appname()}
-                            </NavbarBrand>
+                <div class="site-mobile-menu site-navbar-target">
+                    <div class="site-mobile-menu-header">
+                        <div class="site-mobile-menu-close mt-3">
+                            <span class="icon-close2 js-menu-toggle"></span>
                         </div>
-                        <button
-                            aria-expanded={false}
-                            aria-label="Toggle navigation"
-                            className="navbar-toggler"
-                            data-target="#navigation"
-                            data-toggle="collapse"
-                            id="navigation"
-                            type="button"
-                            onClick={this.toggleCollapse}>
-                            <span className="navbar-toggler-bar navbar-kebab"/>
-                            <span className="navbar-toggler-bar navbar-kebab"/>
-                            <span className="navbar-toggler-bar navbar-kebab"/>
-                        </button>
-                        <Collapse navbar isOpen={this.state.collapseOpen}>
-                            <Nav className="ml-auto" navbar>
+                    </div>
+                    <div class="site-mobile-menu-body"></div>
+                </div>
 
-                                {this
-                                    .props
-                                    .location
-                                    .pathname
-                                    .indexOf("register") !== -1
-                                    ? (
-                                        <Link to="/login">
-                                            <Button className="btn-fill" color="primary" type="submit">
-                                                Login
-                                            </Button>
-                                        </Link>
-                                    )
-                                    : (
-                                        <Link to="/register">
-                                            <Button className="btn-fill" color="primary" type="submit">
-                                                Register
-                                            </Button>
-                                        </Link>
-                                    )}
+                <header
+                    className="site-navbar py-4 js-sticky-header site-navbar-target"
+                    role="banner">
 
-                                <li className="separator d-lg-none"/>
-                            </Nav>
-                        </Collapse>
-                    </Container>
-                </Navbar>
+                    <div className="container-fluid">
+                        <div className="d-flex align-items-center">
+                            <div className="site-logo mr-auto w-25">
+                                <strong>
+                                    {this.props.location.pathname === "/"
+                                        ? <a href="#at-school">at-School</a>
+                                        : <a
+                                            href="#at-school"
+                                            style={{
+                                            color: "black"
+                                        }}>at-School</a>}
+                                </strong>
+                            </div>
+
+                            {this.props.location.pathname === "/"
+
+                                ? <div className="mx-auto text-center">
+                                        <nav className="site-navigation position-relative text-right" role="navigation">
+                                            <ul
+                                                className="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
+                                                <li>
+                                                    <a href="#home-section" className="nav-link">Home</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#programs-section" className="nav-link">Features</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                : ''}
+
+                            <div className="ml-auto w-25">
+                                <nav className="site-navigation position-relative text-right" role="navigation">
+                                    <ul
+                                        className="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
+                                        <li className="cta">
+                                            {this.props.location.pathname !== "/register"
+                                                ? <Link to="/register" className="nav-link">
+                                                        <span>Sign Up</span>
+                                                    </Link>
+                                                : <Link to="/login" className="nav-link">
+                                                    <span>Login</span>
+                                                </Link>}
+
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <a
+                                    href="#at-school"
+                                    className="d-inline-block d-lg-none site-menu-toggle js-menu-toggle text-black float-right">
+                                    <span className="icon-menu h3"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </header>
 
             </div>
         );

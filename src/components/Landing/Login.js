@@ -4,20 +4,6 @@ import AuthService from "../../services/auth.service";
 
 import Navbar from "../Navbar.js";
 import Footer from "../Footer.js";
-// reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Label,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col
-} from "reactstrap";
 
 const Login = ({
     location,
@@ -38,7 +24,7 @@ const Login = ({
         from.pathname !== "/in/dashboard"
             ? notify.user('Login', 'You are logged out! Login to continue', 'info')
             : console.log("");
-    },[from.pathname]);
+    }, [from.pathname]);
     const handleLogin = (e) => {
         e.preventDefault();
         setloading(true);
@@ -64,62 +50,58 @@ const Login = ({
     }
     return (
         <div>
-            <div className="wrapper">
-                <div className="main-panel">
-                    <Navbar location={location}/>
-                    <div className="content">
-                        <Row>
-                            <Col md="8">
+            <Navbar location={location}/>
+            <div className="limiter">
+                <div className="container-login100">
+                    <div className="wrap-login100 p-t-50 p-b-90">
+                        <form
+                            className="login100-form validate-form flex-sb flex-w"
+                            onSubmit={handleLogin}>
+                            <span className="login100-form-title p-b-51">
+                                Login
+                            </span>
 
-                                <Card className="card-user">
-                                    <CardHeader className="author">
-                                        <div className="block block-one"/>
-                                        <div className="block block-two"/>
-                                        <div className="block block-three"/>
-                                        <div className="block block-four"/>
-                                        <h5 className="title">Login</h5>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <Form onSubmit={handleLogin}>
-                                            <Row>
-                                                <Col md="10">
-                                                    <FormGroup>
-                                                        <Label for="email">Email</Label>
-                                                        <Input
-                                                            type="email"
-                                                            name="email"
-                                                            value={email}
-                                                            onChange={(e) => setemail(e.target.value)}
-                                                            id="email"
-                                                            required
-                                                            placeholder="student@anubra.tech"/>
-                                                    </FormGroup>
-                                                </Col>
-                                                <Col md="10">
-                                                    <FormGroup>
-                                                        <Label for="passwod">Password</Label>
-                                                        <Input
-                                                            type="password"
-                                                            name="password"
-                                                            value={password}
-                                                            onChange={(e) => setpassword(e.target.value)}
-                                                            id="password"
-                                                            required
-                                                            placeholder="**********"/>
-                                                    </FormGroup>
-                                                </Col>
-                                            </Row>
-                                            <Button disabled={loading} className="btn-fill" color="primary" type="submit">
-                                                Login
-                                            </Button>
-                                        </Form>
-                                    </CardBody>
-                                    <CardFooter></CardFooter>
-                                </Card>
-                            </Col>
-                        </Row>
+                            <div className="wrap-input100  m-b-16">
+                                <input
+                                    className="input100"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setemail(e.target.value)}
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"/>
+                                <span className="focus-input100"></span>
+                            </div>
+
+                            <div className="wrap-input100  m-b-16">
+                                <input
+                                    className="input100"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setpassword(e.target.value)}
+                                    type="password"
+                                    name="pass"
+                                    placeholder="Password"/>
+                                <span className="focus-input100"></span>
+                            </div>
+
+                            <div className="flex-sb-m w-full p-t-3 p-b-24">
+
+                                <div>
+                                    <a href="#at-school" className="txt1">
+                                        Forgot?
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className="container-login100-form-btn m-t-17">
+                                <button disabled={loading} className="login100-form-btn">
+                                    Login
+                                </button>
+                            </div>
+
+                        </form>
                     </div>
-                    <Footer fluid/>
                 </div>
             </div>
         </div>

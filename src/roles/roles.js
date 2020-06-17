@@ -14,7 +14,7 @@ export default {
                 component: 'Organizations',
                 url: '/organizations',
                 name: 'Organizations',
-                icon: "tim-icons icon-istanbul",
+                icon: "icon-institution",
                 layout: "/in/dashboard"
             }
         ]
@@ -25,7 +25,7 @@ export default {
                 component: 'Environs',
                 url: '/environs',
                 name: 'Environs',
-                icon: "tim-icons icon-bank",
+                icon: "icon-group_work",
                 layout: "/in/dashboard"
             }
         ]
@@ -36,20 +36,20 @@ export default {
                 component: 'Classrooms',
                 url: '/classrooms',
                 name: 'Classrooms',
-                icon: "tim-icons icon-molecule-40",
+                icon: "icon-people",
                 layout: "/in/dashboard"
             }, {
                 component: 'Questionst',
                 url: '/tests/questionst/:test',
                 name: 'Test Questions',
-                icon: "tim-icons icon-paper",
+                icon: "icon-file-text-o",
                 layout: "/in/classroom",
                 dont_show: true
             }, {
                 component: 'Questionso',
                 url: '/tests/questionso/:test',
                 name: 'Test Questions',
-                icon: "tim-icons icon-paper",
+                icon: "icon-th-list",
                 layout: "/in/classroom",
                 dont_show: true
             }
@@ -61,7 +61,7 @@ export default {
                 component: 'Classes',
                 url: '/classes',
                 name: 'Classes',
-                icon: "tim-icons icon-paper",
+                icon: "icon-people_outline",
                 layout: "/in/dashboard"
             },
             /* {
@@ -76,14 +76,14 @@ export default {
                 component: 'Home',
                 url: '/home',
                 name: 'Home',
-                icon: "tim-icons icon-chart-pie-36",
+                icon: "icon-home",
                 layout: "/in/dashboard"
             }, 
             {
                 component: 'Tests',
                 url: '/tests',
                 name: 'Tests',
-                icon: "tim-icons icon-paper",
+                icon: "icon-pencil",
                 layout: "/in/classroom"
             }, {
                 component: 'TheoryTest',

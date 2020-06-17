@@ -1,6 +1,5 @@
-
 import React, {useState} from "react";
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
 
@@ -34,7 +33,9 @@ const Login = (props) => {
             .login(email, password)
             .then(() => {
                 notify.user('Login', 'Login successful. Redirecting you...', 'success')
-                props.history.push("/in/dashboard/home");
+                props
+                    .history
+                    .push("/in/dashboard/home");
                 window
                     .location
                     .reload();
@@ -42,66 +43,45 @@ const Login = (props) => {
                 const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 setloading(true);
                 notify.user('Login', resMessage, 'danger')
+
                 setloading(false);
                 setpassword('');
+                props
+                    .history
+                    .push("/login");
 
             });
     }
     return (
-        <div>
-
-            <div className="content">
-                <Row>
-                    <Col md="8">
-
-                        <Card className="card-user">
-                            <CardHeader className="author">
-                                <div className="block block-one"/>
-                                <div className="block block-three"/>
-                                <h5 className="title">Login</h5>
-                            </CardHeader>
-                            <CardBody>
-                                <Form onSubmit={handleLogin}>
-                                    <Row>
-                                        <Col md="10">
-                                            <FormGroup>
-                                                <Label for="email">Email</Label>
-                                                <Input
-                                                    type="email"
-                                                    name="email"
-                                                    value={email}
-                                                    onChange={(e) => setemail(e.target.value)}
-                                                    id="email"
-                                                    required
-                                                    placeholder="student@anubra.tech"/>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md="10">
-                                            <FormGroup>
-                                                <Label for="passwod">Password</Label>
-                                                <Input
-                                                    type="password"
-                                                    name="password"
-                                                    value={password}
-                                                    onChange={(e) => setpassword(e.target.value)}
-                                                    id="password"
-                                                    required
-                                                    placeholder="**********"/>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                    <Button disabled={loading} className="btn-fill" color="primary" type="submit">
-                                        Login
-                                    </Button>
-                                </Form>
-                            </CardBody>
-                            <CardFooter></CardFooter>
-                        </Card>
-                    </Col>
-                </Row>
-            </div>
+        <div className="col-lg-5 ml-auto" data-aos="fade-up" data-aos-delay="500">
+            <form onSubmit={handleLogin} method="post" className="form-box">
+                <h3 className="h4 text-black mb-4">Log In</h3>
+                <div className="form-group">
+                    <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setemail(e.target.value)}
+                        className="form-control"
+                        placeholder="Email Addresss"/>
+                </div>
+                <div className="form-group">
+                    <input
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)}
+                        className="form-control"
+                        placeholder="Password"/>
+                </div>
+                <div className="form-group">
+                    <button type="submit" disabled={loading} className="btn btn-primary btn-pill">Log In
+                    </button>
+                </div>
+            </form>
 
         </div>
+
     );
 }
 

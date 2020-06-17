@@ -26,20 +26,12 @@ import Footer from "../Footer.js";
 import MainPage from "./MainPage.js";
 
 import logo from "assets/img/react-logo.png";
+import "../../assets/landingfonts/icomoon/style.css";
+import  "../../assets/landingcss/style.css";
 
 var ps;
 
 class Admin extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            backgroundColor: "blue",
-            sidebarOpened: document
-                .documentElement
-                .className
-                .indexOf("nav-open") !== -1
-        };
-    }
     componentDidMount() {
         if (navigator.platform.indexOf("Win") > -1) {
             document.documentElement.className += " perfect-scrollbar-on";
@@ -94,17 +86,13 @@ class Admin extends React.Component {
 
     render() {
         return (
-            <div>
-                <div className="wrapper">
-
-                    <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
-                        <Navbar
-                            {...this.props}
-                            toggleSidebar={this.toggleSidebar}
-                            sidebarOpened={this.state.sidebarOpened}/>
+            <div data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+                <div className="site-wrap">
+                    <div ref="mainPanel">
+                        <Navbar {...this.props}/>
 
                         <MainPage/>
-                        
+
                         <Footer fluid/>
 
                     </div>
