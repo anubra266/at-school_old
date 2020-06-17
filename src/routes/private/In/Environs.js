@@ -1,0 +1,193 @@
+import React, {useState, useEffect} from "react";
+import {Link} from "react-router-dom";
+
+// reactstrap components
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    Row,
+    Col,
+    Button,
+    ButtonGroup,
+    Table,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
+    Input,
+    Label,
+    FormGroup
+} from "reactstrap";
+
+import UserService from "../../../services/user.service";
+import notify from "../../../services/notify.js"
+import className from "classnames";
+var tenvirons;
+var noenviron;   
+const orderenvirons=()=>{
+    UserService
+            .getcreatedenvirons()
+            .then(response => {
+                if (response.data.length < 1) {
+                    noenviron = true;
+                } else {
+                    tenvirons = (response.data);
+                }
+            });
+}
+orderenvirons();
+
+const Environs = ({user,history}) => {
+    const [environs,
+        setenvirons] = useState(tenvirons);
+    const [noenvirons,
+        setnoenvirons] = useState(noenviron);
+    useEffect(() => {
+        orderenvirons();
+    }, [environs]);
+    const [modal,
+        setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
+    const [name,
+        setname] = useState('');
+    const [code,
+        setcode] = useState('');
+    const [loading,
+        setloading] = useState(false);
+        const createenviron = (e)=>{
+            e.preventDefault();
+            setloading(true);
+            UserService.createenviron(name,code,true).then(response => {
+
+                notify.user('Create an Environ', 'Environ Created Successfully!', 'success');
+                notify.user('Create an Environ', 'Redirecting you...!', 'info');
+                setTimeout(() => {
+                    history
+                        .push("/in/dashboard/home");
+                    window
+                        .location
+                        .reload();
+                }, 3000);
+            }, error => {
+                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Create an Environ', errMsg, 'danger');
+                setloading(false);
+
+            })
+        }
+    return (
+        <div className="content">
+            <Row>
+                <Col md="12">
+                    <Card>
+                        <CardHeader>
+                            <Row>
+                                <Col md="10">
+                                    Environs
+                                </Col>
+                                <Col md="2">
+                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
+                                        <Button onClick={toggle} tag="label" color="info" size="sm">Create New Environ</Button>
+                                    </ButtonGroup>
+                                    <Modal
+                                    unmountOnClose={false}
+                                    isOpen={modal}
+                                    toggle={toggle}
+                                    className={className + ""}>
+                                    <ModalHeader toggle={toggle}>Create an Environ</ModalHeader>
+                                    <ModalBody>
+                    
+                                        <form onSubmit={createenviron}>
+                                            <FormGroup>
+                                                <Label for="name">Environ Name</Label>
+                                                <Input
+                                                    style={{
+                                                    color: "black"
+                                                }}
+                                                    type="text"
+                                                    name="name"
+                                                    id="name"
+                                                    value={name}
+                                                    required
+                                                    onChange={(e) => setname(e.target.value)}
+                                                    placeholder="Computer Science Dept / SS1"/>
+                                            </FormGroup>
+                                            <FormGroup>
+                                                <Label for="code">Organization Code</Label>
+                                                <Input
+                                                    style={{
+                                                    color: "black"
+                                                }}
+                                                    type="text"
+                                                    name="code"
+                                                    id="code"
+                                                    value={code}
+                                                    required
+                                                    onChange={(e) => setcode(e.target.value)}
+                                                    placeholder="17633-2673-383"/>
+                                            </FormGroup>
+                                            <ModalFooter>
+                                                <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                                                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                                            </ModalFooter>
+                    
+                                        </form>
+                    
+                                    </ModalBody>
+                                </Modal>
+                                </Col>
+                            </Row>
+                        </CardHeader>
+                        <CardBody className="all-icons">
+                            <Row>
+                                <Col md="12">
+                                    {environs
+                                        ? <Table hover>
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th>Code</th>
+                                                        <th>Classrooms</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {environs.map((environ, key) => {
+                                                        return (
+                                                            <tr>
+                                                                <th scope="row">{key + 1}</th>
+                                                                <td>
+                                                                        {environ.name}
+                                                                </td>
+                                                                <td>{environ.code}</td>
+                                                                <td>{environ.classrooms.length}</td>
+                                                            </tr>
+                                                        )
+                                                    })}
+                                                </tbody>
+                                            </Table>
+
+                                        : <div>
+                                            <span className="text-info"></span>
+                                        </div>}
+
+                                    {noenviron
+                                        ? <div>
+                                                <span className="text-info">No Environs Found!{" "}</span>
+                                                Create a New Environment to see it here.</div>
+                                        : ''}
+                                </Col>
+
+                            </Row>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
+        </div>
+    );
+
+}
+
+export default Environs;

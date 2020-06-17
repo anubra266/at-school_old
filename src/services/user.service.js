@@ -20,6 +20,9 @@ class UserService {
             headers: authHeader()
         },);
     }
+    getcreatedorganizations() {
+        return axios.get(API_URL + 'organization', {headers: authHeader()});
+    }
     createenviron(name, code, first_time) {
         return axios({
             method: 'POST',
@@ -31,6 +34,9 @@ class UserService {
             },
             headers: authHeader()
         },);
+    }
+    getcreatedenvirons() {
+        return axios.get(API_URL + 'environ', {headers: authHeader()});
     }
     createclassroom(name, code, first_time) {
         return axios({
@@ -47,7 +53,7 @@ class UserService {
     joinclassroom(code, first_time) {
         return axios({
             method: 'POST',
-            url: API_URL + 'classroom/join',
+            url: API_URL + 'joinclassroom',
             data: {
                 code,
                 first_time
@@ -59,12 +65,12 @@ class UserService {
         return axios.get(API_URL + 'classroom', {headers: authHeader()});
     }
     getjoinedclassrooms() {
-        return axios.get(API_URL + 'classroom/student', {headers: authHeader()});
+        return axios.get(API_URL + 'joinedclassrooms', {headers: authHeader()});
     }
     getclassroomrole(slug) {
         return axios({
             method: 'POST',
-            url: API_URL + 'classroom/role',
+            url: API_URL + 'classroomrole',
             data: {
                 slug
             },
@@ -74,7 +80,7 @@ class UserService {
     checkclassroomstatus(slug) {
         return axios({
             method: 'POST',
-            url: API_URL + 'classroom/check',
+            url: API_URL + 'classroomcheck',
             data: {
                 slug
             },
@@ -84,7 +90,7 @@ class UserService {
     createtheorytest(slug, title, deadline) {
         return axios({
             method: 'POST',
-            url: API_URL + 'theorytest/',
+            url: API_URL + 'storetheorytest/',
             data: {
                 slug,
                 title,
@@ -109,7 +115,7 @@ class UserService {
     gettheorytests(slug) {
         return axios({
             method: 'POST',
-            url: API_URL + 'theorytest/all/',
+            url: API_URL + 'theorytests/',
             data: {
                 slug
             },
@@ -119,7 +125,7 @@ class UserService {
     submittherorytest(question_id, answer) {
         return axios({
             method: 'POST',
-            url: API_URL + 'theoryquestion/answer/' + question_id,
+            url: API_URL + 'submittheoryquestion/' + question_id,
             data: {
                 answer
             },
@@ -141,17 +147,17 @@ class UserService {
         },);
     }
     getobjectivetest(id) {
-        return axios.get(API_URL + 'objectivetest/' + id, {
+        return axios.get(API_URL + 'showobjectivetest/' + id, {
             headers: authHeader(),
         });
     }
     getobjectivetestreview(id) {
-        return axios.get(API_URL + 'objectivetest/review/' + id, {headers: authHeader()});
+        return axios.get(API_URL + 'objectivetestreview/' + id, {headers: authHeader()});
     }
     addobjectivequestion(test, question, options) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetest/' + test + '/question',
+            url: API_URL + 'addtoobjectivetest/' + test + '/question',
             data: {
                 question: question,
                 options: options
@@ -162,7 +168,7 @@ class UserService {
     addfromexcel(test, data) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetest/' + test + '/excel',
+            url: API_URL + 'importobjectivetest/' + test + '/excel',
             data: {
                 datas: data
             },
@@ -172,7 +178,7 @@ class UserService {
     getobjectivetests(slug) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetest/all/',
+            url: API_URL + 'objectivetests/',
             data: {
                 slug
             },
@@ -182,7 +188,7 @@ class UserService {
     submitobjectivestest(test, cbt) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetest/' + test,
+            url: API_URL + 'submitobjectivetest/' + test,
             data: {
                 cbt
             },
@@ -190,7 +196,7 @@ class UserService {
         },);
     }
     getobjectivetestresult(id) {
-        return axios.get(API_URL + 'objectivetest/result/' + id, {headers: authHeader()});
+        return axios.get(API_URL + 'objectivetestresult/' + id, {headers: authHeader()});
     }
     // getStudents() {     return axios.get(API_URL + 'students', {         headers:
     // authHeader()     }); } getTeachers() {     return axios.get(API_URL +
