@@ -6,8 +6,8 @@ class notify {
         return 'at-School';
     }
     APP_URL(){
-        //return 'https://at-school.xyz/api/';
-        return 'http://localhost:8000/';
+        return 'https://api.at-school.xyz/';
+        //return 'http://localhost:8000/';
     }
     user(title, message, type) {
         store.addNotification({

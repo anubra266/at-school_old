@@ -24,13 +24,13 @@ import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js"
 import className from "classnames";
 var torganizations;
-var noorganizations;
+var tnoorganizations;
 const orderorganizations = () => {
     UserService
         .getcreatedorganizations()
         .then(response => {
             if (response.data.length < 1) {
-                noorganizations = true;
+                tnoorganizations = true;
             } else {
                 torganizations = (response.data);
             }
@@ -42,7 +42,7 @@ const Organizations = ({user, history}) => {
     const [organizations,
         setorganizations] = useState(torganizations);
     const [noorganizations,
-        setnoorganizations] = useState(noorganizations);
+        setnoorganizations] = useState(tnoorganizations);
     useEffect(() => {
         orderorganizations();
     }, [organizations]);
