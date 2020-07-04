@@ -19,16 +19,7 @@ import UserService from "../../../services/user.service";
 
 const Home = ({user}) => {
     //const user = AuthService.getCurrentUser();
-    const [message,
-        setmessage] = useState('');
-    window
-        .Echo
-        .channel('at_school_database_chat')
-        .listen('TestSocketsMessage', e => {
-
-            console.log(e['chatMessage'])
-            setmessage(e['chatMessage'])
-        })
+     
     return (
         <div className="content">
             <Row>
@@ -37,7 +28,7 @@ const Home = ({user}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Home {message}
+                                    Home 
                                 </Col>
                                 <Col md="2"></Col>
                             </Row>
