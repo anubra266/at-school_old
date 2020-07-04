@@ -445,15 +445,15 @@ const Questiona = ({match, history}) => {
                                         </Label>
                                     </FormGroup>
                                 </FormGroup>
-                                {test.objectivequestions.length>0
-                                ?<FormGroup>
+                                <FormGroup>
                                     <Button color="info" size="sm" disabled={loading}>Add Question</Button>
-                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
+                                    {test.objectivequestions.length>0
+                                        ? <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
                                         <Link to={"/in/classroom/" + match.params.slug + "/tests/"}>
                                             <Button color="info" size="sm">Finish</Button>
                                         </Link>
-                                    </ButtonGroup>
-                                </FormGroup>:''}
+                                    </ButtonGroup>:''}
+                                </FormGroup>
                             </Form>
                         </CardBody>
                     </Card>}
