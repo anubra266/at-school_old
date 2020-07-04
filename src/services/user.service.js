@@ -124,10 +124,20 @@ class UserService {
             headers: authHeader()
         },);
     }
-    submittherorytest(question_id, answer) {
+    submittheorytest(question_id, answer) {
         return axios({
             method: 'POST',
             url: API_URL + 'submittheoryquestion/' + question_id,
+            data: {
+                answer
+            },
+            headers: authHeader()
+        },);
+    }
+    updatetheorytest(answer_id, answer) {
+        return axios({
+            method: 'PUT',
+            url: API_URL + 'updatetheoryanswer/'+answer_id,
             data: {
                 answer
             },

@@ -37,7 +37,7 @@ const TheoryTest = ({user, match, history}) => {
             .gettheorytest(match.params.test)
             .then(response => {
                 settest(response.data);
-                setanswered(response.data.theoryquestion.theoryanswer.length>0)
+                setanswered(response.data.theoryquestion.theoryanswer.length > 0)
             });
     }, []);
     const pat = match.path;
@@ -47,16 +47,37 @@ const TheoryTest = ({user, match, history}) => {
         setdisabled(true);
         e.preventDefault();
         const question_id = test.theoryquestion.id;
-        UserService
-            .submittherorytest(question_id, answer)
-            .then(response => {
-                notify.user('Submit Test', 'Test Submitted Successfully', 'success');
-                history.push('/in/classroom/' + slug + "/tests");
-            }, error => {
-                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-                notify.user('Submit Test', errMsg, 'danger');
-                setdisabled(false);
-            })
+        if (answer === '') {
+            notify.user('Submit Test', 'You have not modified the Answer Input', 'warning');
+            setdisabled(false);
+
+        } else {
+
+            if (!answered) {
+
+                UserService
+                    .submittheorytest(question_id, answer)
+                    .then(response => {
+                        notify.user('Submit Test', 'Test Submitted Successfully', 'success');
+                        history.push('/in/classroom/' + slug + "/tests");
+                    }, error => {
+                        const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                        notify.user('Submit Test', errMsg, 'danger');
+                        setdisabled(false);
+                    })
+            } else {
+                UserService
+                    .updatetheorytest(test.theoryquestion.theoryanswer[0].id, answer)
+                    .then(response => {
+                        notify.user('Submit Test', 'Test Modified Successfully', 'success');
+                        history.push('/in/classroom/' + slug + "/tests");
+                    }, error => {
+                        const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                        notify.user('Submit Test', errMsg, 'danger');
+                        setdisabled(false);
+                    })
+            }
+        }
     }
     return (
         <div className="content">
@@ -83,7 +104,9 @@ const TheoryTest = ({user, match, history}) => {
                                         editor={ClassicEditor}
                                         onInit={editor => {
                                         setanswereditor(editor);
-                                        editor.setData(answered?test.theoryquestion.theoryanswer[0].answer:'<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
+                                        editor.setData(answered
+                                            ? test.theoryquestion.theoryanswer[0].answer
+                                            : '<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();
