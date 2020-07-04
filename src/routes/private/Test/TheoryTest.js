@@ -37,7 +37,7 @@ const TheoryTest = ({user, match, history}) => {
             .gettheorytest(match.params.test)
             .then(response => {
                 settest(response.data);
-                setanswered(response.data.theoryquestions[0].theoryanswers.length>0)
+                setanswered(response.data.theoryquestion.theoryanswer.length>0)
             });
     }, []);
     const pat = match.path;
@@ -46,7 +46,7 @@ const TheoryTest = ({user, match, history}) => {
     const submitTest = (e) => {
         setdisabled(true);
         e.preventDefault();
-        const question_id = test.theoryquestions[0].id;
+        const question_id = test.theoryquestion.id;
         UserService
             .submittherorytest(question_id, answer)
             .then(response => {
@@ -71,7 +71,7 @@ const TheoryTest = ({user, match, history}) => {
                             </Row>
                         </CardHeader>
                         {test && <CardBody className="all-icons">
-                            {parse(test.theoryquestions[0].question)}
+                            {parse(test.theoryquestion.question)}
                             <Form method="POST" onSubmit={submitTest}>
 
                                 <FormGroup><br/>
@@ -83,7 +83,7 @@ const TheoryTest = ({user, match, history}) => {
                                         editor={ClassicEditor}
                                         onInit={editor => {
                                         setanswereditor(editor);
-                                        editor.setData(answered?test.theoryquestions[0].theoryanswers[0].answer:'<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
+                                        editor.setData(answered?test.theoryquestion.theoryanswer[0].answer:'<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();
