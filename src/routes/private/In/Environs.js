@@ -33,6 +33,8 @@ const orderenvirons = () => {
                 noenviron = true;
             } else {
                 tenvirons = (response.data);
+                noenviron = false;
+
             }
         });
 }
@@ -52,6 +54,8 @@ const Environs = ({user, history}) => {
                     setnoenvirons(true);
                 } else {
                     setenvirons(response.data);
+                    setnoenvirons(false);
+
                 }
             });
     }

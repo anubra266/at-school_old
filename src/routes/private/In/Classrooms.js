@@ -33,6 +33,7 @@ const orderclassrooms=()=>{
                     noclass = true;
                 } else {
                     tclassrooms = (response.data);
+                    noclass = false;
                 }
             });
 }
@@ -52,6 +53,8 @@ const Classrooms = ({user}) => {
                     setnoclassrooms(true);
                 } else {
                     setclassrooms(response.data);
+                    setnoclassrooms(false);
+
                 }
             });
         }

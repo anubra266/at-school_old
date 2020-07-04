@@ -16,7 +16,14 @@ import PrivateRoute from "./routes/HOC/PrivateRoute.js";
 
 import Echo from "laravel-echo"
 window.io = require('socket.io-client');
-window.Echo = new Echo({broadcaster: 'socket.io', host: 'https://api.at-school.xyz:6001'});
+var host;
+var url = window.location.hostname;
+if (url === 'localhost') {
+    host = 'http://localhost:6001';
+} else {
+    host = 'https://api.at-school.xyz:6001';
+}
+window.Echo = new Echo({broadcaster: 'socket.io', host: host});
 
 const hist = createBrowserHistory();
 

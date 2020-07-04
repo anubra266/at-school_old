@@ -48,6 +48,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                     settheoryTests([]);
                 } else {
                     settheoryTests(response.data);
+                    setnotheory(false);
                 }
 
             });
@@ -61,6 +62,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                     setobjectiveTests([]);
                 } else {
                     setobjectiveTests(response.data);
+                    setnoobjective(false);
                 }
             });
         }

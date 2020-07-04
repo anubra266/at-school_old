@@ -53,6 +53,7 @@ const Organizations = ({user, history}) => {
                     setnoorganizations(true);
                 } else {
                     setorganizations(response.data);
+                    setnoorganizations(false);
                 }
             });
     }
