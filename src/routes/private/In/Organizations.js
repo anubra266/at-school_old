@@ -168,6 +168,7 @@ const Organizations = ({user, history}) => {
                                                         <th>#</th>
                                                         <th>Name</th>
                                                         <th>Address</th>
+                                                        <th>Code</th>
                                                         <th>Environs</th>
                                                     </tr>
                                                 </thead>
@@ -180,6 +181,7 @@ const Organizations = ({user, history}) => {
                                                                     {organization.name}
                                                                 </td>
                                                                 <td>{organization.address}</td>
+                                                                <td>{organization.code}</td>
                                                                 <td>{organization.environs.length}</td>
                                                             </tr>
                                                         )
