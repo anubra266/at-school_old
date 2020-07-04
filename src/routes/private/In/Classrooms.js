@@ -43,9 +43,27 @@ const Classrooms = ({user}) => {
         setclassrooms] = useState(tclassrooms);
     const [noclassrooms,
         setnoclassrooms] = useState(noclass);
-    useEffect(() => {
-        orderclassrooms();
-    }, [classrooms]);
+
+        const updateclassrooms = ()=>{
+            UserService
+            .getcreatedclassrooms()
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnoclassrooms(true);
+                } else {
+                    setclassrooms(response.data);
+                }
+            });
+        }
+        useEffect(()=>{
+            updateclassrooms();
+        },[]);
+        window
+        .Echo
+        .channel('at_school_database_classrooms')
+        .listen('UpdateClassrooms', e => {
+            updateclassrooms();
+        })
     const [modal,
         setModal] = useState(false);
 

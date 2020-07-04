@@ -39,13 +39,32 @@ const orderorganizations = () => {
 orderorganizations();
 
 const Organizations = ({user, history}) => {
+
     const [organizations,
         setorganizations] = useState(torganizations);
     const [noorganizations,
         setnoorganizations] = useState(tnoorganizations);
-    useEffect(() => {
-        orderorganizations();
-    }, [organizations]);
+    const updateorganizations = () => {
+
+        UserService
+            .getcreatedorganizations()
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnoorganizations(true);
+                } else {
+                    setorganizations(response.data);
+                }
+            });
+    }
+    useEffect(()=>{
+        updateorganizations();
+    },[]);
+    window
+        .Echo
+        .channel('at_school_database_organizations')
+        .listen('UpdateOrganizations', e => {
+            updateorganizations()
+        })
     const [modal,
         setModal] = useState(false);
 
@@ -63,15 +82,10 @@ const Organizations = ({user, history}) => {
         UserService
             .createorganization(name, address, true)
             .then(response => {
-
+                setloading(false);
                 notify.user('Register an Organization', 'Organization Registered Successfully!', 'success');
-                notify.user('Register an Organization', 'Redirecting you...!', 'info');
-                setTimeout(() => {
-                    history.push("/in/dashboard/home");
-                    window
-                        .location
-                        .reload();
-                }, 3000);
+                setname('');
+                setaddress('');
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 notify.user('Register an Organization', errMsg, 'danger');
@@ -87,7 +101,7 @@ const Organizations = ({user, history}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Classrooms
+                                    Organizations
                                 </Col>
                                 <Col md="2">
                                     <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
@@ -163,7 +177,7 @@ const Organizations = ({user, history}) => {
                                                             <tr>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
-                                                                        {organization.name}
+                                                                    {organization.name}
                                                                 </td>
                                                                 <td>{organization.address}</td>
                                                                 <td>{organization.environs.length}</td>

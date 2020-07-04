@@ -60,7 +60,7 @@ class InSidebar extends React.Component {
                             <NavLink
                                 to={"/in/dashboard/classrooms"}
                                 className="nav-link">
-                                <i className="tim-icons icon-double-left"/>
+                                <i className="icon-arrow-left"/>
                                 <p>Back</p>
                             </NavLink>
                         </li>
@@ -91,7 +91,7 @@ class InSidebar extends React.Component {
 
                         <li>
                             <a href="/" onClick={this.props.logout}>
-                                <i className="tim-iconsicon-power_settings_new"/>
+                                <i className="tim-icons icon-power_settings_new"/>
                                 <p>Logout</p>
                             </a>
                         </li>

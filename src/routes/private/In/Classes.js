@@ -23,18 +23,18 @@ import {
 import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js"
 import className from "classnames";
-var tclassrooms; 
+var tclassrooms;
 var noclass;
-const orderclasses = ()=>{
+const orderclasses = () => {
     UserService
-    .getjoinedclassrooms()
-    .then(response => {
-        if (response.data.length < 1) {
-            noclass = (true)
-        } else {
-            tclassrooms = (response.data);
-        }
-    });
+        .getjoinedclassrooms()
+        .then(response => {
+            if (response.data.length < 1) {
+                noclass = (true)
+            } else {
+                tclassrooms = (response.data);
+            }
+        });
 }
 orderclasses();
 
@@ -43,9 +43,26 @@ const Classes = ({user}) => {
         setclassrooms] = useState(tclassrooms);
     const [noclassrooms,
         setnoclassrooms] = useState(noclass);
-    useEffect(() => {
-        orderclasses()
-    }, [classrooms]);
+    const updateclasses = () => {
+        UserService
+            .getjoinedclassrooms()
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnoclassrooms(true)
+                } else {
+                    setclassrooms(response.data);
+                }
+            });
+    }
+    useEffect(()=>{
+        updateclasses();
+    },[]);
+    window
+        .Echo
+        .channel('at_school_database_classes')
+        .listen('UpdateClasses', e => {
+            updateclasses();
+        })
     const [modal,
         setModal] = useState(false);
 
@@ -137,7 +154,7 @@ const Classes = ({user}) => {
                                                             <tr>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
-                                                                     <Link to={"/in/classroom/" + classroom.slug+"/tests"}>
+                                                                    <Link to={"/in/classroom/" + classroom.slug + "/tests"}>
                                                                         {classroom.name}
                                                                     </Link>
                                                                 </td>
@@ -145,7 +162,7 @@ const Classes = ({user}) => {
                                                             </tr>
                                                         )
                                                     })}
-                                                </tbody>    
+                                                </tbody>
                                             </Table>
 
                                         : <div>

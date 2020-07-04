@@ -135,7 +135,7 @@ class TheNavbar extends React.Component {
                                 <UncontrolledDropdown nav>
                                     <DropdownToggle caret color="default" data-toggle="dropdown" nav>
                                         <div className="notification d-lg-block d-xl-block"/>
-                                        <i className="tim-icons icon-sound-wave"/>
+                                        <i className="icon-bell"/>
                                         <p className="d-lg-none">Notifications</p>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-navbar" right tag="ul">

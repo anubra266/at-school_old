@@ -123,3 +123,13 @@ public function checkAnswer(Request $request)
 Going with the second option might be better as if you ever change the way that a correct answer is worked out (maybe there can be multiple 'correct' answers for instance) then your controller checkAnswer function doesn't have to change - just the code hidden inside the model's checkAnswerIsCorrect() one.
 
 But as always - do what seems right/easy/simple for your project :-)
+
+
+
+
+window
+.Echo
+.channel('at_school_database_organizations')
+.listen('UpdateOrganizations', e => {
+    
+})

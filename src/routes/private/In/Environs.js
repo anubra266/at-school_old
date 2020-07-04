@@ -24,28 +24,47 @@ import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js"
 import className from "classnames";
 var tenvirons;
-var noenviron;   
-const orderenvirons=()=>{
+var noenviron;
+const orderenvirons = () => {
     UserService
-            .getcreatedenvirons()
-            .then(response => {
-                if (response.data.length < 1) {
-                    noenviron = true;
-                } else {
-                    tenvirons = (response.data);
-                }
-            });
+        .getcreatedenvirons()
+        .then(response => {
+            if (response.data.length < 1) {
+                noenviron = true;
+            } else {
+                tenvirons = (response.data);
+            }
+        });
 }
 orderenvirons();
 
-const Environs = ({user,history}) => {
+const Environs = ({user, history}) => {
+
     const [environs,
         setenvirons] = useState(tenvirons);
     const [noenvirons,
         setnoenvirons] = useState(noenviron);
-    useEffect(() => {
-        orderenvirons();
-    }, [environs]);
+    const updateenvirons = () => {
+        UserService
+            .getcreatedenvirons()
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnoenvirons(true);
+                } else {
+                    setenvirons(response.data);
+                }
+            });
+    }
+    useEffect(()=>{
+        updateenvirons();
+    },[]);
+    window
+        .Echo
+        .channel('at_school_database_environs')
+        .listen('UpdateEnvirons', e => {
+            updateenvirons();
+        })
+
     const [modal,
         setModal] = useState(false);
 
@@ -56,27 +75,24 @@ const Environs = ({user,history}) => {
         setcode] = useState('');
     const [loading,
         setloading] = useState(false);
-        const createenviron = (e)=>{
-            e.preventDefault();
-            setloading(true);
-            UserService.createenviron(name,code,true).then(response => {
+    const createenviron = (e) => {
+        e.preventDefault();
+        setloading(true);
+        UserService
+            .createenviron(name, code, true)
+            .then(response => {
 
                 notify.user('Create an Environ', 'Environ Created Successfully!', 'success');
-                notify.user('Create an Environ', 'Redirecting you...!', 'info');
-                setTimeout(() => {
-                    history
-                        .push("/in/dashboard/home");
-                    window
-                        .location
-                        .reload();
-                }, 3000);
+                setloading(false);
+                setname('');
+                setcode('');
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 notify.user('Create an Environ', errMsg, 'danger');
                 setloading(false);
 
             })
-        }
+    }
     return (
         <div className="content">
             <Row>
@@ -92,51 +108,51 @@ const Environs = ({user,history}) => {
                                         <Button onClick={toggle} tag="label" color="info" size="sm">Create New Environ</Button>
                                     </ButtonGroup>
                                     <Modal
-                                    unmountOnClose={false}
-                                    isOpen={modal}
-                                    toggle={toggle}
-                                    className={className + ""}>
-                                    <ModalHeader toggle={toggle}>Create an Environ</ModalHeader>
-                                    <ModalBody>
-                    
-                                        <form onSubmit={createenviron}>
-                                            <FormGroup>
-                                                <Label for="name">Environ Name</Label>
-                                                <Input
-                                                    style={{
-                                                    color: "black"
-                                                }}
-                                                    type="text"
-                                                    name="name"
-                                                    id="name"
-                                                    value={name}
-                                                    required
-                                                    onChange={(e) => setname(e.target.value)}
-                                                    placeholder="Computer Science Dept / SS1"/>
-                                            </FormGroup>
-                                            <FormGroup>
-                                                <Label for="code">Organization Code</Label>
-                                                <Input
-                                                    style={{
-                                                    color: "black"
-                                                }}
-                                                    type="text"
-                                                    name="code"
-                                                    id="code"
-                                                    value={code}
-                                                    required
-                                                    onChange={(e) => setcode(e.target.value)}
-                                                    placeholder="17633-2673-383"/>
-                                            </FormGroup>
-                                            <ModalFooter>
-                                                <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
-                                                <Button color="secondary" onClick={toggle}>Cancel</Button>
-                                            </ModalFooter>
-                    
-                                        </form>
-                    
-                                    </ModalBody>
-                                </Modal>
+                                        unmountOnClose={false}
+                                        isOpen={modal}
+                                        toggle={toggle}
+                                        className={className + ""}>
+                                        <ModalHeader toggle={toggle}>Create an Environ</ModalHeader>
+                                        <ModalBody>
+
+                                            <form onSubmit={createenviron}>
+                                                <FormGroup>
+                                                    <Label for="name">Environ Name</Label>
+                                                    <Input
+                                                        style={{
+                                                        color: "black"
+                                                    }}
+                                                        type="text"
+                                                        name="name"
+                                                        id="name"
+                                                        value={name}
+                                                        required
+                                                        onChange={(e) => setname(e.target.value)}
+                                                        placeholder="Computer Science Dept / SS1"/>
+                                                </FormGroup>
+                                                <FormGroup>
+                                                    <Label for="code">Organization Code</Label>
+                                                    <Input
+                                                        style={{
+                                                        color: "black"
+                                                    }}
+                                                        type="text"
+                                                        name="code"
+                                                        id="code"
+                                                        value={code}
+                                                        required
+                                                        onChange={(e) => setcode(e.target.value)}
+                                                        placeholder="17633-2673-383"/>
+                                                </FormGroup>
+                                                <ModalFooter>
+                                                    <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                                                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                                                </ModalFooter>
+
+                                            </form>
+
+                                        </ModalBody>
+                                    </Modal>
                                 </Col>
                             </Row>
                         </CardHeader>
@@ -159,7 +175,7 @@ const Environs = ({user,history}) => {
                                                             <tr>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
-                                                                        {environ.name}
+                                                                    {environ.name}
                                                                 </td>
                                                                 <td>{environ.code}</td>
                                                                 <td>{environ.classrooms.length}</td>

@@ -42,14 +42,22 @@ const Questiona = ({match, history}) => {
         settest] = useState(null);
     const [loading,
         setloading] = useState(null);
-    useEffect(() => {
+    const updatetest = () => {
         UserService
             .getobjectivetest(match.params.test)
             .then(response => {
                 settest(response.data);
             });
-    });
-
+    }
+    useEffect(() => {
+        updatetest();
+    }, []);
+    window
+        .Echo
+        .channel('at_school_database_tests')
+        .listen('UpdateTestQuestions', e => {
+            updatetest();
+        })
     const [questioneditor,
         setquestioneditor] = useState(null);
     const [question,
@@ -157,7 +165,7 @@ const Questiona = ({match, history}) => {
                     .rows
                     .slice(1)
                     .map((row, index) => {
-                        if (row && row !== "undefined"&&row.length!==0) {
+                        if (row && row !== "undefined" && row.length !== 0) {
                             //newRows.push({key: index, name: row[0], age: row[1], gender: row[2]});
                             newRows.push({
                                 question: {
@@ -437,14 +445,15 @@ const Questiona = ({match, history}) => {
                                         </Label>
                                     </FormGroup>
                                 </FormGroup>
-                                <FormGroup>
+                                {test.objectivequestions.length>0
+                                ?<FormGroup>
                                     <Button color="info" size="sm" disabled={loading}>Add Question</Button>
                                     <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
                                         <Link to={"/in/classroom/" + match.params.slug + "/tests/"}>
-                                            <Button color="info" size="sm">Save Test</Button>
+                                            <Button color="info" size="sm">Finish</Button>
                                         </Link>
                                     </ButtonGroup>
-                                </FormGroup>
+                                </FormGroup>:''}
                             </Form>
                         </CardBody>
                     </Card>}

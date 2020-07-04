@@ -2,7 +2,9 @@ import axios from 'axios';
 import authHeader from './auth-header';
 import notify from "./notify";
 const API_URL = notify.APP_URL() + 'api/';
-
+// var url = window.location.pathname; 
+// var arr = url.split('/');
+// var tslug = arr[3];
 class UserService {
 
     getUser() {
@@ -90,7 +92,7 @@ class UserService {
     createtheorytest(slug, title, deadline) {
         return axios({
             method: 'POST',
-            url: API_URL + 'storetheorytest/',
+            url: API_URL + 'storetheorytest',
             data: {
                 slug,
                 title,
@@ -112,10 +114,10 @@ class UserService {
             headers: authHeader()
         },);
     }
-    gettheorytests(slug) {
+    gettheorytests(slug) {  
         return axios({
             method: 'POST',
-            url: API_URL + 'theorytests/',
+            url: API_URL + 'theorytests',
             data: {
                 slug
             },
@@ -135,7 +137,7 @@ class UserService {
     createobjecivetest(slug, title, duration, starttime, deadline) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetest/',
+            url: API_URL + 'objectivetest',
             data: {
                 slug,
                 title,
@@ -178,7 +180,7 @@ class UserService {
     getobjectivetests(slug) {
         return axios({
             method: 'POST',
-            url: API_URL + 'objectivetests/',
+            url: API_URL + 'objectivetests',
             data: {
                 slug
             },

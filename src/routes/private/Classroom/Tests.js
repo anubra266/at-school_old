@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from "react";
+import React, {useState, useEffect} from "react";
 
 // reactstrap components
 import {
@@ -33,27 +33,14 @@ const Tests = ({history, educator, slug, match, location}) => {
         settheoryTests] = useState(null);
     const [objectiveTests,
         setobjectiveTests] = useState(null);
+
     const [noobjective,
-        setnoobjective] = useState(false);
+        setnoobjective] = useState(null);
     const [notheory,
-        setnotheory] = useState(false);
+        setnotheory] = useState(null);
 
-    useLayoutEffect(() => {
-
-        UserService
-            .getobjectivetests(slug)
-            .then(response => {
-                if (response.data.length < 1) {
-                    setnoobjective(true);
-                    setobjectiveTests([]);
-                } else {
-                    setobjectiveTests(response.data);
-                }
-            });
-    });
-    useLayoutEffect(() => {
-
-        UserService
+        const updatetheorytests = ()=>{
+            UserService
             .gettheorytests(slug)
             .then(response => {
                 if (response.data.length < 1) {
@@ -64,8 +51,35 @@ const Tests = ({history, educator, slug, match, location}) => {
                 }
 
             });
+        }
+        const updateobjectivetests = ()=>{
+            UserService
+            .getobjectivetests(slug)
+            .then(response => {
+                if (response.data.length < 1) {
+                    setnoobjective(true);
+                    setobjectiveTests([]);
+                } else {
+                    setobjectiveTests(response.data);
+                }
+            });
+        }
+    useEffect(() => {
+            updateobjectivetests();
+            const updateobj = setInterval(()=>{
+            updateobjectivetests();
+        },25000);
+        updatetheorytests();
+        return () => clearInterval(updateobj);
 
-    });
+    }, []); 
+    window
+    .Echo
+    .channel('at_school_database_tests')
+    .listen('UpdateTheoryTests', e => {
+        updatetheorytests();
+    })
+    
 
     const [createtest,
         setcreatetest] = useState(false);
@@ -137,7 +151,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Tests
+                                    Tests -  {new Date().toLocaleTimeString()}
                                 </Col>
                                 {educator
                                     ? <Col md="2">
@@ -301,10 +315,10 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                     </Col>
                                                 )
                                             })
-                                            : <span>Wait...</span>}
+                                            :  <Col sm="12"><div><span className="text-info">Wait...</span></div> </Col>}
                                             {notheory
                                                 ? <Col sm="12"><div>
-                                                        <span className="text-info">No Pending Tests!{" "}</span>
+                                                        <span className="text-info">No Pending THeory Tests!{" "}</span>
                                                         They'll be here when available.</div> </Col>
                                                 : ''}
                                     </Row>
@@ -339,12 +353,14 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                     </Col>
                                                 )
                                             })
-                                            : <span>Wait...</span>}
+                                            : <Col sm="12"><div><span className="text-info">Wait...</span></div> </Col>}
                                             {noobjective
                                                 ? <Col sm="12"><div>
-                                                        <span className="text-info">No Pending Tests!{" "}</span>
+                                                        <span className="text-info">No Pending Objective Tests!{" "}</span>
                                                         They'll be here when available.</div> </Col>
-                                                : ''}
+                                                : objectiveTests&&objectiveTests.filter(objective => (new Date(objective.deadline) > new Date()) && (new Date(objective.starttime) <= new Date())).length<1?<Col sm="12"><div>
+                                                <span className="text-info">There are upcoming Tests{" "}</span>
+                                                Be patient please.</div> </Col>:''}
                                     </Row>
                                 </TabPane>
                             </TabContent>
