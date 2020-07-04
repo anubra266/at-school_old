@@ -153,7 +153,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Tests -  {new Date().toLocaleTimeString()}
+                                    Tests 
                                 </Col>
                                 {educator
                                     ? <Col md="2">
@@ -320,7 +320,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                                             :  <Col sm="12"><div><span className="text-info">Wait...</span></div> </Col>}
                                             {notheory
                                                 ? <Col sm="12"><div>
-                                                        <span className="text-info">No Pending THeory Tests!{" "}</span>
+                                                        <span className="text-info">No Pending Theory Tests!{" "}</span>
                                                         They'll be here when available.</div> </Col>
                                                 : ''}
                                     </Row>

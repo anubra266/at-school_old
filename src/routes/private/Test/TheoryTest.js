@@ -28,6 +28,8 @@ const TheoryTest = ({user, match, history}) => {
         setdisabled] = useState(null);
     const [answer,
         setanswer] = useState('');
+    const [answered,
+        setanswered] = useState(false);
     const [answereditor,
         setanswereditor] = useState();
     useEffect(() => {
@@ -35,6 +37,7 @@ const TheoryTest = ({user, match, history}) => {
             .gettheorytest(match.params.test)
             .then(response => {
                 settest(response.data);
+                setanswered(response.data.theoryquestions[0].theoryanswers.length>0)
             });
     }, []);
     const pat = match.path;
@@ -42,13 +45,13 @@ const TheoryTest = ({user, match, history}) => {
     const slug = patharr[3];
     const submitTest = (e) => {
         setdisabled(true);
-        e.preventDefault(); 
+        e.preventDefault();
         const question_id = test.theoryquestions[0].id;
         UserService
             .submittherorytest(question_id, answer)
             .then(response => {
                 notify.user('Submit Test', 'Test Submitted Successfully', 'success');
-                history.push('/in/classroom/'+slug+"/tests");
+                history.push('/in/classroom/' + slug + "/tests");
             }, error => {
                 const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 notify.user('Submit Test', errMsg, 'danger');
@@ -80,7 +83,7 @@ const TheoryTest = ({user, match, history}) => {
                                         editor={ClassicEditor}
                                         onInit={editor => {
                                         setanswereditor(editor);
-                                        editor.setData('<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
+                                        editor.setData(answered?test.theoryquestions[0].theoryanswers[0].answer:'<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();

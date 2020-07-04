@@ -174,7 +174,7 @@ const Classes = ({user}) => {
                                     {noclassrooms
                                         ? <div>
                                                 <span className="text-info">No Classrooms Found!{" "}</span>
-                                                Join a New Classroom to see it here.</div>
+                                                Join a New Classroom to see class here.</div>
                                         : ''}
                                 </Col>
 
