@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 
 import notify from "../../../services/notify.js"
-import className from "classnames";
-import UserService from "../../../services/user.service";
+// import className from "classnames";
+// import UserService from "../../../services/user.service";
 // reactstrap components
 import {
     Button,

@@ -64,7 +64,7 @@ class TheNavbar extends React.Component {
     };
     
     render() {
-        const {user, thislayout, logout, brandText} = this.props;
+        const {user, thislayout, logout} = this.props;
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">

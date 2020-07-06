@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-import Timer from "./Timer.js"
 // reactstrap components
 import {
     Card,
@@ -9,9 +8,7 @@ import {
     Row,
     Col,
     Button,
-    ButtonGroup,
-    CardTitle,
-    CardText,
+    ButtonGroup, 
     Label,
     FormGroup,
     CustomInput,
@@ -22,7 +19,7 @@ import {
     Progress
 } from "reactstrap";
 import notify from "../../../services/notify.js"
-import className from "classnames";
+// import className from "classnames";
 import UserService from "../../../services/user.service";
 var parse = require('html-react-parser');
 
@@ -33,9 +30,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
     const [cbt,
         setcbt] = useState(null);
     const [submitting,
-        setsubmitting] = useState(false);
-    const [duration,
-        setduration] = useState(false);
+        setsubmitting] = useState(false); 
     useEffect(() => {
         UserService
             .getobjectivetest(match.params.test)

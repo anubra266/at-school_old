@@ -107,6 +107,7 @@ class Dashboard extends React.Component {
 
         // user roles
         const roles = [...user_roles_arr];
+        
         let allowedRoutes = roles.reduce((acc, role) => {
             return [
                 ...acc,
@@ -136,7 +137,15 @@ class Dashboard extends React.Component {
         }, []);
 
         // user roles
-        const roles = [...user_roles_arr];
+        var roles = [...user_roles_arr];
+        const order = ['student','educator','dephead','orgadmin'];
+        roles.sort((a,b)=>{
+            if(order.indexOf(a)>order.indexOf(b)){
+                return 1;
+            }else{
+                return -1;
+            }
+        });
         let allowedRoutes = roles.reduce((acc, role) => {
             return [
                 ...acc,
@@ -160,7 +169,9 @@ class Dashboard extends React.Component {
                     return (<ReRoute
                         key={component}
                         path={`${this.props.match.path}${url}`}
-                        component={Routes[component]}/>)
+                        component={Routes[component]}/>);
+                }else{
+                    return '';
                 }
             })
         }

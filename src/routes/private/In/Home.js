@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 
-import classNames from "classnames";
+// import classNames from "classnames";
 
 // reactstrap components
 import {
@@ -8,13 +8,11 @@ import {
     CardHeader,
     CardBody,
     Row,
-    Col,
-    Button,
-    ButtonGroup
+    Col
 } from "reactstrap";
-import notify from "../../../services/notify.js"
-import className from "classnames";
-import UserService from "../../../services/user.service";
+// import notify from "../../../services/notify.js"
+// import className from "classnames";
+// import UserService from "../../../services/user.service";
 //import AuthService from "../../../services/auth.service";
 
 const Home = ({user}) => {

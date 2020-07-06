@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-import classNames from "classnames";
+// import classNames from "classnames";
 
 // reactstrap components
 import {
@@ -15,7 +15,7 @@ import {
     FormGroup
 } from "reactstrap";
 import notify from "../../../services/notify.js"
-import className from "classnames";
+// import className from "classnames";
 import UserService from "../../../services/user.service";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
@@ -30,13 +30,13 @@ const TheoryTest = ({user, match, history}) => {
         setanswer] = useState('');
     const [answered,
         setanswered] = useState(false);
-    const [answereditor,
-        setanswereditor] = useState();
+    // const [answereditor,
+    //     setanswereditor] = useState();
     useEffect(() => {
         UserService
             .gettheorytest(match.params.test)
             .then(response => {
-                settest(response.data);
+                settest(response.data);  
                 setanswered(response.data.theoryquestion.theoryanswer.length > 0)
             });
     }, []);
@@ -103,7 +103,7 @@ const TheoryTest = ({user, match, history}) => {
                                     <CKEditor
                                         editor={ClassicEditor}
                                         onInit={editor => {
-                                        setanswereditor(editor);
+                                        // setanswereditor(editor);
                                         editor.setData(answered
                                             ? test.theoryquestion.theoryanswer[0].answer
                                             : '<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');

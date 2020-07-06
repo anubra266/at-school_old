@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
 
 // reactstrap components
 import {
@@ -193,7 +192,7 @@ const Environs = ({user, history}) => {
                                             <span className="text-info"></span>
                                         </div>}
 
-                                    {noenviron
+                                    {noenvirons
                                         ? <div>
                                                 <span className="text-info">No Environs Found!{" "}</span>
                                                 Create a New Environment to see it here.</div>

@@ -8,13 +8,68 @@ export default {
             }
         ]
     },
+    student : {
+        routes: [
+            {
+                component: 'Home',
+                url: '/home',
+                name: 'Home',
+                icon: "icon-home",
+                layout: "/in/dashboard"
+            }, 
+            {
+                component: 'Classes',
+                url: '/classes',
+                name: 'Classes',
+                icon: "icon-people_outline",
+                layout: "/in/dashboard"
+            },
+            /* {
+                component: 'Settings',
+                url: '/profile-settings',
+                name: 'Settings',
+                icon: "tim-icons icon-settings-gear-63",
+                layout: "/in/dashboard"
+            },
+            */
+            
+            {
+                component: 'Tests',
+                url: '/tests',
+                name: 'Tests',
+                icon: "icon-pencil",
+                layout: "/in/classroom"
+            }, {
+                component: 'TheoryTest',
+                url: '/theory/:test',
+                name: 'Theory Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show: true
+            }, {
+                component: 'ObjectiveTest',
+                url: '/objective/:test',
+                name: 'Objective Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show: true
+            }, {
+                component: 'ObjectiveTestReview',
+                url: '/objective/:test/review',
+                name: 'Review Objective Test',
+                icon: "tim-icons icon-paper",
+                layout: "/in/test",
+                dont_show: true
+            }
+        ]
+    },
     orgadmin : {
         routes: [
             {
                 component: 'Organizations',
                 url: '/organizations',
                 name: 'Organizations',
-                icon: "icon-institution",
+                icon: "icon-institution", 
                 layout: "/in/dashboard"
             }
         ]
@@ -54,60 +109,7 @@ export default {
                 dont_show: true
             }
         ]
-    },
-    student : {
-        routes: [
-            {
-                component: 'Classes',
-                url: '/classes',
-                name: 'Classes',
-                icon: "icon-people_outline",
-                layout: "/in/dashboard"
-            },
-            /* {
-                component: 'Settings',
-                url: '/profile-settings',
-                name: 'Settings',
-                icon: "tim-icons icon-settings-gear-63",
-                layout: "/in/dashboard"
-            },
-            */
-            {
-                component: 'Home',
-                url: '/home',
-                name: 'Home',
-                icon: "icon-home",
-                layout: "/in/dashboard"
-            }, 
-            {
-                component: 'Tests',
-                url: '/tests',
-                name: 'Tests',
-                icon: "icon-pencil",
-                layout: "/in/classroom"
-            }, {
-                component: 'TheoryTest',
-                url: '/theory/:test',
-                name: 'Theory Test',
-                icon: "tim-icons icon-paper",
-                layout: "/in/test",
-                dont_show: true
-            }, {
-                component: 'ObjectiveTest',
-                url: '/objective/:test',
-                name: 'Objective Test',
-                icon: "tim-icons icon-paper",
-                layout: "/in/test",
-                dont_show: true
-            }, {
-                component: 'ObjectiveTestReview',
-                url: '/objective/:test/review',
-                name: 'Review Objective Test',
-                icon: "tim-icons icon-paper",
-                layout: "/in/test",
-                dont_show: true
-            }
-        ]
     }
+    
 
 }

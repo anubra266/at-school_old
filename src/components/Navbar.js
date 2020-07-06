@@ -1,23 +1,14 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
+// import classNames from "classnames";
 
 import {Link} from "react-router-dom";
-import notify from "../services/notify.js";
-// reactstrap components
-import {
-    Button,
-    Collapse,
-    NavbarBrand,
-    Navbar,
-    Nav,
-    Container
-} from "reactstrap";
+// import notify from "../services/notify.js"; 
 
 class LandingNavbar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = { 
             collapseOpen: false,
             modalSearch: false,
             color: "navbar-transparent"

@@ -27,15 +27,13 @@ const Questiona = ({match, history}) => {
         setdisabled] = useState(null);
     useEffect(() => {
         UserService
-            .gettheorytest(match.params.test)
+            .gettheorytestdetails(match.params.test)
             .then(response => {
                 settest(response.data);
             });
     }, []);
     const [question,
-        setquestion] = useState('');
-    const [questioneditor,
-        setquestioneditor] = useState();
+        setquestion] = useState(''); 
     const addquestions = (e) => {
         e.preventDefault();
         setdisabled(true);
@@ -71,7 +69,6 @@ const Questiona = ({match, history}) => {
                                             {test.title}</BreadcrumbItem>
                                     </Breadcrumb>
                                 </Col>
-                                {console.log('render')}
                             </Row>
                         </CardHeader>
                         <CardBody className="all-icons">
@@ -95,7 +92,6 @@ const Questiona = ({match, history}) => {
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 onInit={editor => {
-                                                setquestioneditor(editor);
                                                 editor.setData('<h1><u>' + test.title + '</u></h1><br /><h3><span style="color:hsl(0,75%,60%);">Deadline: ' + new Date(test.deadline).toLocaleString() + '</span></h3><br />Edit this to your taste😋');
                                             }}
                                                 onChange={(event, editor) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 
 
 import Home from "./private/In/Home.js"
@@ -7,7 +6,7 @@ import Classrooms from "./private/In/Classrooms.js"
 import Classes from "./private/In/Classes.js"
 import Environs from "./private/In/Environs.js"
 import Organizations from "./private/In/Organizations.js"
-
+ 
 import Tests from "./private/Classroom/Tests.js"
 
 import Questionst from "./private/Classroom/Questionst.js"
@@ -19,7 +18,7 @@ import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
 
 
   export {
-    Home,
+    Home, 
     Settings,
     Classrooms,
     Classes,

@@ -104,6 +104,9 @@ class UserService {
     gettheorytest(id) {
         return axios.get(API_URL + 'theorytest/' + id, {headers: authHeader()});
     }
+    gettheorytestdetails(id) {
+        return axios.get(API_URL + 'theorytestdetails/' + id, {headers: authHeader()});
+    }
     addtheoryquestion(test_id, question) {
         return axios({
             method: 'POST',

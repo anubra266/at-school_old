@@ -1,7 +1,6 @@
-import React,{useState, useEffect} from "react";
+import React from "react";
 import {Route, Redirect} from "react-router-dom";
 import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
 
 const NoAuthRoute = ({
     component: Component,

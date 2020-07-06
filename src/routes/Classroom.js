@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route} from "react-router-dom";
 
 import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
@@ -17,7 +17,6 @@ import Sidebar from "./private/Classroom/Sidebar.js";
 import routes from "../roles/roles.js"
 import * as Routes from './routes_list';
 
-import logo from "assets/img/react-logo.png";
 import AuthService from "../services/auth.service";
 import UserService from "../services/user.service";
 import {uniqBy} from 'lodash';

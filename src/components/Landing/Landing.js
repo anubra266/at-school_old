@@ -16,7 +16,6 @@
 
 */
 import React from "react";
-import {Route, Switch, Redirect} from "react-router-dom";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
@@ -25,7 +24,6 @@ import Navbar from "../Navbar.js";
 import Footer from "../Footer.js";
 import MainPage from "./MainPage.js";
 
-import logo from "assets/img/react-logo.png";
 import "../../assets/landingfonts/icomoon/style.css";
 import  "../../assets/landingcss/style.css";
 

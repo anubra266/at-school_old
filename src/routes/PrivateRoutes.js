@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 
 import Dashboard from "./Dashboard.js";
 import Classroom from "./Classroom.js";
@@ -9,10 +9,7 @@ import Welcome from "../components/Welcome/Welcome.js"
 import ClassroomRoute from "../routes/HOC/ClassroomRoute.js"
 import error404 from './error404.js';
 
-import {uniqBy} from 'lodash';
 //import TRoutes from "./routes.js";
-import routes from "../roles/roles.js";
-import * as Routes from './routes_list.js';
 
 const PrivateRoutes = ({user}) => {
 

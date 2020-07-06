@@ -1,7 +1,6 @@
 import React from "react";
-import Login from "./subLogin.js"
-// reactstrap components
-import {Row, Col} from "reactstrap";
+import {Link} from "react-router-dom";
+import Login from "./subLogin.js" 
 
 class MainPage extends React.Component {
     render() {
@@ -22,7 +21,7 @@ class MainPage extends React.Component {
                                             <h1 data-aos="fade-up" data-aos-delay="100">Let the learning flow</h1>
                                             <p className="mb-4" data-aos="fade-up" data-aos-delay="200">We help you keep up with the flow of knowledge. Anywhere and anytime.</p>
                                             <p data-aos="fade-up" data-aos-delay="300">
-                                                <a href="#at-school" className="btn btn-primary py-3 px-5 btn-pill">Join Us Now</a>
+                                                <Link to="/register"><a href="#at-school" className="btn btn-primary py-3 px-5 btn-pill">Join Us Now</a></Link>
                                             </p>
 
                                         </div>

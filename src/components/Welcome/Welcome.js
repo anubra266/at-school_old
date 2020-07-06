@@ -15,14 +15,11 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React, {useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import React from "react";
 import Footer from "../Footer.js";
-import classNames from "classnames";
 
 // reactstrap components
 import {
-    Button,
     Card,
     CardHeader,
     CardBody,

@@ -15,11 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  
 */
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useRef} from "react";
 import AvatarEditor from 'react-avatar-editor'
 
 import Navbar from "../Navbar.js";
-import Footer from "../Footer.js";  
 // reactstrap components
 import {
     Button,

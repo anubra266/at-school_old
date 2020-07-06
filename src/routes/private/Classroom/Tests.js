@@ -20,8 +20,7 @@ import {
     Nav,
     NavItem,
     NavLink,
-    CardTitle,
-    CardText
+    CardTitle
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
@@ -297,7 +296,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                                         {theoryTests
                                             ? theoryTests.filter(theory => new Date(theory.deadline) > new Date()).map((test) => {
                                                 return (
-                                                    <Col sm="4">
+                                                    <Col md="4">
                                                         <Card body>
                                                             <CardTitle>
                                                                 <strong>{test.title}</strong>
@@ -317,21 +316,21 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                     </Col>
                                                 )
                                             })
-                                            :  <Col sm="12"><div><span className="text-info">Wait...</span></div> </Col>}
+                                            :  <Col md="12"><div><span className="text-info">Wait...</span></div> </Col>}
                                             {notheory
-                                                ? <Col sm="12"><div>
+                                                ? <Col md="12"><div>
                                                         <span className="text-info">No Pending Theory Tests!{" "}</span>
                                                         They'll be here when available.</div> </Col>
                                                 : ''}
                                     </Row>
                                 </TabPane>
-                                <TabPane tabId="2">
+                                <TabPane tabId="2"> 
                                     <Row>
                                         {objectiveTests
                                             ? objectiveTests.filter(objective => (new Date(objective.deadline) > new Date()) && (new Date(objective.starttime) <= new Date())).map((test) => {
                                                 return (
 
-                                                    <Col sm="4">
+                                                    <Col md="4">
                                                         <Card body>
                                                             <CardTitle>
                                                                 <strong>{test.title}</strong>
@@ -355,9 +354,9 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                     </Col>
                                                 )
                                             })
-                                            : <Col sm="12"><div><span className="text-info">Wait...</span></div> </Col>}
+                                            : <Col md="12"><div><span className="text-info">Wait...</span></div> </Col>}
                                             {noobjective
-                                                ? <Col sm="12"><div>
+                                                ? <Col md="12"><div>
                                                         <span className="text-info">No Pending Objective Tests!{" "}</span>
                                                         They'll be here when available.</div> </Col>
                                                 : objectiveTests&&objectiveTests.filter(objective => (new Date(objective.deadline) > new Date()) && (new Date(objective.starttime) <= new Date())).length<1?<Col sm="12"><div>

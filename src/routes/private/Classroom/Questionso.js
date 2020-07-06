@@ -24,11 +24,11 @@ import {
     ModalBody
 } from "reactstrap";
 import notify from "../../../services/notify.js";
-import className from "classnames";
+//import className from "classnames";
 import UserService from "../../../services/user.service";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
-import {OutTable, ExcelRenderer} from 'react-excel-renderer';
+import {/*OutTable, */ ExcelRenderer} from 'react-excel-renderer';
 import {uniqBy} from 'lodash';
 
 var parse = require('html-react-parser');
@@ -70,8 +70,6 @@ const Questiona = ({match, history}) => {
         setoption3] = useState('');
     const [option4,
         setoption4] = useState('');
-    const [answer,
-        setanswer] = useState('');
     const addquestion = (e) => {
         setloading(true);
         e.preventDefault();
@@ -113,7 +111,6 @@ const Questiona = ({match, history}) => {
                         setoption2("");
                         setoption3("");
                         setoption4("");
-                        setanswer('');
                         if (questioneditor) {
                             questioneditor.setData("");
                         }
@@ -377,7 +374,6 @@ const Questiona = ({match, history}) => {
                                                     value={option1}
                                                     onChange={(e) => {
                                                     setoption1(e.target.value);
-                                                    setanswer(e.target.value)
                                                 }}
                                                     required
                                                     placeholder="Option 1"/>
@@ -457,7 +453,7 @@ const Questiona = ({match, history}) => {
                             </Form>
                         </CardBody>
                     </Card>}
-                </Col>
+                </Col>!
             </Row>
         </div>
     );

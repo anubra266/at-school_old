@@ -12,7 +12,6 @@ import {
     Row,
     Col
 } from "reactstrap";
-import className from "classnames";
 import Educator from "./Educator.js";
 import DepHead from "./DepHead.js";
 const EduHead = () => {

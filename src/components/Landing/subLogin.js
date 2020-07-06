@@ -2,21 +2,7 @@ import React, {useState} from "react";
 import {withRouter} from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
-
-// reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    Label,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col
-} from "reactstrap";
+ 
 
 const Login = (props) => {
     const [email,

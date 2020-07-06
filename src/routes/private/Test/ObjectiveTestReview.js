@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react";
 
-import Timer from "./Timer.js"
 // reactstrap components
 import {
     Card,
@@ -13,7 +12,7 @@ import {
     CustomInput,
     Button, ButtonGroup
 } from "reactstrap";
-import notify from "../../../services/notify.js"
+// import notify from "../../../services/notify.js"
 import UserService from "../../../services/user.service";
 var parse = require('html-react-parser');
 

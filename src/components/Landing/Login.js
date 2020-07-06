@@ -3,7 +3,6 @@ import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
 
 import Navbar from "../Navbar.js";
-import Footer from "../Footer.js";
 
 const Login = ({
     location,
