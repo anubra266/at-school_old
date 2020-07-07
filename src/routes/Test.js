@@ -133,7 +133,7 @@ class Test extends React.Component {
         }, []);
 
         // user roles
-        const roles = [...user_roles_arr];
+        const roles = [...user_roles_arr]; 
         let allowedRoutes = roles.reduce((acc, role) => {
             return [
                 ...acc,

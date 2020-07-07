@@ -80,7 +80,7 @@ class InSidebar extends React.Component {
                                     <li
                                         className={this.activeRoute(prop.url) + (prop.pro
                                         ? " active-pro"
-                                        : "")}
+                                        : "")} 
                                         key={key}>
                                         <NavLink
                                             to={prop.layout + "/" + this.props.match.params.slug + prop.url}

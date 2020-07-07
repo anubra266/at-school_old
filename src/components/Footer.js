@@ -25,7 +25,7 @@ class Footer extends React.Component {
           </Nav>
           <div className="copyright">
             © {new Date().getFullYear()} made with{" "}
-            <i className="icons icon-heart" /> by{" "}
+            <i className="icon-heart" /> by{" "}
             <a
               href="https://www.linkedin.com/in/anubra266"
               target="_blank"

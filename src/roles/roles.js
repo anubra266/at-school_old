@@ -16,8 +16,7 @@ export default {
                 name: 'Home',
                 icon: "icon-home",
                 layout: "/in/dashboard"
-            }, 
-            {
+            }, {
                 component: 'Classes',
                 url: '/classes',
                 name: 'Classes',
@@ -32,8 +31,14 @@ export default {
                 layout: "/in/dashboard"
             },
             */
-            
+
             {
+                component: 'Members',
+                url: '/members',
+                name: 'Members',
+                icon: "icon-users",
+                layout: "/in/classroom"
+            }, {
                 component: 'Tests',
                 url: '/tests',
                 name: 'Tests',
@@ -69,7 +74,7 @@ export default {
                 component: 'Organizations',
                 url: '/organizations',
                 name: 'Organizations',
-                icon: "icon-institution", 
+                icon: "icon-institution",
                 layout: "/in/dashboard"
             }
         ]
@@ -107,9 +112,36 @@ export default {
                 icon: "icon-th-list",
                 layout: "/in/classroom",
                 dont_show: true
+            },
+            {
+                component: 'MarkAssessment',
+                url: '/mark-assessment/:test/:user',
+                name: 'Mark Assessment',
+                icon: "tim-icons icon-paper",
+                layout: "/in/classroom",
+                dont_show: true
+            },
+            {
+                component: 'Submissions',
+                url: '/submissions/:test',
+                name: 'submissions',
+                icon: "tim-icons icon-paper",
+                layout: "/in/classroom",
+                dont_show: true
+            }, {
+                component: 'Assessments',
+                url: '/assessments',
+                name: 'Assessments',
+                icon: "icon-playlist_add_check",
+                layout: "/in/classroom"
+            }, {
+                component: 'Results',
+                url: '/results',
+                name: 'Results',
+                icon: "icon-receipt",
+                layout: "/in/classroom"
             }
         ]
     }
-    
 
 }

@@ -89,14 +89,15 @@ class UserService {
             headers: authHeader()
         },);
     }
-    createtheorytest(slug, title, deadline) {
+    createtheorytest(slug, title, deadline, total) {
         return axios({
             method: 'POST',
             url: API_URL + 'storetheorytest',
             data: {
                 slug,
                 title,
-                deadline
+                deadline,
+                total
             },
             headers: authHeader()
         },);
@@ -106,6 +107,17 @@ class UserService {
     }
     gettheorytestdetails(id) {
         return axios.get(API_URL + 'theorytestdetails/' + id, {headers: authHeader()});
+    }
+    marktestdetails(test_id,user_id) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'marktestdetails/' + test_id,
+            data: {
+                user_id
+            },
+            headers: authHeader()
+        },);
+
     }
     addtheoryquestion(test_id, question) {
         return axios({
@@ -121,6 +133,21 @@ class UserService {
         return axios({
             method: 'POST',
             url: API_URL + 'theorytests',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
+    gettestsubmissions(test) {  
+        return axios.get(API_URL + 'theorytestsubmissions/' + test, {
+            headers: authHeader(),
+        });
+    }
+    getalltheorytests(slug) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'alltheorytests',
             data: {
                 slug
             },
@@ -143,6 +170,18 @@ class UserService {
             url: API_URL + 'updatetheoryanswer/'+answer_id,
             data: {
                 answer
+            },
+            headers: authHeader()
+        },);
+    }
+    finishmarktest(answer_id, answer, test_id, score) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'finishmarktest/'+test_id,
+            data: {
+                answer_id,
+                answer,
+                score
             },
             headers: authHeader()
         },);
@@ -212,6 +251,17 @@ class UserService {
     }
     getobjectivetestresult(id) {
         return axios.get(API_URL + 'objectivetestresult/' + id, {headers: authHeader()});
+    }
+
+    getmembers(slug) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'classroommembers',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
     }
     // getStudents() {     return axios.get(API_URL + 'students', {         headers:
     // authHeader()     }); } getTeachers() {     return axios.get(API_URL +

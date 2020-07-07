@@ -31,7 +31,7 @@ class InFooter extends React.Component {
           
           <div className="copyright">
             © {new Date().getFullYear()} made with{" "}
-            <i className="tim-icons icon-heart-2" /> by{" "}
+            <i className="icon-heart" /> by{" "}
             <a
               href="https://www.linkedin.com/in/anuoluwapo-abraham-91a311194/"
               target="_blank"

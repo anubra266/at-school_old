@@ -94,6 +94,7 @@ const Tests = ({history, educator, slug, match, location}) => {
         setstarttime] = useState('');
     const [deadline,
         setdeadline] = useState('');
+    const[total, settotal] = useState('');
     const [test_type,
         settest_type] = useState('theory');
     const [disabled,
@@ -104,7 +105,7 @@ const Tests = ({history, educator, slug, match, location}) => {
         setdisabled(true);
         if (test_type === 'theory') {
             UserService
-                .createtheorytest(slug, title, deadline)
+                .createtheorytest(slug, title, deadline, total)
                 .then(response => {
                     const test = response.data;
                     notify.user('Create New Test', 'Test Created Successfully', 'success');
@@ -248,7 +249,25 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                                 required/>
 
                                                         </FormGroup>
-
+                                                        {test_type === "theory"
+                                                        ? <FormGroup>
+                                                                <Label for="total">Total Score (For Percentage)
+                                                                </Label>
+                                                                <Input
+                                                                    style={{
+                                                                    color: "black"
+                                                                }}
+                                                                    type="number"
+                                                                    name="total"
+                                                                    id="total"
+                                                                    value={total}
+                                                                    onChange={(e) => settotal(e.target.value)}
+                                                                    required
+                                                                    placeholder="100"
+                                                                    />
+                                                                    
+                                                            </FormGroup>
+                                                        : ''}
                                                         <Button disabled={disabled}>Submit</Button>
                                                     </Form>
                                                 </ModalBody>
