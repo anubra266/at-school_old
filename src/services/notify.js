@@ -34,6 +34,7 @@ class notify {
         })
     }
 
+
 }
 
 export default new notify();

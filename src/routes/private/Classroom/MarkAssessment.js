@@ -106,12 +106,12 @@ const MarkAssessment = ({slug, match, history}) => {
                                 <Row>
                                     <Col md="12">
                                         <FormGroup>
-                                            <label>Enter Score here:</label>
+                                            <label>Enter Score here - <strong>Obtainable Mark({test.total})</strong>:</label>
                                             <Input
                                                 style={{
                                                 color: "black"
                                             }}
-                                                max={test.total}
+                                                max={test.total} 
                                                 value={score}
                                                 onChange={(e) => setscore(e.target.value)}
                                                 type="number"

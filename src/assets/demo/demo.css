@@ -1,3 +1,7 @@
+.heyoffline_overlay{
+  z-index: 5000 !important;
+}
+
 .pag{
   color: black !important;
 }

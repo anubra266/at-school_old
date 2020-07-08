@@ -8,11 +8,7 @@ import "assets/scss/black-dashboard-react.scss";
 import "assets/demo/demo.css";
 import "assets/css/nucleo-icons.css";
 
-import PublicRoutes from "./routes/PublicRoutes";
-import PrivateRoutes from "./routes/PrivateRoutes";
-
-import NoAuthRoute from "./routes/HOC/NoAuthRoute.js";
-import PrivateRoute from "./routes/HOC/PrivateRoute.js";
+import IndexRoutes from "./IndexRoutes";
 
 import Echo from "laravel-echo"
 window.io = require('socket.io-client');
@@ -32,9 +28,7 @@ ReactDOM.render(
     <ReactNotifications/>
     <Router history={hist}>
         <Switch>
-            {/*//?Do not change the arrangement of the routes, remember what it did to you😂😂🤣*/}
-            <PrivateRoute path="/in" component={PrivateRoutes}/>
-            <NoAuthRoute path="/" component={PublicRoutes}/>
+            <IndexRoutes></IndexRoutes>
         </Switch>
     </Router>
 </div>, document.getElementById("root"));

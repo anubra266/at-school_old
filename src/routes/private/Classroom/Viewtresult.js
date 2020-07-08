@@ -108,8 +108,10 @@ const Viewtresult = ({match, slug}) => {
             obj.email = result.user.email;
             obj.telephone = result.user.telephone;
             obj.dateofbirth = result.user.dateOfBirth; 
-            obj.score = result.score+"/"+test.total +' '+(Math.round(result.score/test.total*100))+"%";
-            data.push(obj);
+            obj.score = result.score;
+            obj.total = result.total;
+            obj.percentage = (Math.round(result.score/result.total*100))+"%"
+            data.push(obj); 
         }
         return data;
     }
@@ -174,6 +176,8 @@ const Viewtresult = ({match, slug}) => {
                                                                         })}
                                                                         
                                                                         <Workbook.Column label="Score" value="score"/>
+                                                                        <Workbook.Column label="Total" value="total"/>
+                                                                        <Workbook.Column label="Percentage" value="percentage"/>
                                                                       </Workbook.Sheet>
                                                                     </Workbook>
                                                                             </Col>
