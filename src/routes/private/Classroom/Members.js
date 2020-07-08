@@ -8,7 +8,6 @@ import {
     Row,
     Col,
     Button,
-    ButtonGroup,
     Table,
     Modal,
     ModalBody,
@@ -18,7 +17,7 @@ import {
 } from "reactstrap";
 
 import UserService from "../../../services/user.service";
-import notify from "../../../services/notify.js"
+// import notify from "../../../services/notify.js"
 import className from "classnames";
 
 const Members = ({user, slug}) => {

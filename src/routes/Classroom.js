@@ -166,12 +166,13 @@ class Classroom extends React.Component {
         };
         const getRoutes = () => {
             return allowedRoutes.map(({layout, component, url}) => {
-                if (layout === this.state.layout) {
-                    return (<ReRoute
-                        key={component}
-                        path={`${this.props.match.path}${url}`}
-                        component={Routes[component]}/>)
-                }
+
+                return (
+                    layout === this.state.layout?<ReRoute
+                    key={component}
+                    path={`${this.props.match.path}${url}`}
+                    component={Routes[component]}/>:''
+                );
 
             })
         }

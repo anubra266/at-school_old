@@ -12,7 +12,6 @@ import {
     Pagination, PaginationItem, PaginationLink
 } from "reactstrap";
 import notify from "../../../services/notify.js"
-import className from "classnames";
 import UserService from "../../../services/user.service";
 
 const Assessments = ({history, educator, slug, match, location}) => {

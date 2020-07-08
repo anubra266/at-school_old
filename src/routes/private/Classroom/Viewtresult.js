@@ -12,7 +12,6 @@ import {
     Table,
     Modal,
     ModalBody,
-    CardText,
     Label,
     CustomInput,
     Input,
@@ -20,7 +19,6 @@ import {
 } from "reactstrap";
 
 import UserService from "../../../services/user.service";
-import notify from "../../../services/notify.js"
 import className from "classnames";
 
 

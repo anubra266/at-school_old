@@ -141,7 +141,7 @@ class Test extends React.Component {
             ]
         }, []);
         allowedRoutes = uniqBy(allowedRoutes, 'component');
-        const ReRoute = ({
+        const ReRoute = ({ 
             component: Component,
             ...rest
         }) => {
@@ -158,13 +158,12 @@ class Test extends React.Component {
         };
         const getRoutes = () => {
             return allowedRoutes.map(({layout, component, url}) => {
-                if (layout === this.state.layout) {
-                    
-                    return (<ReRoute
-                        key={component}
-                        path={this.state.layout+'/'+this.props.match.params.slug+url}
-                        component={Routes[component]}/>)
-                }
+                return (
+                    layout === this.state.layout?<ReRoute
+                    key={component}
+                    path={this.state.layout+'/'+this.props.match.params.slug+url}
+                    component={Routes[component]}/>:''
+                );
 
             })
         }

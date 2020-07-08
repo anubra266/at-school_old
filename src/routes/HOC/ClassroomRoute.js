@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import {Route, Redirect, withRouter} from "react-router-dom";
 import UserService from "../../services/user.service";
 
@@ -14,8 +14,7 @@ const ClassroomRoute = ({
     component: Component,
     ...rest
 }) => {
-    const [status,
-        setstatus] = useState(user_status);
+    const status = user_status;
         const url = location.pathname;
         const slug = url.split('/')[3]
     useEffect(() => {

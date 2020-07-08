@@ -186,7 +186,6 @@ class Dashboard extends React.Component {
                     }}
                         toggleSidebar={this.toggleSidebar}
                         logout={this.logOut}
-                        routes={routes}
                         user={currentUser}
                         allowedRoutes={allowedRoutes}
                         thislayout={this.state.layout}/>
