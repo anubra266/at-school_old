@@ -2,6 +2,11 @@ import {store} from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
 class notify {
+    
+    date(date){
+        const options = {weekday:"short", year: "numeric", month: "long", day: "numeric", hour:"numeric", minute:"numeric", hour12:true}
+        return new Date(date).toLocaleString(undefined, options)
+    }
     appname() {
         return 'at-School';
     }

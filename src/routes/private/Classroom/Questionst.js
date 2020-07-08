@@ -75,7 +75,7 @@ const Questiona = ({match, history}) => {
                             <Row>
                                 <Col sm="4">
                                     <p className="title">
-                                        Deadline:{" " + new Date(test.deadline).toLocaleString()}
+                                        Deadline:{" " + notify.date(test.deadline)}
                                     </p>
                                 </Col>
                             </Row>
@@ -92,7 +92,7 @@ const Questiona = ({match, history}) => {
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 onInit={editor => {
-                                                editor.setData('<h1><u>' + test.title + '</u></h1><br /><h3><span style="color:hsl(0,75%,60%);">Deadline: ' + new Date(test.deadline).toLocaleString() + '</span></h3><br />Edit this to your taste😋');
+                                                editor.setData('<h1><u>' + test.title + '</u></h1><br /><h3><span style="color:hsl(0,75%,60%);">Deadline: ' + notify.date(test.deadline) + '</span></h3><br />Edit this to your taste😋');
                                             }}
                                                 onChange={(event, editor) => {
                                                 const data = editor.getData();

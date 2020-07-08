@@ -106,7 +106,7 @@ const TheoryTest = ({user, match, history}) => {
                                         // setanswereditor(editor);
                                         editor.setData(answered
                                             ? test.theoryquestion.theoryanswer[0].answer
-                                            : '<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + new Date().toLocaleDateString() + '</span></h5><br /> Edit this to your taste😋');
+                                            : '<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + notify.date(new Date()) + '</span></h5><br /> Edit this to your taste😋');
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();

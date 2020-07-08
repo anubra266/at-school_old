@@ -26,6 +26,7 @@ import notify from "../../../services/notify.js"
 import className from "classnames";
 import UserService from "../../../services/user.service";
 import StudentResults from "./StudentResults";
+import EducatorResults from "./EducatorResults";
 
 const Tests = ({history, educator, slug, match, location}) => {
 
@@ -38,7 +39,7 @@ const Tests = ({history, educator, slug, match, location}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Tests 
+                                    Results
                                 </Col>
                                 {educator
                                     ? <Col md="2">
@@ -50,11 +51,11 @@ const Tests = ({history, educator, slug, match, location}) => {
                                     : ''}
                             </Row>
                         </CardHeader>
+
                         {educator
-                            ? <StudentResults ></StudentResults>
+                            ? <EducatorResults slug={slug}></EducatorResults>
 
-                            : ''}
-
+                            : <StudentResults slug={slug}></StudentResults>}
 
                     </Card>
                 </Col>

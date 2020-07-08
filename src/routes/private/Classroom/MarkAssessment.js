@@ -37,23 +37,26 @@ const MarkAssessment = ({slug, match, history}) => {
                 settest(response.data);
                 setanswer(response.data.answer.answer);
                 setdisabled(false);
+                setscore(response.data.score
+                    ? response.data.score
+                    : 0)
             });
 
     }, []);
-    const finishmarktest = (e)=>{
+    const finishmarktest = (e) => {
         e.preventDefault()
         setdisabled(true);
         UserService
-                    .finishmarktest(test.answer.id, answer, test.id, score)
-                    .then(response => {
-                        notify.user('Mark Test', 'Saved Successfully', 'success');
-                        setdisabled(false);
-                        history.push('/in/classroom/' + slug + "/submissions/"+test.id);
-                    }, error => {
-                        const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-                        notify.user('Mark Test', errMsg, 'danger');
-                        setdisabled(false);
-                    })
+            .finishmarktest(test.answer.id, answer, test.id, score)
+            .then(response => {
+                notify.user('Mark Test', 'Saved Successfully', 'success');
+                setdisabled(false);
+                history.push('/in/classroom/' + slug + "/submissions/" + test.id);
+            }, error => {
+                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Mark Test', errMsg, 'danger');
+                setdisabled(false);
+            })
     }
     return (
         <div className="content">
@@ -74,7 +77,8 @@ const MarkAssessment = ({slug, match, history}) => {
                                     {test
                                         .user
                                         .lastName
-                                        .split('').pop() === 's'
+                                        .split('')
+                                        .pop() === 's'
                                         ? ''
                                         : "'s"}
                                     {" submission for " + test.title + " Test."}
@@ -90,8 +94,8 @@ const MarkAssessment = ({slug, match, history}) => {
                                     <CKEditor
                                         editor={ClassicEditor}
                                         onInit={editor => {
-                                        editor.setData('<span style="color:hsl(0,75%,60%);">NB: You can pick the red color for distinct ' +
-                                                'test corrections.</span><br />' + test.answer.answer);
+                                        editor.setData((test.score?'':'<span style="color:hsl(0,75%,60%);">NB: You can pick the red color for distinct ' +
+                                                'test corrections.</span><br />') + test.answer.answer);
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();
@@ -102,7 +106,7 @@ const MarkAssessment = ({slug, match, history}) => {
                                 <Row>
                                     <Col md="12">
                                         <FormGroup>
-                                        <label>Enter Score here:</label>
+                                            <label>Enter Score here:</label>
                                             <Input
                                                 style={{
                                                 color: "black"

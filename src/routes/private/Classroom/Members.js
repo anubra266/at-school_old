@@ -208,7 +208,7 @@ const Members = ({user, slug}) => {
                                             </span>
 
                                         : <div>
-                                            <span className="text-info"></span>
+                                            <span className="text-info">wait...</span>
                                         </div>}
 
                                     {nomembers

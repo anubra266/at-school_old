@@ -322,10 +322,10 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                             </CardTitle>
                                                             <CardTitle>
                                                                 <strong>Created:{" "}</strong>
-                                                                {new Date(test.created_at).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.created_at)}</CardTitle>
                                                             <CardTitle>
                                                                 <strong>Deadline:{" "}</strong>
-                                                                {new Date(test.deadline).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.deadline)}</CardTitle>
                                                             <Button
                                                                 tag="label"
                                                                 color="info"
@@ -356,10 +356,10 @@ const Tests = ({history, educator, slug, match, location}) => {
                                                             </CardTitle>
                                                             <CardTitle>
                                                                 <strong>Created:{" "}</strong>
-                                                                {new Date(test.created_at).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.created_at)}</CardTitle>
                                                             <CardTitle>
                                                                 <strong>Deadline:{" "}</strong>
-                                                                {new Date(test.deadline).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.deadline)}</CardTitle>
                                                             <CardTitle>
                                                                 <strong>Duration:{" "}</strong>
                                                                 {test.duration + " "}Minutes</CardTitle>

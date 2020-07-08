@@ -128,6 +128,22 @@ export default {
                 icon: "tim-icons icon-paper",
                 layout: "/in/classroom",
                 dont_show: true
+            },
+            {
+                component: 'Viewtresult',
+                url: '/viewtresult/:test',
+                name: 'Viewtresult',
+                icon: "tim-icons icon-paper",
+                layout: "/in/classroom",
+                dont_show: true
+            },
+            {
+                component: 'Vieworesult',
+                url: '/vieworesult/:test',
+                name: 'Vieworesult',
+                icon: "tim-icons icon-paper",
+                layout: "/in/classroom",
+                dont_show: true
             }, {
                 component: 'Assessments',
                 url: '/assessments',

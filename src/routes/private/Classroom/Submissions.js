@@ -12,6 +12,7 @@ import {
 
 import UserService from "../../../services/user.service";
 // import className from "classnames";
+import notify from "../../../services/notify.js"
 
 const Submissions = ({slug, history, match}) => {
 
@@ -30,6 +31,9 @@ const Submissions = ({slug, history, match}) => {
                 if (response.data.length < 1) {
                     setnosubmissions(true);
                 } else {
+                    response.data.sort((a,b)=>{
+                        return a.marked&&!b.marked? 1: -1;
+                    })
                     setsubmissions(response.data);
                     setnosubmissions(false);
                 }
@@ -96,7 +100,7 @@ const Submissions = ({slug, history, match}) => {
                                                                             {(submission.user.firstName) + " " + (submission.user.middleName).charAt(0) + ". " + submission.user.lastName}
                                                                         </td>
                                                                         <td>{submission.user.email}</td>
-                                                                        <td>{new Date(submission.updated_at).toLocaleString()}</td>
+                                                                        <td>{notify.date(submission.updated_at)}</td>
                                                                         <td>{submission.marked?"✔️":''}</td>
                                                                     </tr>
                                                                 )
@@ -105,7 +109,7 @@ const Submissions = ({slug, history, match}) => {
                                                     </Table>
 
                                                 : <div>
-                                                    <span className="text-info"></span>
+                                                    <span className="text-info">wait...</span>
                                                 </div>}
 
                                             {nosubmissions

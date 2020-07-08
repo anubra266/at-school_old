@@ -8,7 +8,8 @@ import {
     Row,
     Col,
     Button,
-    CardTitle
+    CardTitle,
+    Pagination, PaginationItem, PaginationLink
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 import className from "classnames";
@@ -16,8 +17,15 @@ import UserService from "../../../services/user.service";
 
 const Assessments = ({history, educator, slug, match, location}) => {
 
+
+
     const [theoryTests,
         settheoryTests] = useState(null);
+    const pageSize = 3;
+    const [pagesCount,
+            setpagesCount] = useState(0);
+    const [currentPage,
+            setcurrentPage] = useState(0);
 
     const [notheory,
         setnotheory] = useState(null);
@@ -33,12 +41,17 @@ const Assessments = ({history, educator, slug, match, location}) => {
                     settheoryTests(response.data);
                     setnotheory(false);
                 }
-
+                setpagesCount(Math.ceil(response.data.length / pageSize))
             });
         }
     useEffect(() => {
         updatetheorytests();
     }, []); 
+
+    const handleClick = (e,index)=>{
+        e.preventDefault();
+        setcurrentPage(index);
+    }
 
     window
     .Echo
@@ -53,9 +66,7 @@ const Assessments = ({history, educator, slug, match, location}) => {
     } 
     return (
         <div className="content">
-
-            <Row>
-                <Col md="12">
+ 
                     <Card>
                         <CardHeader>
                             <Row>
@@ -65,11 +76,14 @@ const Assessments = ({history, educator, slug, match, location}) => {
                                  
                             </Row>
                         </CardHeader>
-                        <CardBody className="all-icons">
+                        <CardBody className="all-icons"> 
 
                                     <Row>
                                         {theoryTests
-                                            ? theoryTests.map((test) => {
+                                            ? theoryTests.slice(
+                                                currentPage * pageSize,
+                                                (currentPage + 1) * pageSize
+                                              ).map((test) => {
                                                 return (
                                                     <Col md="4">
                                                         <Card body>
@@ -78,10 +92,10 @@ const Assessments = ({history, educator, slug, match, location}) => {
                                                             </CardTitle>
                                                             <CardTitle>
                                                                 <strong>Created:{" "}</strong>
-                                                                {new Date(test.created_at).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.created_at)}</CardTitle>
                                                             <CardTitle>
                                                                 <strong>Deadline:{" "}</strong>
-                                                                {new Date(test.deadline).toLocaleString()}</CardTitle>
+                                                                {notify.date(test.deadline)}</CardTitle>
                                                             <Button
                                                                 tag="label"
                                                                 color="info"
@@ -98,11 +112,36 @@ const Assessments = ({history, educator, slug, match, location}) => {
                                                         They'll be here when available.</div> </Col>
                                                 : ''}
                                     </Row>
+                                    <div className="pagination-wrapper">
 
+                            <Pagination aria-label="Page navigation example">
+
+                                <PaginationItem disabled={currentPage <= 0}>
+
+                                    <PaginationLink
+                                        onClick={e => handleClick(e, currentPage - 1)}
+                                        previous
+                                        href="#"/>
+
+                                </PaginationItem>
+
+                                {[...Array(pagesCount)].map((page, i) => <PaginationItem active={i === currentPage} key={i} className="pag">
+                                    <PaginationLink onClick={e => handleClick(e, i)} href="#">
+                                        {i + 1}
+                                    </PaginationLink>
+                                </PaginationItem>)}
+
+                                <PaginationItem disabled={currentPage >= pagesCount - 1}>
+
+                                    <PaginationLink onClick={e => handleClick(e, currentPage + 1)} next href="#"/>
+
+                                </PaginationItem>
+
+                            </Pagination>
+
+                        </div>
                         </CardBody>
                     </Card>
-                </Col>
-            </Row>
         </div>
     );
 

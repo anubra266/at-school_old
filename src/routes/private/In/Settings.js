@@ -146,7 +146,7 @@ const Settings = ({user}) => {
                                
                           <p className="description">{user.email}</p>
                           <p className="description">{"+" + user.telephone}</p>
-                          <p className="description">{new Date(user.dateOfBirth).toLocaleDateString()}</p>
+                          <p className="description">{notify.date(user.dateOfBirth)}</p>
                             </div>
                             <div className="card-description welct">
                                

@@ -17,6 +17,8 @@ import Questionso from "./private/Classroom/Questionso.js"
 import MarkAssessment from "./private/Classroom/MarkAssessment.js"
 import Submissions from "./private/Classroom/Submissions.js"
 import Results from "./private/Classroom/Results.js"
+import Viewtresult from "./private/Classroom/Viewtresult.js"
+import Vieworesult from "./private/Classroom/Vieworesult.js"
 
 
 import TheoryTest from "./private/Test/TheoryTest.js"
@@ -41,6 +43,8 @@ import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
     MarkAssessment,
     Submissions,
     Results,
+    Viewtresult,
+    Vieworesult,
     ObjectiveTest,
     ObjectiveTestReview,
   }

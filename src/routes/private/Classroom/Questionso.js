@@ -263,12 +263,12 @@ const Questiona = ({match, history}) => {
                             <Row>
                                 <Col sm="4">
                                     <p className="title">
-                                        Start-Time:{" " + new Date(test.starttime).toLocaleString()}
+                                        Start-Time:{" " + notify.date(test.starttime)}
                                     </p>
                                 </Col>
                                 <Col sm="4">
                                     <p className="title">
-                                        Deadline:{" " + new Date(test.deadline).toLocaleString()}
+                                        Deadline:{" " + notify.date(test.deadline)}
                                     </p>
                                 </Col>
                             </Row>

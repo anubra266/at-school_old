@@ -371,7 +371,7 @@ const Register = ({location, history}) => {
                                           : "+" + telephone}</p>
                                   <p className="description">{dateOfBirth === ""
                                           ? ""
-                                          : new Date(dateOfBirth).toLocaleDateString()}</p>
+                                          : notify.date(dateOfBirth)}</p>
                                   <Button disabled={loading} className="btn-fill" color="primary" type="submit">
                                       Submit
                                   </Button>

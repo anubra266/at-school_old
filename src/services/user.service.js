@@ -154,6 +154,16 @@ class UserService {
             headers: authHeader()
         },);
     }
+    getalltheorytestsresults(slug) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'alltheorytestsresults',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
     submittheorytest(question_id, answer) {
         return axios({
             method: 'POST',
@@ -186,6 +196,11 @@ class UserService {
             headers: authHeader()
         },);
     }
+    gettestresults(test) {
+        return axios.get(API_URL + 'gettestresults/' + test, {
+            headers: authHeader(),
+        });
+    }
     createobjecivetest(slug, title, duration, starttime, deadline) {
         return axios({
             method: 'POST',
@@ -204,6 +219,16 @@ class UserService {
         return axios.get(API_URL + 'showobjectivetest/' + id, {
             headers: authHeader(),
         });
+    }
+    getallobjectivetests(slug) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'allobjectivetests',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
     }
     getobjectivetestreview(id) {
         return axios.get(API_URL + 'objectivetestreview/' + id, {headers: authHeader()});
@@ -252,7 +277,21 @@ class UserService {
     getobjectivetestresult(id) {
         return axios.get(API_URL + 'objectivetestresult/' + id, {headers: authHeader()});
     }
-
+    getallobjectivetestsresults(slug) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'allobjectivetestsresults',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
+    gettestoresults(test) {
+        return axios.get(API_URL + 'gettestoresults/' + test, {
+            headers: authHeader(),
+        });
+    }
     getmembers(slug) {
         return axios({
             method: 'POST',
