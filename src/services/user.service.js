@@ -10,6 +10,9 @@ class UserService {
     getUser() {
         return axios.get(API_URL + 'user', {headers: authHeader()});
     }
+    gethomeinfo(id) {
+        return axios.get(API_URL + 'homeinfo', {headers: authHeader()});
+    }
     createorganization(name, address, first_time) {
         return axios({
             method: 'POST',

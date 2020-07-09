@@ -6,7 +6,7 @@ import PrivateRoutes from "./routes/PrivateRoutes";
 import NoAuthRoute from "./routes/HOC/NoAuthRoute.js";
 import PrivateRoute from "./routes/HOC/PrivateRoute.js";
 
-import notify from "./services/notify.js";
+// import notify from "./services/notify.js";
 import Heyoffline from "../node_modules/heyoffline/dist/heyoffline.esm.js";
 
 const IndexRoutes = () => {
