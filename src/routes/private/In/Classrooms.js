@@ -173,7 +173,7 @@ const Classrooms = ({user}) => {
                                                 <tbody>
                                                     {classrooms.map((classroom, key) => {
                                                         return (
-                                                            <tr>
+                                                            <tr key={key}>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
                                                                     <Link to={"/in/classroom/" + classroom.slug+"/tests"}>

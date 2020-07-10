@@ -34,7 +34,13 @@ orderhome();
 const Home = ({user}) => {
 
   const [HomeInfo,setHomeInfo] = useState(home);
-
+    const updateHomeInfo = ()=>{
+      UserService
+          .gethomeinfo()
+          .then(response => {
+              setHomeInfo(response.data);
+          });
+    }
      const [bigChartData, setbigChartData] = useState(HomeInfo.theoryTests[1].length>1?'theory':'objective')
 
      const setBgChartData = name => {
@@ -47,29 +53,13 @@ const Home = ({user}) => {
   }, []);
     const roles = user_roles_arr.filter((a, b) => user_roles_arr.indexOf(a) === b);
     const role_level = roles.length;
-    var role;
-    switch (role_level){
-      case 1:
-        role = 'student';
-        break;
-      case 2:
-        role = 'educator';
-        break;
-      case 3:
-        role = "dephead";
-        break;
-      case 4:
-        role = "orgadmin";
-        break;
-      default:
-        role = 'student';
-    }
+
     var cards = [
       {
         header:"Classrooms Joined",
         icon:"icon-group",
         value:HomeInfo.classroomsJoined[0],
-        content:"Classrooms Joined",
+        content:"",
         color:"text-info",
         show:()=>{
           return true;
@@ -79,7 +69,7 @@ const Home = ({user}) => {
         header:"Theory Tests Taken",
         icon:"icon-group",
         value:HomeInfo.theoryTests[0],
-        content:"Theory Tests Taken",
+        content:"",
         color:"text-primary",
         show:()=>{
           return true;
@@ -89,17 +79,17 @@ const Home = ({user}) => {
         header:"Objective Tests Taken",
         icon:"icon-group",
         value:HomeInfo.objectiveTests[0],
-        content:"Objective Tests Taken",
-        color:"text-warning",
+        content:"",
+        color:"text-warning",  
         show:()=>{
           return true;
-        }
+        } 
       },
       {
         header:"Classroom Students",
         icon:"icon-group",
         value:HomeInfo.classroomStudents,
-        content:"Classroom Students",
+        content:"",
         color:"text-info",
         show:()=>{
           return role_level===2
@@ -109,7 +99,7 @@ const Home = ({user}) => {
         header:"Classrooms Created",
         icon:"icon-group",
         value:HomeInfo.classroomsCreated[0],
-        content:"Classrooms Created",
+        content:"",
         color:"text-warning",
         show:()=>{
           return role_level>1
@@ -119,7 +109,7 @@ const Home = ({user}) => {
         header:"Classroom Tests",
         icon:"icon-group",
         value:HomeInfo.classroomTests,
-        content:"Classroom Tests",
+        content:"",
         color:"text-danger",
         show:()=>{
           return role_level>1
@@ -129,7 +119,7 @@ const Home = ({user}) => {
         header:"Environs Created",
         icon:"icon-group",
         value:HomeInfo.environs[0],
-        content:"Environs Created",
+        content:"",
         color:"text-danger",
         show:()=>{
           return role_level>2
@@ -139,7 +129,7 @@ const Home = ({user}) => {
         header:"Environ Educators",
         icon:"icon-group",
         value:HomeInfo.environEducators,
-        content:"Environ Educators",
+        content:"",
         color:"text-primary",
         show:()=>{
           return role_level===3
@@ -149,7 +139,7 @@ const Home = ({user}) => {
         header:"Environ Students",
         icon:"icon-group",
         value:HomeInfo.environStudents,
-        content:"Environ Students",
+        content:"",
         color:"text-info",
         show:()=>{
           return role_level===3
@@ -159,7 +149,7 @@ const Home = ({user}) => {
         header:"Organizations",
         icon:"icon-group",
         value:HomeInfo.organizations[0],
-        content:"Organizations",
+        content:"",
         color:"text-warning",
         show:()=>{
           return role_level>3
@@ -169,7 +159,7 @@ const Home = ({user}) => {
         header:"Organization Students",
         icon:"icon-group",
         value:HomeInfo.organizationStudents,
-        content:"Organization Students",
+        content:"",
         color:"text-info",
         show:()=>{
           return role_level===4
@@ -179,18 +169,41 @@ const Home = ({user}) => {
         header:"Organization Educators",
         icon:"icon-group",
         value:HomeInfo.organizationEducators,
-        content:"Organization Educators",
+        content:"",
         color:"text-warning",
         show:()=>{
           return role_level===4
         }
       },
     ]
+
+    window
+        .Echo
+        .channel('at_school_database_classes')
+        .listen('UpdateClasses', e => {
+            updateHomeInfo();
+        })
+        .listen('UpdateClassrooms', e => {
+          updateHomeInfo();
+        })
+        .listen('UpdateClasses', e => {
+            updateHomeInfo();
+        })
+        .listen('UpdateEnvirons', e => {
+          updateHomeInfo();
+        })
+        .listen('UpdateMembers', e => {
+        updateHomeInfo();
+        })
+        .listen('UpdateOrganizations', e => {
+            updateHomeInfo();
+        })
+
     return (
         <>
         <div className="content">
           <Row>
-          {cards.filter(card=>{return card.show()&&card.value>0}).length<2
+          {cards.filter(card=>{return card.show()&&card.value>0}).length<2&&cards[0].value<2
             ?<Col xs="12">
             <Jumbotron>
             <h1 className="display-3">Welcome!</h1>
@@ -198,7 +211,19 @@ const Home = ({user}) => {
             <hr className="my-2" />
             <p>As you progress, all your activities will be summarised here, so you can always have a quick look at your stats<span aria-label="welcome smile" role="img">😁</span></p>
           </Jumbotron>
-            </Col>:''}
+            </Col>
+          :<Col xs="12">
+          <Card className="card-chart">
+                <CardHeader>
+
+                <Row>
+                    <Col className="text-left" sm="6">
+                      Home
+                    </Col>
+                    </Row>
+                    </CardHeader>
+                    </Card>
+          </Col>}
           
 
             {HomeInfo.objectiveTests[1].length>1||HomeInfo.theoryTests[1].length>1
@@ -283,9 +308,9 @@ const Home = ({user}) => {
           </Row>
           <Row>
 
-            {cards.filter(card=>{return card.show()&&card.value>0}).map((card=>{
+            {cards.filter(card=>{return card.show()&&card.value>0}).map(((card, key)=>{
               return (
-                <Col lg="4">
+                <Col lg="4" key={key}>
                 <Card className="card-chart">
                   <CardHeader>
                     <h5 className="card-category">{card.header}</h5>

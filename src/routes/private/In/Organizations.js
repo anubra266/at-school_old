@@ -175,7 +175,7 @@ const Organizations = ({user, history}) => {
                                                 <tbody>
                                                     {organizations.map((organization, key) => {
                                                         return (
-                                                            <tr>
+                                                            <tr key={key}>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
                                                                     {organization.name}

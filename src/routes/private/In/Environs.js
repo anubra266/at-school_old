@@ -175,7 +175,7 @@ const Environs = ({user, history}) => {
                                                 <tbody>
                                                     {environs.map((environ, key) => {
                                                         return (
-                                                            <tr>
+                                                            <tr key={key}>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
                                                                     {environ.name}
