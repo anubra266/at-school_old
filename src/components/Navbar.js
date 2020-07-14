@@ -43,15 +43,6 @@ class LandingNavbar extends React.Component {
     render() {
         return (
             <div>
-                <div class="site-mobile-menu site-navbar-target">
-                    <div class="site-mobile-menu-header">
-                        <div class="site-mobile-menu-close mt-3">
-                            <span class="icon-close2 js-menu-toggle"></span>
-                        </div>
-                    </div>
-                    <div class="site-mobile-menu-body"></div>
-                </div>
-
                 <header
                     className="site-navbar py-4 js-sticky-header site-navbar-target"
                     role="banner">
@@ -73,7 +64,7 @@ class LandingNavbar extends React.Component {
                             {this.props.location.pathname === "/"
 
                                 ? <div className="mx-auto text-center">
-                                        <nav className="site-navigation position-relative text-right" role="navigation">
+                                         <nav className="site-navigation position-relative text-right" role="navigation">
                                             <ul
                                                 className="site-menu main-menu js-clone-nav mx-auto d-none d-lg-block  m-0 p-0">
                                                 <li>
@@ -92,13 +83,9 @@ class LandingNavbar extends React.Component {
                                     <ul
                                         className="site-menu main-menu site-menu-dark js-clone-nav mr-auto d-none d-lg-block m-0 p-0">
                                         <li className="cta">
-                                            {this.props.location.pathname !== "/register"
-                                                ? <Link to="/register" className="nav-link">
+                                                    <Link to="/register" className="nav-link">
                                                         <span>Sign Up</span>
                                                     </Link>
-                                                : <Link to="/login" className="nav-link">
-                                                    <span>Login</span>
-                                                </Link>}
 
                                         </li>
                                     </ul>

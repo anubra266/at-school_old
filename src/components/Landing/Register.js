@@ -1,62 +1,91 @@
-/*!
-
-=========================================================
-* Black Dashboard React v1.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/black-dashboard-react
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/black-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
- 
-*/
 import React, {useState, useRef} from "react";
+import {Link} from "react-router-dom";
+import notify from "../../services/notify";
+import AuthService from "../../services/auth.service";
 import AvatarEditor from 'react-avatar-editor'
-
-import Navbar from "../Navbar.js";
-// reactstrap components
-import {
-    Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardText,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-    CustomInput
-} from "reactstrap";
 import ReactPhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/bootstrap.css';
 import PasswordInput from "../PasswordStrength/Password-Input";
-import AuthService from "../../services/auth.service";
-import notify from "../../services/notify";
+import {
+    Row,
+    Col,
+    FormGroup,
+    CustomInput,
+    Card,
+    CardBody,
+    CardText,
+    Input
+} from "reactstrap";
 
-const Register = ({location, history}) => {
-  
+const Register = ({
+    location,
+    history
+}, props) => {
+    const [page,
+        setpage] = useState(1);
+    const validateEmail = (testemail) => {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(testemail)) {
+            return (true)
+        }
+        return (false)
+    }
+    const move = (topage) => {
+        if (page > topage) {
+            setpage(topage)
+        } else {
+            switch (topage) {
+                case 2:
+                    if (firstName.trim() !== "" && middleName.trim() !== "" && lastName.trim() !== "") {
+                        setpage(topage)
+                    } else {
+                        notify.user('Register', 'All fields are required', 'warning')
+
+                    };
+                    break;
+                case 3:
+                    if (!validateEmail(email)) {
+                        notify.user('Register', 'Input Valid Email', 'warning')
+
+                    } else if (email.trim() !== "" && telephone.trim() !== "" && dateOfBirth !== "") {
+                        setpage(topage)
+                    }else{
+                        notify.user('Register', 'All fields are required', 'warning')
+                    }
+                    break;
+                case 4:
+                    if(password===confirmpassword&&password.length>=6){
+                        setpage(topage);
+                    }else{
+                        notify.user('Register', 'Input Matching Passwords (at least 6 characters)', 'warning')
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     const [firstName,
-        setfirstName] = useState(''); 
+        setfirstName] = useState('');
     const [middleName,
         setmiddleName] = useState('');
     const [lastName,
         setlastName] = useState('');
+    const [gender,
+        setgender] = useState('male');
+
     const [email,
         setemail] = useState('');
     const [telephone,
         settelephone] = useState('');
     const [dateOfBirth,
         setdateOfBirth] = useState('');
+
     const [password,
         setpassword] = useState('');
     const [confirmpassword,
         setconfirmpassword] = useState('');
+
     const [profile_image,
         setprofile_image] = useState(null);
     const [src,
@@ -68,9 +97,6 @@ const Register = ({location, history}) => {
     const [loading,
         setloading] = useState(false);
     const editor = useRef(null);
-    const passwordchange = (e) => {
-        setpassword(e.target.value);
-    }
     const checkfile = image => {
 
         if (!image) {
@@ -128,15 +154,18 @@ const Register = ({location, history}) => {
                 });
         }
     }
+    const passwordchange = (e) => {
+        setpassword(e.target.value);
+    }
     const handleRegister = (e) => {
         e.preventDefault();
         setloading(true)
-        if (image_name==="default-avatar.png") {
+        if (image_name === "default-avatar.png") {
             notify.user('Registration', 'Upload another Image!', 'danger')
             setloading(false)
         } else {
             AuthService
-                .register(firstName, middleName, lastName, email, telephone, dateOfBirth, password, profile_image)
+                .register(firstName, middleName, lastName, gender, email, telephone, dateOfBirth, password, profile_image)
                 .then(response => {
                     notify.user('Registration', 'Registration was succssful 🤜', 'success')
                     notify.user('Registration', 'Logging you in... 🚶', 'info')
@@ -162,234 +191,295 @@ const Register = ({location, history}) => {
     }
     return (
         <div>
-        <Navbar location={location}/>
-        <div className="limiter">
-            <div className="container-login100">
-            <div className="">
-            <Form onSubmit={handleRegister} encType="multipart/form-data">
-              <Row>
-                  <Col md="8">
-                      <Card>
-                          <CardHeader>
-                              <h5 className="title">Register</h5>
-                          </CardHeader>
-                          <CardBody>
-                              <Row>
-                                  <Col className="pr-md-1" md="4">
-                                      <FormGroup>
-                                          <label>First Name</label>
-                                          <Input
-                                              placeholder="Doe"
-                                              type="text"
-                                              required
-                                              value={firstName}
-                                              onChange={(e) => {
-                                              setfirstName(e.target.value)
-                                          }}/>
-                                      </FormGroup>
-                                  </Col>
-                                  <Col className="px-md-1" md="4">
-                                      <FormGroup>
-                                          <label>Middle Name</label>
-                                          <Input
-                                              placeholder="Smith"
-                                              type="text"
-                                              required
-                                              value={middleName}
-                                              onChange={(e) => {
-                                              setmiddleName(e.target.value)
-                                          }}/>
-                                      </FormGroup>
-                                  </Col>
-                                  <Col className="pl-md-1" md="4">
-                                      <FormGroup>
-                                          <label>Last Name</label>
-                                          <Input
-                                              placeholder="John"
-                                              type="text"
-                                              required
-                                              value={lastName}
-                                              onChange={(e) => {
-                                              setlastName(e.target.value)
-                                          }}/>
-                                      </FormGroup>
-                                  </Col>
-                              </Row>
-                              <Row>
-                                  <Col className="pr-md-1" md="6">
-                                      <FormGroup>
-                                          <label>Email</label>
-                                          <Input
-                                              placeholder="john_doe@skul.xyz"
-                                              type="email"
-                                              required
-                                              value={email}
-                                              onChange={(e) => {
-                                              setemail(e.target.value)
-                                          }}/>
-                                      </FormGroup>
-                                  </Col>
-                                  <Col className="pl-md-1" md="6">
-                                      <FormGroup>
-                                          <label>Telephone</label>
-                                          <ReactPhoneInput
-                                              country={'ng'}
-                                              defaultCountry={'ngn'}
-                                              inputProps={{
-                                              name: 'telephone',
-                                              required: true
-                                          }}
-                                              value={telephone}
-                                              onChange={phone => settelephone(phone)}/>
-                                      </FormGroup>
-                                  </Col>
-                              </Row>
-                              <Row>
-                                  <Col md="12">
-                                      <FormGroup>
-                                          <label>Date Of Birth</label>
-                                          <Input
-                                              type="date"
-                                              required
-                                              value={dateOfBirth}
-                                              onChange={(e) => {
-                                              setdateOfBirth(e.target.value)
-                                          }}/>
-                                      </FormGroup>
-                                  </Col>
-                              </Row>
-                              <Row>
-                                  <Col className="pr-md-1" md="6">
-                                      <FormGroup>
-                                          <label>Password</label>
-                                          <PasswordInput
-                                              value={password}
-                                              placeholder='********'
-                                              handleChanges={passwordchange}/>
-                                      </FormGroup>
-                                  </Col>
-                                  <Col className="px-md-1" md="6">
-                                      <FormGroup>
 
-                                          <label>Confirm Password</label>
-                                          <div>
-                                              <Input
-                                                  placeholder="********"
-                                                  type="password"
-                                                  required
-                                                  value={confirmpassword}
-                                                  onChange={(e) => {
-                                                  setconfirmpassword(e.target.value);
-                                              }}/>
-                                              <label
-                                                  style={{
-                                                  color: "red",
-                                                  margin: "0 0"
-                                              }}>
-                                                  {password === confirmpassword
-                                                      ? ''
-                                                      : "Passwords don't match 😡"}
-                                              </label>
-                                          </div>
-                                      </FormGroup>
-                                  </Col>
-                              </Row>
+            <div className="limiter">
+                <div className="container-login100">
 
-                          </CardBody>
-                      </Card>
-                  </Col>
-                  <Col md="4">
-                      <Card className="card-user">
-                          <CardBody>
-                              <CardText/>
-                              <div className="author">
-                                  <div className="block block-one"/>
-                                  <div className="block block-two"/>
-                                  <div className="block block-three"/>
-                                  <div className="block block-four"/>
+                    <header
+                        className="site-navbar py-4 js-sticky-header site-navbar-target"
+                        role="banner">
 
-                                  <div
-                                      className="upload-butn-wrapper"
-                                      style={{
-                                      cursor: "pointer"
-                                  }}>
-                                      <AvatarEditor
-                                          image={src
-                                          ? src
-                                          : require("assets/img/default-avatar.png")}
-                                          border={20}
-                                          color={[255, 255, 255, 0.6]}
-                                          scale={parseInt(scale)}
-                                          rotate={0}
-                                          width={150}
-                                          height={150}
-                                          borderRadius={75}
-                                          ref={editor}
-                                          onPositionChange={() => updateimage()}
-                                          onImageReady={() => updateimage()}
-                                          className="avatar"/>
+                        <div className="container-fluid">
+                            <div className="d-flex align-items-center">
+                                <div className="site-logo mr-auto w-30">
+                                    <a href="/">at-School</a>
+                                </div>
 
-                                      <input
-                                          accept="image/jpeg"
-                                          type="file"
-                                          onChange={(e) => upload_profile_image(e)}/>
-                                      <br/>
-                                      <label>
-                                          {src
-                                              ? <FormGroup>
-                                                      <label htmlFor="zoom">Zoom in or Out</label>
-                                                      <CustomInput
-                                                          min={1}
-                                                          max={5}
-                                                          step={0.2}
-                                                          value={scale}
-                                                          onChange={(e) => {
-                                                          setscale(e.target.value);
-                                                          updateimage()
-                                                      }}
-                                                          type="range"
-                                                          id="zoom"
-                                                          name="customRange"/>
-                                                  </FormGroup>
-                                              : ""}
-                                          {src
-                                              ? <span>
-                                                      <strong>{profile_image.name}</strong><br/>
-                                                      Click picture center to change, drag from bottom to adjust</span>
-                                              : <span>Click center above to Upload Profile Picture</span>
-}
+                            </div>
+                        </div>
 
-                                      </label>
-                                  </div>
-                                  <h5 className="title">{firstName + " "} {middleName === ""
-                                          ? ""
-                                          : middleName.charAt(0) + ". "}
-                                      {lastName}</h5>
-                                  <p className="description">{email}</p>
-                                  <p className="description">{telephone === ""
-                                          ? ""
-                                          : "+" + telephone}</p>
-                                  <p className="description">{dateOfBirth === ""
-                                          ? ""
-                                          : notify.date(dateOfBirth)}</p>
-                                  <Button disabled={loading} className="btn-fill" color="primary" type="submit">
-                                      Submit
-                                  </Button>
-                              </div>
-                          </CardBody>
+                    </header>
+                    <div className="row ceent">
+                        <div class="col-md-6">
+                            <div className="wrap-login100 p-t-50 p-b-90">
+                                <form
+                                    onSubmit={handleRegister}
+                                    className="login100-form validate-form flex-sb flex-w">
+                                    <span className="login100-form-title p-b-51">
+                                        Register
+                                    </span>
 
-                      </Card>
-                  </Col>
+                                    {page === 1
+                                        ? <span>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="text"
+                                                        name="firstName"
+                                                        value={firstName}
+                                                        onChange={(e) => {
+                                                        setfirstName(e.target.value)
+                                                    }}
+                                                        placeholder="First Name"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="text"
+                                                        name="middleName"
+                                                        value={middleName}
+                                                        onChange={(e) => {
+                                                        setmiddleName(e.target.value)
+                                                    }}
+                                                        placeholder="Middle Name"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="text"
+                                                        name="lastName"
+                                                        value={lastName}
+                                                        onChange={(e) => {
+                                                        setlastName(e.target.value)
+                                                    }}
+                                                        placeholder="Last Name"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <Row>
+                                                    <Col>
+                                                        <label className="radiocontainer">Male
+                                                            <Input
+                                                                onChange={(e) => {
+                                                                setgender(e.target.value)
+                                                            }}
+                                                                value="male"
+                                                                type="radio"
+                                                                checked={gender === "male"}
+                                                                name="gender"/>
+                                                            <span className="checkmark"></span>
+                                                        </label>
+                                                    </Col>
+                                                    <Col>
+                                                        <label className="radiocontainer">Female
+                                                            <Input
+                                                                onChange={(e) => {
+                                                                setgender(e.target.value)
+                                                            }}
+                                                                value="female"
+                                                                type="radio"
+                                                                checked={gender === "female"}
+                                                                name="gender"/>
+                                                            <span className="checkmark"></span>
+                                                        </label>
+                                                    </Col>
+                                                </Row>
 
-              </Row>
-          </Form>
+                                            </span>
+                                        : ''}
 
+                                    {page === 2
+                                        ? <span>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="email"
+                                                        name="email"
+                                                        value={email}
+                                                        onChange={(e) => {
+                                                        setemail(e.target.value)
+                                                    }}
+                                                        placeholder="Email"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <ReactPhoneInput
+                                                        country={'ng'}
+                                                        defaultCountry={'ngn'}
+                                                        inputProps={{
+                                                        name: 'telephone',
+                                                        required: true
+                                                    }}
+                                                        value={telephone}
+                                                        onChange={phone => settelephone(phone)}/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="date"
+                                                        name="dateOfBirth"
+                                                        value={dateOfBirth}
+                                                        onChange={(e) => {
+                                                        setdateOfBirth(e.target.value)
+                                                    }}
+                                                        placeholder="Date Of Birth"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <label>Date of Birth</label>
+                                            </span>
+                                        : ''}
 
+                                    {page === 3
+                                        ? <span>
+                                                <label>Must be more than 6 Characters*</label>
+                                                <PasswordInput
+                                                    value={password}
+                                                    placeholder='Password'
+                                                    handleChanges={passwordchange}/>
+                                                    
+                                                <div className="wrap-input100  m-b-16">
+                                                    <Input
+                                                        className="input100"
+                                                        required
+                                                        type="password"
+                                                        name="confirmpassword"
+                                                        value={confirmpassword}
+                                                        onChange={(e) => {
+                                                        setconfirmpassword(e.target.value)
+                                                    }}
+                                                        placeholder="Confirm Password"/>
+                                                    <span className="focus-input100"></span>
+                                                </div>
+                                                <label
+                                                    style={{
+                                                    color: "red",
+                                                    margin: "0 0"
+                                                }}>
+                                                    {password === confirmpassword
+                                                        ? ''
+                                                        : "Passwords don't match 😡"}
+                                                </label>
+                                            </span>
+                                        : ''}
 
-          </div>
+                                    {page === 4
+                                        ? <Card className="card-user">
+                                                <CardBody>
+                                                    <CardText/>
+                                                    <div className="author">
+                                                        <div
+                                                            className="upload-butn-wrapper"
+                                                            style={{
+                                                            cursor: "pointer"
+                                                        }}>
+                                                            <AvatarEditor
+                                                                image={src
+                                                                ? src
+                                                                : require("assets/img/default-avatar.png")}
+                                                                border={20}
+                                                                color={[255, 255, 255, 0.6]}
+                                                                scale={parseInt(scale)}
+                                                                rotate={0}
+                                                                width={150}
+                                                                height={150}
+                                                                borderRadius={75}
+                                                                ref={editor}
+                                                                onPositionChange={() => updateimage()}
+                                                                onImageReady={() => updateimage()}
+                                                                className="avatar"/>
+
+                                                            <Input
+                                                                accept="image/jpeg"
+                                                                type="file"
+                                                                onChange={(e) => upload_profile_image(e)}/>
+                                                            <br/>
+                                                            <label>
+                                                                {src
+                                                                    ? <FormGroup>
+                                                                            <label htmlFor="zoom">Zoom in or Out</label>
+                                                                            <CustomInput
+                                                                                min={1}
+                                                                                max={5}
+                                                                                step={0.2}
+                                                                                value={scale}
+                                                                                onChange={(e) => {
+                                                                                setscale(e.target.value);
+                                                                                updateimage()
+                                                                            }}
+                                                                                type="range"
+                                                                                id="zoom"
+                                                                                name="customRange"/>
+                                                                        </FormGroup>
+                                                                    : ""}
+                                                                {src
+                                                                    ? <span>
+                                                                            <strong>{profile_image.name}</strong><br/>
+                                                                            Click picture center to change, drag from bottom to adjust</span>
+                                                                    : <span>Click center above to Upload Profile Picture</span>}
+
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                        : ''}
+
+                                    {page < 2
+                                        ? <div className="flex-sb-m w-full p-t-3 p-b-24">
+                                                <Link to="/login" className="txt1">
+                                                    You have an account? Login
+                                                </Link>
+                                            </div>
+                                        : ''}
+
+                                    <Row>
+                                        <Col>
+                                            <div className="container-login100-form-btn m-t-17">
+                                                <span
+                                                    onClick={(e) => {
+                                                    page > 1 && move(page - 1)
+                                                }}
+                                                    disabled={page < 2}
+                                                    className="login100-form-btn">
+                                                    Prev
+                                                </span>
+                                            </div>
+                                        </Col>
+                                        <Col>
+                                            {page > 3
+                                                ? <div className="container-login100-form-btn m-t-17">
+                                                        <button disabled={loading} className="login100-form-btn">
+                                                            Finish
+                                                        </button>
+                                                    </div>
+                                                : <div className="container-login100-form-btn m-t-17">
+                                                    <span
+                                                        onClick={(e) => {
+                                                        page < 4 && move(page + 1)
+                                                    }}
+                                                        disabled={page > 3}
+                                                        className="login100-form-btn">
+                                                        Next
+                                                    </span>
+                                                </div>}
+                                        </Col>
+                                    </Row>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
     );
 }
 

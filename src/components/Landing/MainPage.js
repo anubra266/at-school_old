@@ -8,7 +8,7 @@ class MainPage extends React.Component {
             <div>
                 <div className="intro-section" id="home-section">
                     <div
-                        className="slide-1"
+                        className="slide-1" 
                         style={{
                         backgroundImage: `url(${require("assets/images/hero_1.jpg")})`
                     }}
@@ -21,7 +21,11 @@ class MainPage extends React.Component {
                                             <h1 data-aos="fade-up" data-aos-delay="100">Let the learning flow</h1>
                                             <p className="mb-4" data-aos="fade-up" data-aos-delay="200">We help you keep up with the flow of knowledge. Anywhere and anytime.</p>
                                             <p data-aos="fade-up" data-aos-delay="300">
-                                                <Link to="/register"><a href="#at-school" className="btn btn-primary py-3 px-5 btn-pill">Join Us Now</a></Link>
+                                            
+                                                <Link to="/register" className="nav-link">
+                                                <span className="formbt">Sign Up</span>
+                                                        </Link>
+    
                                             </p>
 
                                         </div>

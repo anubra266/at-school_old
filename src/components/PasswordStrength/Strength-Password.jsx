@@ -18,7 +18,7 @@ export const strengthColor = count => {
         return 'red';
 
     if (count < 3)
-        return 'yellow';
+        return 'rgb(241, 162, 14)';
 
     if (count < 4)
         return 'orange';
@@ -42,10 +42,10 @@ export const strengthlabel = count => {
         return 'Fair 😌';
 
     if (count < 5)
-        return 'Good 😄';
+        return 'Good 😊';
 
     if (count < 6)
-        return 'Strong 😂';
+        return 'Strong 😆';
 }
 
 export const strengthIndicator = value => {

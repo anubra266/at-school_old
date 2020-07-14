@@ -61,7 +61,7 @@ const Login = (props) => {
                         placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                    <button type="submit" disabled={loading} className="btn btn-primary btn-pill">Log In
+                    <button type="submit" disabled={loading} className="formbt">Log In
                     </button>
                 </div>
             </form>

@@ -18,11 +18,12 @@ class AuthService {
         localStorage.removeItem("classrooms-app");
     }
 
-    register(firstName, middleName, lastName, email, telephone, dateOfBirth, password, profile_image) {
+    register(firstName, middleName, lastName, gender, email, telephone, dateOfBirth, password, profile_image) {
         return axios.post(API_URL + "register", {
             firstName,
             middleName,
             lastName,
+            gender,
             email,
             telephone,
             dateOfBirth,
