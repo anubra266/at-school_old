@@ -6,7 +6,7 @@ gulp.task("licenses", async function() {
   gulp
     .src("build/static/js/*chunk.js", { base: "./" })
     .pipe(
-      gap.prependText(``)
+      gap.prependText(`<!--Built by Anubra-->`)
     )
     .pipe(gulp.dest("./", { overwrite: true }));
 
@@ -14,7 +14,7 @@ gulp.task("licenses", async function() {
   gulp
     .src("build/index.html", { base: "./" })
     .pipe(
-      gap.prependText(``)
+      gap.prependText(`<!--Built by Anubra-->`)
     )
     .pipe(gulp.dest("./", { overwrite: true }));
 
@@ -22,7 +22,7 @@ gulp.task("licenses", async function() {
   gulp
     .src("build/static/css/*chunk.css", { base: "./" })
     .pipe(
-      gap.prependText(``)
+      gap.prependText(`<!--Built by Anubra-->`)
     )
     .pipe(gulp.dest("./", { overwrite: true }));
   return;

@@ -456,7 +456,7 @@ const Register = ({
                                             {page > 3
                                                 ? <div className="container-login100-form-btn m-t-17">
                                                         <button disabled={loading} className="login100-form-btn">
-                                                            Finish
+                                                               {loading?'Wait...':'Finish'}
                                                         </button>
                                                     </div>
                                                 : <div className="container-login100-form-btn m-t-17">

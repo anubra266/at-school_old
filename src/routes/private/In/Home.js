@@ -201,6 +201,7 @@ const Home = ({user}) => {
 
     return (
         <>
+        {HomeInfo&&
         <div className="content">
           <Row>
           {cards.filter(card=>{return card.show()&&card.value>0}).length<2&&cards[0].value<2
@@ -330,7 +331,7 @@ const Home = ({user}) => {
           </Row>
 
 
-        </div>
+        </div>}
       </>
     );
 

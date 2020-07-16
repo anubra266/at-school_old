@@ -69,7 +69,6 @@ const Classrooms = ({user}) => {
         })
     const [modal,
         setModal] = useState(false);
-
     const toggle = () => setModal(!modal);
     const [name,
         setname] = useState('');

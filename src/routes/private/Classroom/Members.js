@@ -70,6 +70,10 @@ const Members = ({user, slug}) => {
             .lastName
             .toLowerCase()
             .indexOf(search.toLowerCase()) > -1;
+        var gender = member
+            .gender
+            .toLowerCase()
+            .indexOf(search.toLowerCase()) > -1;
         var email = member
             .email
             .toLowerCase()
@@ -81,7 +85,7 @@ const Members = ({user, slug}) => {
         var dob = (new Date(member.dateOfBirth))
             .toLocaleDateString()
             .indexOf(search.toLowerCase()) > -1;
-        var result = fname || mname || lname || email || telephone || dob;
+        var result = fname || mname || lname || gender || email || telephone || dob;
         return result;
     }
     return (
@@ -111,7 +115,7 @@ const Members = ({user, slug}) => {
                                             value={search}
                                             onChange={(e) => setsearch(e.target.value)}
                                             type="text"
-                                            placeholder="Search Members by Name, Email, Tel or Birthday"/>
+                                            placeholder="Search Members by Name, Email, Gender, Tel or Birthday"/>
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -137,6 +141,9 @@ const Members = ({user, slug}) => {
                                                                         return (
                                                                             <tr
                                                                                 key={member.id}
+                                                                                class={user.id === member.id
+                                                                                ? "theuser"
+                                                                                : ""}
                                                                                 onClick={() => {
                                                                                 toggle();
                                                                                 setview(member)
@@ -188,12 +195,14 @@ const Members = ({user, slug}) => {
                                                                                             </div>
                                                                                             <p className="description">{view.firstName + " "} {view.middleName + " "}
                                                                                                 {view.lastName}</p>
+
                                                                                             <p className="description">{view.email}</p>
+                                                                                            <p className="description">{view.gender}</p>
                                                                                             <p className="description">{"+" + view.telephone}</p>
                                                                                             <p className="description">{new Date(view.dateOfBirth).toLocaleDateString()}</p>
                                                                                         </div>
 
-                                                                                    </div>
+                                                                                     </div>
                                                                                 : ''}
                                                                         </Col>
                                                                     </Row>

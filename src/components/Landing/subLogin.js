@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {withRouter} from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
- 
 
 const Login = (props) => {
     const [email,
@@ -61,8 +60,7 @@ const Login = (props) => {
                         placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                    <button type="submit" disabled={loading} className="formbt">Log In
-                    </button>
+                    <button className="formbt">Log In</button>
                 </div>
             </form>
 
