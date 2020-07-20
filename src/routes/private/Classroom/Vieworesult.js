@@ -53,7 +53,12 @@ const Viewtresult = ({match, slug}) => {
                 }
             });
     }
-
+    window
+    .Echo
+    .channel('at_school_database_objectivetests')
+    .listen('UpdateObjectiveTests', e => {
+        updateresults();
+    })
     
     useEffect(() => {
         updateresults();

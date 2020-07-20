@@ -18,17 +18,12 @@ const Login = (props) => {
             .login(email, password)
             .then(() => {
                 notify.user('Login', 'Login successful. Redirecting you...', 'success')
-                props
-                    .history
-                    .push("/in/dashboard/home");
-                window
-                    .location
-                    .reload();
+                window.location.replace("/in/dashboard/home")
             }, error => {
                 const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 setloading(true);
                 notify.user('Login', resMessage, 'danger')
-
+                props.history.push("/login")
                 setloading(false);
                 setpassword('');
                 props
@@ -60,7 +55,7 @@ const Login = (props) => {
                         placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                    <button className="formbt">Log In</button>
+                    <button disabled={loading} className="formbt">Log In</button>
                 </div>
             </form>
 

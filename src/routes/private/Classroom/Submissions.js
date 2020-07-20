@@ -37,6 +37,11 @@ const Submissions = ({slug, history, match}) => {
                     setsubmissions(response.data);
                     setnosubmissions(false);
                 }
+            },error=>{
+                const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                notify.user('Mark Test',resMessage,'info')
+                //Redirect to edit page if there's no question yet
+                history.push("/in/classroom/" + slug + "/tests/questionst/" + match.params.test)
             });
     }
     useEffect(() => {
@@ -109,7 +114,7 @@ const Submissions = ({slug, history, match}) => {
                                                     </Table>
 
                                                 : <div>
-                                                    <span className="text-info">wait...</span>
+                                                    <span className="text-info">{nosubmissions?"":"wait..."}</span>
                                                 </div>}
 
                                             {nosubmissions

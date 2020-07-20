@@ -10,7 +10,7 @@ import {
     Label,
     FormGroup,
     CustomInput,
-    Button, ButtonGroup
+    Button, ButtonGroup, Input
 } from "reactstrap";
 // import notify from "../../../services/notify.js"
 import UserService from "../../../services/user.service";
@@ -102,6 +102,7 @@ const ObjectiveTestReview = ({user, match, history}) => {
                                                             return (
                                                                 <Row><Col><CustomInput
                                                                     type="radio"
+                                                                    disabled={!(option.is_correct === 1)&&!((option.id === result[question.id]) && option.is_correct === 0)}
                                                                     id={option.id + option}
                                                                     name={question.id}
                                                                     value={option.id}

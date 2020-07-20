@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from "react";
 
-// import classNames from "classnames";
-
-// reactstrap components
+// import classNames from "classnames"; reactstrap components
 import {
     Card,
     CardHeader,
@@ -30,13 +28,12 @@ const TheoryTest = ({user, match, history}) => {
         setanswer] = useState('');
     const [answered,
         setanswered] = useState(false);
-    // const [answereditor,
-    //     setanswereditor] = useState();
+    var initialquestion = test&&`<p><strong><u>${test.title}</u></strong><br>&nbsp;</p><p><span style="color:hsl(0,75%,60%);">Submitted: ${notify.date(new Date())}</span></p><p><br>Edit this to your taste😋</p>`;
     useEffect(() => {
         UserService
             .gettheorytest(match.params.test)
             .then(response => {
-                settest(response.data);  
+                settest(response.data);
                 setanswered(response.data.theoryquestion.theoryanswer.length > 0)
             });
     }, []);
@@ -102,11 +99,16 @@ const TheoryTest = ({user, match, history}) => {
                                     </p>
                                     <CKEditor
                                         editor={ClassicEditor}
+                                        onFocus={(event, editor) => {
+                                            const data = editor.getData();
+                                            if (data === initialquestion) {
+                                                editor.setData('')
+                                            }
+                                        }}
                                         onInit={editor => {
-                                        // setanswereditor(editor);
                                         editor.setData(answered
                                             ? test.theoryquestion.theoryanswer[0].answer
-                                            : '<b><u>' + test.title + '</u></b><br /><h5><span style="color:hsl(0,75%,60%);">Submitted: ' + notify.date(new Date()) + '</span></h5><br /> Edit this to your taste😋');
+                                            : initialquestion);
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();

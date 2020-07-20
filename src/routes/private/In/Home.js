@@ -15,7 +15,6 @@ import {
     Jumbotron, Container
   } from "reactstrap";
 
-
 import { Line, Bar } from "react-chartjs-2";
 import classNames from "classnames";
 import notify from "../../../services/notify.js"
@@ -34,14 +33,8 @@ orderhome();
 const Home = ({user}) => {
 
   const [HomeInfo,setHomeInfo] = useState(home);
-    const updateHomeInfo = ()=>{
-      UserService
-          .gethomeinfo()
-          .then(response => {
-              setHomeInfo(response.data);
-          });
-    }
-     const [bigChartData, setbigChartData] = useState(HomeInfo.theoryTests[1].length>1?'theory':'objective')
+    
+     const [bigChartData, setbigChartData] = useState(home&&home.theoryTests[1].length>1?'theory':'objective')
 
      const setBgChartData = name => {
           setbigChartData(name)
@@ -54,7 +47,7 @@ const Home = ({user}) => {
     const roles = user_roles_arr.filter((a, b) => user_roles_arr.indexOf(a) === b);
     const role_level = roles.length;
 
-    var cards = [
+    const cards = HomeInfo&&[
       {
         header:"Classrooms Joined",
         icon:"icon-group",
@@ -67,7 +60,7 @@ const Home = ({user}) => {
       },
       {
         header:"Theory Tests Taken",
-        icon:"icon-group",
+        icon:"icon-pencil",
         value:HomeInfo.theoryTests[0],
         content:"",
         color:"text-primary",
@@ -77,7 +70,7 @@ const Home = ({user}) => {
       },
       {
         header:"Objective Tests Taken",
-        icon:"icon-group",
+        icon:"icon-th-list",
         value:HomeInfo.objectiveTests[0],
         content:"",
         color:"text-warning",  
@@ -87,7 +80,7 @@ const Home = ({user}) => {
       },
       {
         header:"Classroom Students",
-        icon:"icon-group",
+        icon:"icon-mortar-board",
         value:HomeInfo.classroomStudents,
         content:"",
         color:"text-info",
@@ -107,7 +100,7 @@ const Home = ({user}) => {
       },
       {
         header:"Classroom Tests",
-        icon:"icon-group",
+        icon:"icon-edit",
         value:HomeInfo.classroomTests,
         content:"",
         color:"text-danger",
@@ -117,7 +110,7 @@ const Home = ({user}) => {
       },
       {
         header:"Environs Created",
-        icon:"icon-group",
+        icon:"icon-group_work",
         value:HomeInfo.environs[0],
         content:"",
         color:"text-danger",
@@ -127,7 +120,7 @@ const Home = ({user}) => {
       },
       {
         header:"Environ Educators",
-        icon:"icon-group",
+        icon:"icon-person_outline",
         value:HomeInfo.environEducators,
         content:"",
         color:"text-primary",
@@ -137,7 +130,7 @@ const Home = ({user}) => {
       },
       {
         header:"Environ Students",
-        icon:"icon-group",
+        icon:"icon-mortar-board",
         value:HomeInfo.environStudents,
         content:"",
         color:"text-info",
@@ -147,7 +140,7 @@ const Home = ({user}) => {
       },
       {
         header:"Organizations",
-        icon:"icon-group",
+        icon:"icon-institution",
         value:HomeInfo.organizations[0],
         content:"",
         color:"text-warning",
@@ -157,7 +150,7 @@ const Home = ({user}) => {
       },
       {
         header:"Organization Students",
-        icon:"icon-group",
+        icon:"icon-mortar-board",
         value:HomeInfo.organizationStudents,
         content:"",
         color:"text-info",
@@ -167,7 +160,7 @@ const Home = ({user}) => {
       },
       {
         header:"Organization Educators",
-        icon:"icon-group",
+        icon:"icon-person",
         value:HomeInfo.organizationEducators,
         content:"",
         color:"text-warning",
@@ -176,7 +169,17 @@ const Home = ({user}) => {
         }
       },
     ]
-
+    const updateHomeInfo = ()=>{
+      UserService
+          .gethomeinfo()
+          .then(response => {
+              setHomeInfo(response.data);
+              setbigChartData(response.data.theoryTests[1].length>1?'theory':'objective')
+          });
+    }
+    // useEffect(()=>{
+    //   updateHomeInfo();
+    // },[])
     window
         .Echo
         .channel('at_school_database_classes')
@@ -236,7 +239,7 @@ const Home = ({user}) => {
                 <Row>
                     <Col className="text-left" sm="6">
                       <h5 className="card-category">Tests</h5>
-                      <CardTitle tag="h2">Performance</CardTitle>
+                      <CardTitle tag="h2">Performance</CardTitle>home
                     </Col>
                     <Col sm="6">
                       <ButtonGroup
@@ -316,7 +319,7 @@ const Home = ({user}) => {
                   <CardHeader>
                     <h5 className="card-category">{card.header}</h5>
                     <CardTitle tag="h3">
-                      <i className={`${card.icon} ${card.color}`} />{" "}
+                      <i className={`${card.icon} text-info`} />{" "}
                       {card.value}
                     </CardTitle>
                     <h5 className={`card-category ${card.color}`}>{card.content}</h5>

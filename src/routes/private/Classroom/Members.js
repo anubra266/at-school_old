@@ -149,7 +149,7 @@ const Members = ({user, slug}) => {
                                                                                 setview(member)
                                                                             }}>
                                                                                 <th scope="row">{key + 1}</th>
-                                                                                <td>
+                                                                                <td >
                                                                                     {(member.firstName) + " " + (member.middleName).charAt(0) + ". " + member.lastName}
                                                                                 </td>
                                                                                 <td>{member.email}</td>
@@ -216,7 +216,7 @@ const Members = ({user, slug}) => {
                                             </span>
 
                                         : <div>
-                                            <span className="text-info">wait...</span>
+                                            <span className="text-info">{nomembers?'':"wait..."}</span>
                                         </div>}
 
                                     {nomembers

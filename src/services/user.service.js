@@ -132,6 +132,36 @@ class UserService {
             headers: authHeader()
         },);
     }
+    updatetheoryquestion(question_id, question) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'updatetheoryquestion/' + question_id,
+            data: {
+                question
+            },
+            headers: authHeader()
+        },);
+    }
+    addtheorytestsolution(test_id, solution) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'addtheorytestsolution/' + test_id,
+            data: {
+                solution
+            },
+            headers: authHeader()
+        },);
+    }
+    updatetheorytestsolution(solution_id, solution) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'updatetheorytestsolution/' + solution_id,
+            data: {
+                solution
+            },
+            headers: authHeader()
+        },);
+    }
     gettheorytests(slug) {  
         return axios({
             method: 'POST',
@@ -218,6 +248,26 @@ class UserService {
             headers: authHeader()
         },);
     }
+    addobjectivetestsolution(question_id, solution) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'addobjectivetestsolution/' + question_id,
+            data: {
+                solution
+            },
+            headers: authHeader()
+        },);
+    }
+    updateobjectivetestsolution(solution_id, solution) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'updateobjectivetestsolution/' + solution_id,
+            data: {
+                solution
+            },
+            headers: authHeader()
+        },);
+    }
     getobjectivetest(id) {
         return axios.get(API_URL + 'showobjectivetest/' + id, {
             headers: authHeader(),
@@ -240,6 +290,17 @@ class UserService {
         return axios({
             method: 'POST',
             url: API_URL + 'addtoobjectivetest/' + test + '/question',
+            data: {
+                question: question,
+                options: options
+            },
+            headers: authHeader()
+        },);
+    }
+    updateobjectivequestion(question_id, question, options) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'editobjectivetest/' + question_id + '/question',
             data: {
                 question: question,
                 options: options

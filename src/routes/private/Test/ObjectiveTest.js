@@ -8,15 +8,15 @@ import {
     Row,
     Col,
     Button,
-    ButtonGroup, 
+    ButtonGroup,
     Label,
     FormGroup,
-    CustomInput,
     Modal,
     ModalHeader,
     ModalBody,
     ModalFooter,
-    Progress
+    Progress,
+    Input
 } from "reactstrap";
 import notify from "../../../services/notify.js"
 // import className from "classnames";
@@ -30,7 +30,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
     const [cbt,
         setcbt] = useState(null);
     const [submitting,
-        setsubmitting] = useState(false); 
+        setsubmitting] = useState(false);
     useEffect(() => {
         UserService
             .getobjectivetest(match.params.test)
@@ -223,7 +223,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
 
                                             <p className="score">Time up!</p>
                                             <p className="percentage">Wait! Your Work is being submitted...</p>
-                                            <p><Progress animated color="danger" value="75" /></p>
+                                            <p><Progress animated color="danger" value="75"/></p>
                                         </div>
                                     </ModalBody>
                                 </Modal>
@@ -244,19 +244,24 @@ const ObjectiveTest = ({user, match, history, className}) => {
                                         <Card>
                                             <CardBody>
                                                 <FormGroup>
+
                                                     <Label for="">
                                                         <strong>{key + 1}{". "}</strong>{parse(question.question)}</Label>
                                                     <div>
                                                         {question
                                                             .objectiveoptions
                                                             .map((option, key) => {
-                                                                return (<CustomInput
-                                                                    type="radio"
-                                                                    id={option.id + option}
-                                                                    name={question.id}
-                                                                    value={option.id}
-                                                                    onChange={(e) => handleanswer([question.id, option.id])}
-                                                                    label={option.option}/>)
+                                                                return (
+                                                                    <label className="radiocontainer opptions">{option.option}
+                                                                        <Input
+                                                                            type="radio"
+                                                                            id={option.id + option}
+                                                                            name={question.id}
+                                                                            value={option.id}
+                                                                            onChange={(e) => handleanswer([question.id, option.id])}/>
+                                                                        <span className="checkmark"></span>
+                                                                    </label>
+                                                                )
                                                             })}
 
                                                     </div>

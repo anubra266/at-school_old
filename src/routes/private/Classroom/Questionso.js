@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Link} from "react-router-dom";
-import classNames from "classnames";
-// reactstrap components
+// import classNames from "classnames"; reactstrap components
 import {
     Card,
     CardHeader,
@@ -19,25 +18,92 @@ import {
     InputGroup,
     InputGroupText,
     InputGroupAddon,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
     Modal,
     ModalHeader,
-    ModalBody
+    ModalBody,
+    ModalFooter
 } from "reactstrap";
 import notify from "../../../services/notify.js";
 //import className from "classnames";
 import UserService from "../../../services/user.service";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
-import {/*OutTable, */ ExcelRenderer} from 'react-excel-renderer';
+import {/*OutTable, */
+    ExcelRenderer
+} from 'react-excel-renderer';
 import {uniqBy} from 'lodash';
+import className from "classnames";
 
-var parse = require('html-react-parser');
+// var parse = require('html-react-parser');
 
 const Questiona = ({match, history}) => {
-    const [preview,
-        setpreview] = useState(false);
+    const [warning,
+        setwarning] = useState(false);
+    const togglewarning = () => setwarning(!warning);
 
-    const togglepreview = () => setpreview(!preview);
+    const pageSize = 1;
+    const [QuestionsCount,
+        setQuestionsCount] = useState(0);
+    const [CurrentQuestion,
+        setCurrentQuestion] = useState(0);
+    const [togo,
+        settogo] = useState(0);
+    const changepage = (index) => {
+        if (index === test.objectivequestions.length - 1) {
+            questioneditor.setData(initialdata);
+            setquestion('')
+            setoption1('')
+            setoption2('')
+            setoption3('')
+            setoption4('')
+        } else {
+
+            questioneditor.setData(test.objectivequestions[index].question);
+            if(solutioneditor){
+                if(test.objectivequestions[index].objectivesolutions.length > 0){
+                    solutioneditor.setData((test.objectivequestions[index].objectivesolutions[0]).solution)
+                    setsolution((test.objectivequestions[index].objectivesolutions[0]).solution)
+                }else{
+                    solutioneditor.setData(initialsolution)
+                    setsolution('')
+                }
+            }
+            setquestion(test.objectivequestions[index].question)
+            setoption1(test.objectivequestions[index].objectiveoptions[0].option)
+            setoption2(test.objectivequestions[index].objectiveoptions[1].option)
+            setoption3(test.objectivequestions[index].objectiveoptions[2].option)
+            setoption4(test.objectivequestions[index].objectiveoptions[3].option)
+        }
+        setCurrentQuestion(index);
+        setwarning(false);
+    }
+    const handleQuestionChange = (e, index) => {
+        e.preventDefault();
+        if (CurrentQuestion === test.objectivequestions.length - 1) {
+            if (question.trim() !== '') {
+                settogo(index);
+                togglewarning()
+            } else {
+                changepage(index);
+            }
+        } else {
+            var thisquestion = test.objectivequestions[CurrentQuestion].question;
+            var thisoptions = test.objectivequestions[CurrentQuestion].objectiveoptions;
+            if (thisquestion !== question || thisoptions[0].option !== option1 || thisoptions[1].option !== option2 || thisoptions[2].option !== option3 || thisoptions[3].option !== option4) {
+                settogo(index);
+                togglewarning()
+            } else {
+                changepage(index);
+            }
+
+        }
+    }
+    var initialdata = '<h2><span style="color:rgb(0,0,0);">Insert your question here</span><span style=' +
+            '"color:rgb(224,175,104);">😄</span><span style="color:rgb(169,177,214);">.</span' +
+            '></h2>';
     const [test,
         settest] = useState(null);
     const [loading,
@@ -46,7 +112,13 @@ const Questiona = ({match, history}) => {
         UserService
             .getobjectivetest(match.params.test)
             .then(response => {
+                response
+                    .data
+                    .objectivequestions
+                    .push({});
                 settest(response.data);
+                setCurrentQuestion(response.data.objectivequestions.length - 1);
+                setQuestionsCount(Math.ceil(response.data.objectivequestions.length / pageSize));
             });
     }
     useEffect(() => {
@@ -58,6 +130,14 @@ const Questiona = ({match, history}) => {
         .listen('UpdateTestQuestions', e => {
             updatetest();
         })
+    const [solutioneditor,
+        setsolutioneditor] = useState(null);
+    const [solutionmodal,
+        setsolutionmodal] = useState('');
+    const [solution,
+        setsolution] = useState('');
+    var initialsolution = '<p>Solution Here</p>';
+    const togglesolution = () => setsolutionmodal(!solutionmodal);
     const [questioneditor,
         setquestioneditor] = useState(null);
     const [question,
@@ -123,6 +203,52 @@ const Questiona = ({match, history}) => {
             }
         }
     }
+    const editquestion = () => {
+        setloading(true);
+        if (question === "") {
+            notify.user("Add Questions to Test", 'Fill all fields', 'danger');
+            setloading(false);
+        } else {
+            var this_question = {
+                "question": question
+            };
+            var options = [
+                {
+                    "option": option1,
+                    "is_correct": true
+                }, {
+                    "option": option2,
+                    "is_correct": false
+                }, {
+                    "option": option3,
+                    "is_correct": false
+                }, {
+                    "option": option4,
+                    "is_correct": false
+                }
+            ];
+            //?No option should be the same
+            options = uniqBy(options, 'option');
+            if (options.length < 4) {
+                notify.user("Add Questions to Test", 'Two options cannot have same value!', 'danger');
+
+                setloading(false);
+            } else {
+                UserService
+                    .updateobjectivequestion(test.objectivequestions[CurrentQuestion].id, this_question, options)
+                    .then(response => {
+                        notify.user("Modify Test Question", response.data, 'success');
+                        setloading(false);
+                        changepage(test.objectivequestions.length - 1)
+                    }, error => {
+                        const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
+                        notify.user("Modify Test Question", resMessage, 'danger');
+                        setloading(false);
+                    })
+            }
+        }
+    }
+
     let randomString = Math
         .random()
         .toString(36);
@@ -223,6 +349,35 @@ const Questiona = ({match, history}) => {
         //just pass the fileObj as parameter
         fileHandler(fileObj);
     }
+    const [loadingsolution,
+        setloadingsolution] = useState(false);
+    const savesolution = (e) => {
+        e.preventDefault();
+        setloadingsolution(true)
+        if (!(test.objectivequestions[CurrentQuestion].objectivesolutions.length > 0)) {
+
+            UserService
+                .addobjectivetestsolution(test.objectivequestions[CurrentQuestion].id, solution)
+                .then(response => {
+                    notify.user('Set Test Solution', 'Solution Saved Successfully', 'success');
+                    setloadingsolution(false);
+                }, error => {
+                    notify.user('Set Test Solution', "Solution is required", 'danger');
+                    setloadingsolution(false);
+                });
+        } else {
+            UserService
+                .updateobjectivetestsolution(test.objectivequestions[CurrentQuestion].objectivesolutions[0].id, solution)
+                .then(response => {
+                    notify.user('Modify Test Solution', 'Solution Saved Successfully', 'success');
+                    setloadingsolution(false);
+                }, error => {
+                    notify.user('Modify Test Solution', "Solution is required", 'danger');
+                    setloadingsolution(false);
+                });
+        }
+
+    }
     return (
         <div className="content">
             <Row>
@@ -236,7 +391,7 @@ const Questiona = ({match, history}) => {
                                         backgroundColor: "white"
                                     }}>
                                         <BreadcrumbItem>
-                                            <Link to={"/in/classroom/" + match.params.slug + "/tests"}>Tests</Link>
+                                            <Link to={"/in/classroom/" + match.params.slug + "/tests"}>Tests {CurrentQuestion}</Link>
                                         </BreadcrumbItem>
                                         <BreadcrumbItem active>Test</BreadcrumbItem>
                                         <BreadcrumbItem active>
@@ -247,9 +402,55 @@ const Questiona = ({match, history}) => {
                         </CardHeader>
                         <CardBody className="all-icons">
                             <Row>
+                                <Col sm="12">
+                                    <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
+                                        <Button type="submit" onClick={togglesolution} color="info" size="sm">Answer Explanation</Button>
+                                    </ButtonGroup>
+                                    <Modal
+                                        unmountOnClose={false}
+                                        isOpen={solutionmodal}
+                                        toggle={togglesolution}
+                                        className={className + ""}>
+                                        <ModalHeader toggle={togglesolution}>Solution for {test.title}
+                                            No. {CurrentQuestion + 1}
+                                            <br/>
+                                            <span className="text-danger">NB: This is optional</span>
+                                        </ModalHeader>
+                                        <ModalBody>
+                                            <form onSubmit={savesolution}>
+                                                <FormGroup>
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        onFocus={(event, solutiondata) => {
+                                                        const data = solutiondata.getData();
+                                                        if (data === initialsolution) {
+                                                            solutiondata.setData('')
+                                                        }
+                                                    }}
+                                                        onInit={solutiondata => {
+                                                        setsolutioneditor(solutiondata);
+                                                        solutiondata.setData(test.objectivequestions[CurrentQuestion].objectivesolutions.length > 0
+                                                            ? test.objectivequestions[CurrentQuestion].objectivesolutions[0].solution
+                                                            : initialsolution);
+                                                    }}
+                                                        onChange={(event, solutiondata) => {
+                                                        const data = solutiondata.getData();
+                                                        setsolution(data)
+                                                    }}/>
+                                                </FormGroup>
+                                                <ModalFooter>
+                                                    <Button color="primary" disabled={loadingsolution} type="submit">Save</Button>{' '}
+                                                    <Button color="secondary" onClick={togglesolution}>Cancel</Button>
+                                                </ModalFooter>
+                                            </form>
+                                        </ModalBody>
+                                    </Modal>
+                                </Col>
+                            </Row>
+                            <Row>
                                 <Col sm="4">
                                     <p className="title">
-                                        Count: {test.objectivequestions.length + " "}
+                                        Count: {test.objectivequestions.length - 1 + " "}
                                         Question(s)
                                     </p>
                                 </Col>
@@ -259,6 +460,7 @@ const Questiona = ({match, history}) => {
                                         Minutes
                                     </p>
                                 </Col>
+
                             </Row>
                             <Row>
                                 <Col sm="4">
@@ -288,7 +490,7 @@ const Questiona = ({match, history}) => {
                                     <Label>
                                         <strong>Excel contents should be in order:{" "}</strong>
                                         Question, OptionA (Correct Option), OptionB, OptionC, OptionD. E.g:
-                                        <figure class="table">
+                                        <figure className="table">
                                             <table>
                                                 <tbody>
                                                     <tr>
@@ -301,159 +503,224 @@ const Questiona = ({match, history}) => {
                                                 </tbody>
                                             </table>
                                         </figure>
-                                        First Row will be Ignored, as it is considered header.
+                                        <span className="text-danger">First Row will be Ignored, as it is considered header.</span>
                                     </Label>
 
                                 </FormGroup>
+
+                                {test
+                                    .objectivequestions
+                                    .slice(CurrentQuestion * pageSize, (CurrentQuestion + 1) * pageSize)
+                                    .map((objquestion, key) => {
+                                        return (
+
+                                            <span key={key}>
+                                                <FormGroup>
+                                                    <p className="">
+                                                        <strong>{CurrentQuestion + 1 + ". "}</strong>
+                                                        <strong>Type your Question Here</strong>{" "}
+                                                        <label>
+                                                            - You can{" "}
+                                                            <strong>paste from word</strong>, insert
+                                                            <strong>{" "}pictures</strong>
+                                                            {" "}and
+                                                            <strong>{" "}tables.</strong>😊{" "}
+                                                        </label>
+                                                    </p>
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        onFocus={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        if (data === initialdata) {
+                                                            editor.setData('')
+                                                        }
+                                                    }}
+                                                        onInit={editor => {
+                                                        setquestioneditor(editor);
+                                                        editor.setData(objquestion.question || initialdata)
+                                                    }}
+                                                        onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setquestion(data)
+                                                    }}/>
+
+                                                </FormGroup>
+                                                <FormGroup tag="fieldset">
+                                                    <p className="title">Your Options{" "}
+
+                                                        <label>
+                                                            Insert correct answer in (A). Options would be shuffled during test
+
+                                                        </label>
+                                                    </p>
+
+                                                    <FormGroup>
+                                                        <Label>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>A</InputGroupText>
+                                                                </InputGroupAddon>
+
+                                                                <Input
+                                                                    style={{
+                                                                    border: "solid 1px green",
+                                                                    borderLeft: "solid 1px transparent"
+                                                                }}
+                                                                    type="text"
+                                                                    value={option1}
+                                                                    onChange={(e) => {
+                                                                    setoption1(e.target.value);
+                                                                }}
+                                                                    required
+                                                                    placeholder="Option 1"/>
+                                                            </InputGroup>
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>B</InputGroupText>
+                                                                </InputGroupAddon>
+
+                                                                <Input
+                                                                    style={{
+                                                                    border: "solid 1px red",
+                                                                    borderLeft: "solid 1px transparent"
+                                                                }}
+                                                                    type="text"
+                                                                    value={option2}
+                                                                    onChange={(e) => setoption2(e.target.value)}
+                                                                    required
+                                                                    placeholder="Option 2"/>
+                                                            </InputGroup>
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>C</InputGroupText>
+                                                                </InputGroupAddon>
+
+                                                                <Input
+                                                                    style={{
+                                                                    border: "solid 1px red",
+                                                                    borderLeft: "solid 1px transparent"
+                                                                }}
+                                                                    type="text"
+                                                                    value={option3}
+                                                                    onChange={(e) => setoption3(e.target.value)}
+                                                                    required
+                                                                    placeholder="Option 3"/>
+                                                            </InputGroup>
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <Label>
+                                                            <InputGroup>
+                                                                <InputGroupAddon addonType="prepend">
+                                                                    <InputGroupText>D</InputGroupText>
+                                                                </InputGroupAddon>
+
+                                                                <Input
+                                                                    style={{
+                                                                    border: "solid 1px red",
+                                                                    borderLeft: "solid 1px transparent"
+                                                                }}
+                                                                    type="text"
+                                                                    value={option4}
+                                                                    onChange={(e) => setoption4(e.target.value)}
+                                                                    required
+                                                                    placeholder="Option 4"/>
+                                                            </InputGroup>
+                                                        </Label>
+                                                    </FormGroup>
+                                                </FormGroup>
+                                            </span>
+
+                                        );
+                                    })}
+
                                 <FormGroup>
-                                    <p className="">
-                                        <strong>{test.objectivequestions.length + 1 + ". "}</strong>
-                                        <strong>Type your Question Here</strong>{" "}
-                                        <label>
-                                            - You can{" "}
-                                            <strong>paste from word</strong>, insert
-                                            <strong>{" "}pictures</strong>
-                                            {" "}and
-                                            <strong>{" "}tables.</strong>😊{" "}
-                                            <Button onClick={togglepreview} color="primary" size="sm">Preview</Button>
-                                        </label>
-                                        <Modal isOpen={preview} toggle={togglepreview} className={classNames}>
-                                            <ModalHeader toggle={togglepreview}>Question Preview</ModalHeader>
-                                            <ModalBody>
-                                                <div
-                                                    style={{
-                                                    color: "black"
-                                                }}>
-                                                    {parse(question)}</div>
-                                            </ModalBody>
-                                        </Modal>
-                                    </p>
-                                    <CKEditor
-                                        editor={ClassicEditor}
-                                        onInit={editor => {
-                                        setquestioneditor(editor);
-                                        editor.setData('<p> </p><h2><span style="color: rgb(0, 0, 0);">Insert your question here</span><' +
-                                                'span style="color: rgb(224, 175, 104);">😄</span><span style="color: rgb(169, 17' +
-                                                '7, 214);">.</span></h2><p><span style="color: rgb(169, 177, 214);">Hit preview, ' +
-                                                'Up </span><span style="color: rgb(224, 175, 104);">👆 to see the result.</span><' +
-                                                '/p>');
-                                        setquestion('<p> </p><h2><span style="color: rgb(0, 0, 0);">Insert your question here</span><' +
-                                                'span style="color: rgb(224, 175, 104);">😄</span><span style="color: rgb(169, 17' +
-                                                '7, 214);">.</span></h2><p><span style="color: rgb(169, 177, 214);">Hit preview, ' +
-                                                'Up </span><span style="color: rgb(224, 175, 104);">👆 to see the result.</span><' +
-                                                '/p>')
-                                    }}
-                                        onChange={(event, editor) => {
-                                        const data = editor.getData();
-                                        setquestion(data)
-                                    }}/>
+                                    <div className="pagination-wrapper">
 
-                                </FormGroup>
-                                <FormGroup tag="fieldset">
-                                    <p className="title">Your Options{" "}
+                                        <Pagination aria-label="Page navigation example">
 
-                                        <label>
-                                            Insert correct answer in (A). Options would be shuffled during test
+                                            <PaginationItem disabled={CurrentQuestion <= 0}>
 
-                                        </label>
-                                    </p>
+                                                <PaginationLink
+                                                    onClick={e => handleQuestionChange(e, CurrentQuestion - 1)}
+                                                    previous
+                                                    href="#"/>
 
-                                    <FormGroup>
-                                        <Label>
-                                            <InputGroup>
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>A</InputGroupText>
-                                                </InputGroupAddon>
+                                            </PaginationItem>
 
-                                                <Input
-                                                    style={{
-                                                    border: "solid 1px green",
-                                                    borderLeft: "solid 1px transparent"
-                                                }}
-                                                    type="text"
-                                                    value={option1}
-                                                    onChange={(e) => {
-                                                    setoption1(e.target.value);
-                                                }}
-                                                    required
-                                                    placeholder="Option 1"/>
-                                            </InputGroup>
-                                        </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>
-                                            <InputGroup>
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>B</InputGroupText>
-                                                </InputGroupAddon>
+                                            {[...Array(QuestionsCount)].map((page, i) => <PaginationItem active={i === CurrentQuestion} key={i} className="pag">
+                                                <PaginationLink onClick={e => handleQuestionChange(e, i)} href="#">
+                                                    {i + 1}
+                                                </PaginationLink>
+                                            </PaginationItem>)}
 
-                                                <Input
-                                                    style={{
-                                                    border: "solid 1px red",
-                                                    borderLeft: "solid 1px transparent"
-                                                }}
-                                                    type="text"
-                                                    value={option2}
-                                                    onChange={(e) => setoption2(e.target.value)}
-                                                    required
-                                                    placeholder="Option 2"/>
-                                            </InputGroup>
-                                        </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>
-                                            <InputGroup>
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>C</InputGroupText>
-                                                </InputGroupAddon>
+                                            <PaginationItem disabled={CurrentQuestion >= QuestionsCount - 1}>
 
-                                                <Input
-                                                    style={{
-                                                    border: "solid 1px red",
-                                                    borderLeft: "solid 1px transparent"
-                                                }}
-                                                    type="text"
-                                                    value={option3}
-                                                    onChange={(e) => setoption3(e.target.value)}
-                                                    required
-                                                    placeholder="Option 3"/>
-                                            </InputGroup>
-                                        </Label>
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label>
-                                            <InputGroup>
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>D</InputGroupText>
-                                                </InputGroupAddon>
+                                                <PaginationLink
+                                                    onClick={e => handleQuestionChange(e, CurrentQuestion + 1)}
+                                                    next
+                                                    href="#"/>
 
-                                                <Input
-                                                    style={{
-                                                    border: "solid 1px red",
-                                                    borderLeft: "solid 1px transparent"
-                                                }}
-                                                    type="text"
-                                                    value={option4}
-                                                    onChange={(e) => setoption4(e.target.value)}
-                                                    required
-                                                    placeholder="Option 4"/>
-                                            </InputGroup>
-                                        </Label>
-                                    </FormGroup>
+                                            </PaginationItem>
+
+                                        </Pagination>
+
+                                    </div>
                                 </FormGroup>
                                 <FormGroup>
-                                    <Button color="info" size="sm" disabled={loading}>Add Question</Button>
-                                    {test.objectivequestions.length>0
+                                    {CurrentQuestion === test.objectivequestions.length - 1
+                                        ? <Button color="info" size="sm" disabled={loading}>Add Question</Button>
+                                        : <Button
+                                            color="info"
+                                            onClick={e => {
+                                            editquestion()
+                                        }}
+                                            size="sm"
+                                            disabled={loading}>Save Question</Button>}
+                                    {test.objectivequestions.length > 0
                                         ? <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                        <Link to={"/in/classroom/" + match.params.slug + "/tests/"}>
-                                            <Button color="info" size="sm">Finish</Button>
-                                        </Link>
-                                    </ButtonGroup>:''}
+                                                <Link to={"/in/classroom/" + match.params.slug + "/tests/"}>
+                                                    <Button color="info" size="sm">Finish</Button>
+                                                </Link>
+                                            </ButtonGroup>
+                                        : ''}
                                 </FormGroup>
+                                <Modal isOpen={warning} toggle={togglewarning} className={className + ""}>
+                                    <ModalHeader toggle={togglewarning}>Hey!</ModalHeader>
+                                    <ModalBody>
+                                        <div className="aftertest">
+
+                                            <p className="info">
+                                                You've made changes. Save first, or you'll lose your changes!</p>
+                                        </div>
+                                    </ModalBody>
+                                    <ModalFooter>
+
+                                        <Button
+                                            color="primary"
+                                            disabled={loading}
+                                            onClick={e => {
+                                            editquestion()
+                                        }}>Save</Button>
+                                        <Button
+                                            color="secondary"
+                                            onClick={e => {
+                                            changepage(togo);
+                                        }}>Discard</Button>
+                                    </ModalFooter>
+                                </Modal>
                             </Form>
                         </CardBody>
                     </Card>}
-                </Col>!
+                </Col>
             </Row>
         </div>
     );

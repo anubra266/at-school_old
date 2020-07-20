@@ -3,18 +3,10 @@ import {withRouter} from "react-router-dom";
 // reactstrap components
 import {
     Card,
-    CardHeader,
     CardBody,
     Row,
     Col,
     Button,
-    ButtonGroup,
-    Input,
-    FormGroup,
-    Label,
-    Modal,
-    ModalBody,
-    Form,
     TabContent,
     TabPane,
     Nav,
@@ -24,7 +16,6 @@ import {
     Pagination, PaginationItem, PaginationLink
 } from "reactstrap";
 import notify from "../../../services/notify.js"
-import className from "classnames";
 import UserService from "../../../services/user.service";
 
 const EducatorResults = ({slug, history}) => {

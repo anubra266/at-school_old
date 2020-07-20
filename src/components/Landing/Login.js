@@ -33,12 +33,9 @@ const Login = ({
             .login(email, password)
             .then(() => {
                 notify.user('Login', 'Login successful. Redirecting you...', 'success')
-                from
-                    ? history.push(from)
-                    : history.push("/in");
                 window
                     .location
-                    .reload();
+                    .replace(from.pathname)
             }, error => {
                 const resMessage = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                 setloading(true);
@@ -111,10 +108,10 @@ const Login = ({
                                                 </a>
                                             </Col>
                                             <Col>
-                                            <Link to="/register" className="txt1">
-                                                Sign Up
-                                            </Link>
-                                        </Col>
+                                                <Link to="/register" className="txt1">
+                                                    Sign Up
+                                                </Link>
+                                            </Col>
                                         </Row>
                                     </div>
 

@@ -144,13 +144,8 @@ export default {
                 icon: "tim-icons icon-paper",
                 layout: "/in/classroom",
                 dont_show: true
-            }, {
-                component: 'Assessments',
-                url: '/assessments',
-                name: 'Assessments',
-                icon: "icon-playlist_add_check",
-                layout: "/in/classroom"
-            }, {
+            },
+            {
                 component: 'Results',
                 url: '/results',
                 name: 'Results',
