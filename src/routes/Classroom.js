@@ -191,6 +191,7 @@ class Classroom extends React.Component {
                         routes={routes}
                         user={currentUser}
                         allowedRoutes={allowedRoutes}
+                        roles={roles}
                         thislayout={this.state.layout}/>
                     <div className="main-panel" ref="mainPanel" data={this.state.backgroundColor}>
                         <Navbar

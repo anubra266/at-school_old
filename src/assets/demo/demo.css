@@ -1,3 +1,12 @@
+.solutionmodalstud h1,
+.solutionmodalstud h2,
+.solutionmodalstud h3,
+.solutionmodalstud h4,
+.solutionmodalstud h5,
+.solutionmodalstud h6{
+  color: black !important;
+}
+
 .page-item.active .page-link{
   background-color: #3268dd !important;
   border-color: #3268dd !important;

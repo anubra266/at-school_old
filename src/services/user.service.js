@@ -172,6 +172,16 @@ class UserService {
             headers: authHeader()
         },);
     }
+    gettheorysolutions(slug) {  
+        return axios({
+            method: 'POST',
+            url: API_URL + 'theorysolutions',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
     gettestsubmissions(test) {  
         return axios.get(API_URL + 'theorytestsubmissions/' + test, {
             headers: authHeader(),
@@ -322,6 +332,16 @@ class UserService {
         return axios({
             method: 'POST',
             url: API_URL + 'objectivetests',
+            data: {
+                slug
+            },
+            headers: authHeader()
+        },);
+    }
+    getobjectivesolutions(slug) {
+        return axios({
+            method: 'POST',
+            url: API_URL + 'objectivesolutions',
             data: {
                 slug
             },

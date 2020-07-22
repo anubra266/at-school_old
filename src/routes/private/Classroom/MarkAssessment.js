@@ -58,6 +58,7 @@ const MarkAssessment = ({slug, match, history}) => {
                 setdisabled(false);
             })
     }
+    var initialnote = '<span style="color:hsl(0,75%,60%);">NB: You can pick the red color for distinct test corrections.</span><br>';
     return (
         <div className="content">
             <Row>
@@ -84,6 +85,9 @@ const MarkAssessment = ({slug, match, history}) => {
                                     {" submission for " + test.title + " Test."}
                                 </Col>
                             </Row>
+                            <p className="title">
+                        <strong>Question</strong>
+                    </p>
                             {parse(test.question.question)}
                             <Form method="POST" onSubmit={finishmarktest}>
 
@@ -93,13 +97,19 @@ const MarkAssessment = ({slug, match, history}) => {
                                     </p>
                                     <CKEditor
                                         editor={ClassicEditor}
+                                        onFocus={(event, editor) => {
+                                            const data = editor.getData();
+                                            console.log(data);
+                                            if (data.indexOf(initialnote)!==-1) {
+                                                editor.setData(test.answer.answer)
+                                            }
+                                        }}
                                         onInit={editor => {
-                                        editor.setData((test.score?'':'<span style="color:hsl(0,75%,60%);">NB: You can pick the red color for distinct ' +
-                                                'test corrections.</span><br />') + test.answer.answer);
+                                        editor.setData((test.score?'':initialnote) + test.answer.answer);
                                     }}
                                         onChange={(event, editor) => {
                                         const data = editor.getData();
-                                        setanswer(data)
+                                        setanswer(data) 
                                     }}/>
 
                                 </FormGroup>

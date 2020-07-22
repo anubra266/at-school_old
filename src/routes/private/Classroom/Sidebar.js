@@ -49,7 +49,7 @@ class InSidebar extends React.Component {
     };
 
     render() {
-        const {bgColor, routes, user, thislayout, allowedRoutes} = this.props;
+        const {bgColor, roles, user, thislayout, allowedRoutes} = this.props;
 
         return (
             <div className="sidebar" data={bgColor}>
@@ -66,7 +66,8 @@ class InSidebar extends React.Component {
                         </li>
                         {allowedRoutes.map((prop, key) => {
                             if (prop.layout === thislayout && !prop.dont_show) {
-
+                                if(prop.only&&roles[roles.length-1]!==prop.only)
+                                    return null;
                                 if (prop.redirect) 
                                     return null;
                                 return (

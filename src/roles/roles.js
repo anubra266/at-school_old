@@ -45,6 +45,13 @@ export default {
                 icon: "icon-pencil",
                 layout: "/in/classroom"
             }, {
+                component: 'Solutions',
+                url: '/solutions',
+                name: 'Solutions',
+                icon: "icon-question_answer",
+                layout: "/in/classroom",
+                only: "student"
+            }, {
                 component: 'TheoryTest',
                 url: '/theory/:test',
                 name: 'Theory Test',

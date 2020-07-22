@@ -132,7 +132,7 @@ class TheNavbar extends React.Component {
                                         </NavLink>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
-                                <UncontrolledDropdown nav>
+                                {/*<UncontrolledDropdown nav>
                                     <DropdownToggle caret color="default" data-toggle="dropdown" nav>
                                         <div className="notification d-lg-block d-xl-block"/>
                                         <i className="icon-bell"/>
@@ -144,28 +144,8 @@ class TheNavbar extends React.Component {
                                                 Mike John responded to your email
                                             </DropdownItem>
                                         </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">
-                                                You have 5 more tasks
-                                            </DropdownItem>
-                                        </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">
-                                                Your friend Michael is in town
-                                            </DropdownItem>
-                                        </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">
-                                                Another notification
-                                            </DropdownItem>
-                                        </NavLink>
-                                        <NavLink tag="li">
-                                            <DropdownItem className="nav-item">
-                                                Another one
-                                            </DropdownItem>
-                                        </NavLink>
                                     </DropdownMenu>
-                                </UncontrolledDropdown>
+                                </UncontrolledDropdown>*/}
                                 <li className="separator d-lg-none"/>
                             </Nav>
                         </Collapse>

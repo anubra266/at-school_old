@@ -8,6 +8,7 @@ import Environs from "./private/In/Environs.js"
 import Organizations from "./private/In/Organizations.js"
  
 import Tests from "./private/Classroom/Tests.js"
+import Solutions from "./private/Classroom/Solutions.js"
 import Members from "./private/Classroom/Members.js"
 
 import Questionst from "./private/Classroom/Questionst.js"
@@ -34,6 +35,7 @@ import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
     Organizations,
 
     Tests,
+    Solutions,
     Members,
     Questionst,
     Questionso,

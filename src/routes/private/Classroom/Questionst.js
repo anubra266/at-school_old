@@ -108,7 +108,11 @@ const Questiona = ({match, history}) => {
                     notify.user('Modify Test Solution', 'Solution Saved Successfully', 'success');
                     setloading(false);
                 }, error => {
-                    notify.user('Modify Test Solution', "Solution is required", 'danger');
+                    if(solution===''){
+                        notify.user('Modify Test Solution', "Solution is not modified", 'danger');
+                    }else{
+                        notify.user('Modify Test Solution', "Solution is required", 'danger');
+                    }
                     setloading(false);
                 });
         }
@@ -147,6 +151,7 @@ const Questiona = ({match, history}) => {
                                         <Button type="submit" onClick={toggle} color="info" size="sm">Solution</Button>
                                     </ButtonGroup>
                                     <Modal
+                                        size="lg"
                                         unmountOnClose={false}
                                         isOpen={modal}
                                         toggle={toggle}
@@ -188,8 +193,7 @@ const Questiona = ({match, history}) => {
 
                                         <FormGroup><br/>
                                             <p className="title">
-                                                <strong>Insert Questions Here</strong>{" - "}
-                                                Click the 🖼️ icon to insert pictures.
+                                                <strong>Insert Questions Here</strong>
                                             </p>
                                             <CKEditor
                                                 editor={ClassicEditor}

@@ -27,7 +27,6 @@ import {
     ModalFooter
 } from "reactstrap";
 import notify from "../../../services/notify.js";
-//import className from "classnames";
 import UserService from "../../../services/user.service";
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from "@diasraphael/ck-editor5-base64uploadadapter";
@@ -372,7 +371,11 @@ const Questiona = ({match, history}) => {
                     notify.user('Modify Test Solution', 'Solution Saved Successfully', 'success');
                     setloadingsolution(false);
                 }, error => {
-                    notify.user('Modify Test Solution', "Solution is required", 'danger');
+                    if(solution===''){
+                        notify.user('Modify Test Solution', "Solution is not modified", 'danger');
+                    }else{
+                        notify.user('Modify Test Solution', "Solution is required", 'danger');
+                    }
                     setloadingsolution(false);
                 });
         }
@@ -407,6 +410,7 @@ const Questiona = ({match, history}) => {
                                         <Button type="submit" onClick={togglesolution} color="info" size="sm">Answer Explanation</Button>
                                     </ButtonGroup>
                                     <Modal
+                                        size="lg"
                                         unmountOnClose={false}
                                         isOpen={solutionmodal}
                                         toggle={togglesolution}

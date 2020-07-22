@@ -89,13 +89,15 @@ const TheoryTest = ({user, match, history}) => {
                             </Row>
                         </CardHeader>
                         {test && <CardBody className="all-icons">
+                        <p className="title">
+                        <strong>Question</strong>
+                    </p>
                             {parse(test.theoryquestion.question)}
                             <Form method="POST" onSubmit={submitTest}>
 
                                 <FormGroup><br/>
                                     <p className="title">
-                                        <strong>Paste your answers Here</strong>{" - "}
-                                        Click the 🖼️ icon to insert pictures.
+                                        <strong>Paste your answers Here</strong>
                                     </p>
                                     <CKEditor
                                         editor={ClassicEditor}
