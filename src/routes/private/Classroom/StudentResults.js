@@ -2,30 +2,18 @@ import React, {useState, useEffect} from "react";
 
 // reactstrap components
 import {
-    Card,
-    CardHeader,
     CardBody,
-    Row,
     Col,
-    Button,
-    ButtonGroup,
-    Input,
-    FormGroup,
-    Label,
-    Modal,
-    ModalBody,
-    Form,
     TabContent,
     TabPane,
     Nav,
     NavItem,
     NavLink,
-    CardTitle,
     Pagination, PaginationItem, PaginationLink,
     Table
 } from "reactstrap";
 import notify from "../../../services/notify.js"
-import className from "classnames";
+// import className from "classnames";
 import UserService from "../../../services/user.service";
 
 const StudentResults = ({slug}) => {

@@ -79,6 +79,7 @@ const EducatorResults = ({slug, history}) => {
     useEffect(() => {
         updatetheorytests();
         updateobjectivetests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); 
 
     const handleTheoryClick = (e,index)=>{

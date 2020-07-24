@@ -6,7 +6,6 @@ import {
     CardHeader,
     Row,
     Col,
-    Button,
     ButtonGroup
 } from "reactstrap";
 import StudentResults from "./StudentResults";

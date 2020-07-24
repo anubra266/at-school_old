@@ -28,6 +28,7 @@ import className from "classnames";
 var parse = require("html-react-parser");
 
 const Solutions = ({ history, educator, slug }) => {
+  const [mounted, setmounted] = useState(true);
   const [theoryview, settheoryview] = useState(null);
   const [objectiveview, setobjectiveview] = useState(null);
   const [theoryTests, settheoryTests] = useState(null);
@@ -90,8 +91,13 @@ const Solutions = ({ history, educator, slug }) => {
     });
   };
   useEffect(() => {
-    updateobjectivetests();
-    updatetheorytests();
+    if (mounted) {
+      updateobjectivetests();
+      updatetheorytests();
+    }
+    return () => {
+      setmounted(false);
+    };
   }, []);
   window.Echo.channel("at_school_database_tests").listen(
     "UpdateTheoryTests",
@@ -100,13 +106,6 @@ const Solutions = ({ history, educator, slug }) => {
     }
   );
 
-  const viewsolution = (type, id) => {
-    if (type === "objective") {
-      history.push("/in/test/" + slug + "/objective/" + id);
-    } else {
-      history.push("/in/test/" + slug + "/theory/" + id);
-    }
-  };
   const [activeTab, setActiveTab] = useState("1");
 
   const toggletype = (tab) => {
@@ -169,9 +168,9 @@ const Solutions = ({ history, educator, slug }) => {
                           currentTheoryPage * pageSize,
                           (currentTheoryPage + 1) * pageSize
                         )
-                        .map((test) => {
+                        .map((test, key) => {
                           return (
-                            <Col md="4">
+                            <Col md="4" key={key}>
                               <Card body>
                                 <CardTitle>
                                   <strong>{test.title}</strong>
@@ -303,9 +302,9 @@ const Solutions = ({ history, educator, slug }) => {
                           currentObjectivePage * pageSize,
                           (currentObjectivePage + 1) * pageSize
                         )
-                        .map((test) => {
+                        .map((test, key) => {
                           return (
-                            <Col md="4">
+                            <Col md="4" key={key}>
                               <Card body>
                                 <CardTitle>
                                   <strong>{test.title}</strong>
@@ -323,7 +322,8 @@ const Solutions = ({ history, educator, slug }) => {
                                   onClick={() => {
                                     setobjviewsCount(
                                       Math.ceil(
-                                        test.newquestions.length / objviewpageSize
+                                        test.newquestions.length /
+                                          objviewpageSize
                                       )
                                     );
                                     setobjectiveview(test);
@@ -353,9 +353,9 @@ const Solutions = ({ history, educator, slug }) => {
                                           currentobjview * objviewpageSize,
                                           (currentobjview + 1) * objviewpageSize
                                         )
-                                        .map((question) => {
+                                        .map((question, key) => {
                                           return (
-                                            <React.Fragment>
+                                            <React.Fragment key={key}>
                                               <p className="title">
                                                 <strong>Question</strong>
                                               </p>
