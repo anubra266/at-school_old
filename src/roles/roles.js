@@ -39,9 +39,9 @@ export default {
                 icon: "icon-users",
                 layout: "/in/classroom"
             }, {
-                component: 'Tests',
-                url: '/tests',
-                name: 'Tests',
+                component: 'Assessments',
+                url: '/assessments',
+                name: 'Assessments',
                 icon: "icon-pencil",
                 layout: "/in/classroom"
             }, {
@@ -51,6 +51,13 @@ export default {
                 icon: "icon-question_answer",
                 layout: "/in/classroom",
                 only: "student"
+            },
+            {
+                component: 'Results',
+                url: '/results',
+                name: 'Results',
+                icon: "icon-receipt",
+                layout: "/in/classroom"
             }, {
                 component: 'TheoryTest',
                 url: '/theory/:test',
@@ -151,13 +158,6 @@ export default {
                 icon: "tim-icons icon-paper",
                 layout: "/in/classroom",
                 dont_show: true
-            },
-            {
-                component: 'Results',
-                url: '/results',
-                name: 'Results',
-                icon: "icon-receipt",
-                layout: "/in/classroom"
             }
         ]
     }

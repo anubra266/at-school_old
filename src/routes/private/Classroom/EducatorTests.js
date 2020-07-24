@@ -181,7 +181,7 @@ const EducatorResults = ({ slug, history }) => {
               {notheory ? (
                 <Col md="12">
                   <div>
-                    <span className="text-info">No Theory Tests! </span>
+                    <span className="text-info">No Theory Assessments! </span>
                     Create one and Check again.
                   </div>
                 </Col>
@@ -273,7 +273,7 @@ const EducatorResults = ({ slug, history }) => {
               {noobjective ? (
                 <Col md="12">
                   <div>
-                    <span className="text-info">No Objective Tests! </span>
+                    <span className="text-info">No Objective Assessments! </span>
                     Create one and check again.
                   </div>
                 </Col>
@@ -328,3 +328,4 @@ const EducatorResults = ({ slug, history }) => {
   );
 };
 export default withRouter(EducatorResults);
+ 

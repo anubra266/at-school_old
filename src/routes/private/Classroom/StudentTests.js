@@ -176,7 +176,7 @@ const StudentTests = ({ history, educator, slug }) => {
             {notheory ? (
               <Col md="12">
                 <div>
-                  <span className="text-info">No Pending Theory Tests! </span>
+                  <span className="text-info">No Pending Theory Assessments! </span>
                   They'll be here when available.
                 </div>{" "}
               </Col>
@@ -279,7 +279,7 @@ const StudentTests = ({ history, educator, slug }) => {
               <Col md="12">
                 <div>
                   <span className="text-info">
-                    No Pending Objective Tests!{" "}
+                    No Pending Objective Assessments!{" "}
                   </span>
                   They'll be here when available.
                 </div>{" "}
@@ -292,7 +292,7 @@ const StudentTests = ({ history, educator, slug }) => {
               ).length < 1 ? (
               <Col sm="12">
                 <div>
-                  <span className="text-info">There are upcoming Tests </span>
+                  <span className="text-info">There are upcoming Assessments </span>
                   Be patient please.
                 </div>{" "}
               </Col>

@@ -156,7 +156,7 @@ const Classes = ({user}) => {
                                                             <tr>
                                                                 <th scope="row">{key + 1}</th>
                                                                 <td>
-                                                                    <Link to={"/in/classroom/" + classroom.slug + "/tests"}>
+                                                                    <Link to={"/in/classroom/" + classroom.slug + "/assessments"}>
                                                                         {classroom.name}
                                                                     </Link>
                                                                 </td>

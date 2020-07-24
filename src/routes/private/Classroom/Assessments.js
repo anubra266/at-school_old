@@ -83,12 +83,12 @@ const Tests = ({history, educator, slug}) => {
                         <CardHeader>
                             <Row>
                                 <Col md="10">
-                                    Tests
+                                    Assessments
                                 </Col>
                                 {educator
                                     ? <Col md="2">
                                             <ButtonGroup className="btn-group-toggle float-right" data-toggle="buttons">
-                                                <Button onClick={toggle} tag="label" color="info" size="sm">Create New Test</Button>
+                                                <Button onClick={toggle} tag="label" color="info" size="sm">Create New Assessment</Button>
                                             </ButtonGroup>
                                             <Modal isOpen={createtest} toggle={toggle} className={className + ""}>
                                                 <ModalBody>
@@ -96,11 +96,11 @@ const Tests = ({history, educator, slug}) => {
                                                         style={{
                                                         color: "black"
                                                     }}>
-                                                        Create New Test
+                                                        Create New Assessment
                                                     </h3>
                                                     <Form onSubmit={handlecreatetest} action="POST">
                                                         <FormGroup>
-                                                            <Label for="title">Test Title
+                                                            <Label for="title">Assessment Title
                                                             </Label>
                                                             <Input
                                                                 style={{
