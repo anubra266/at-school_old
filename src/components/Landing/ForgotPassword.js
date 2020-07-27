@@ -5,43 +5,10 @@ import AuthService from "../../services/auth.service";
 
 import { Row, Col } from "reactstrap";
 
-const Login = ({ location, history }, props) => {
+const ForgotPassword = ({ location, history }, props) => {
   const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
   const [loading, setloading] = useState(false);
-  const { from } = location.state || {
-    from: {
-      pathname: "/in/dashboard",
-    },
-  };
-  useEffect(() => {
-    from.pathname !== "/in/dashboard"
-      ? notify.user("Login", "You are logged out! Login to continue", "info")
-      : console.log("");
-  }, [from.pathname]);
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setloading(true);
 
-    AuthService.login(email, password).then(
-      () => {
-        notify.user("Login", "Login successful. Redirecting you...", "success");
-        window.location.replace(from.pathname);
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        setloading(true);
-        notify.user("Login", resMessage, "danger");
-        setloading(false);
-        setpassword("");
-      }
-    );
-  };
   return (
     <div>
       <div className="limiter">
@@ -61,11 +28,10 @@ const Login = ({ location, history }, props) => {
           <div className="row ceent">
             <div className="col-lg-4 col-md-6 col-sm-4">
               <div className="wrap-login100 p-t-50 p-b-90">
-                <form
-                  className="login100-form validate-form flex-sb flex-w"
-                  onSubmit={handleLogin}
-                >
-                  <span className="login100-form-title p-b-51">Login</span>
+                <form className="login100-form validate-form flex-sb flex-w">
+                  <span className="login100-form-title p-b-51">
+                    Forgot Password
+                  </span>
 
                   <div className="wrap-input100  m-b-16">
                     <input
@@ -80,19 +46,6 @@ const Login = ({ location, history }, props) => {
                     <span className="focus-input100"></span>
                   </div>
 
-                  <div className="wrap-input100  m-b-16">
-                    <input
-                      className="input100"
-                      required
-                      value={password}
-                      onChange={(e) => setpassword(e.target.value)}
-                      type="password"
-                      name="pass"
-                      placeholder="Password"
-                    />
-                    <span className="focus-input100"></span>
-                  </div>
-
                   <div className="row justify-content-left">
                     <div className="col-sm-6">
                       <div className="container-login100-form-btn m-t-1 m-b-16">
@@ -100,16 +53,16 @@ const Login = ({ location, history }, props) => {
                           disabled={loading}
                           className="login100-form-btn"
                         >
-                          Login
+                          Reset
                         </button>
                       </div>
-                    </div> 
+                    </div>
                   </div>
 
                   <div className="row justify-content-between">
                     <div className="col-4">
-                      <Link to="/forgotpassword" className="txt1">
-                        Forgot?
+                      <Link to="/login" className="txt1">
+                        Login
                       </Link>
                     </div>
                     <div className="col-4">
@@ -128,4 +81,4 @@ const Login = ({ location, history }, props) => {
   );
 };
 
-export default Login;
+export default ForgotPassword;

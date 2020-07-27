@@ -28,7 +28,7 @@ export default function PasswordInput(props) {
                 <span className="focus-input100"></span>
             </div>
 
-            <label
+            {props.value !== ""?<label
                 style={{
                 color: props.value !== ""
                     ? color
@@ -37,7 +37,7 @@ export default function PasswordInput(props) {
                 {props.value !== ""
                     ? label
                     : ''}
-            </label>
+            </label>:''}
         </div>
     )
 

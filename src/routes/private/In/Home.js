@@ -47,128 +47,148 @@ const Home = ({user}) => {
     const roles = user_roles_arr.filter((a, b) => user_roles_arr.indexOf(a) === b);
     const role_level = roles.length;
 
-    const cards = HomeInfo&&[
+    const cards = HomeInfo && [
       {
-        header:"Classrooms Joined",
-        icon:"icon-group",
-        value:HomeInfo.classroomsJoined[0],
-        content:"",
-        color:"text-info",
-        show:()=>{
+        header: "Classrooms Joined",
+        icon: "icon-group",
+        value: HomeInfo.classroomsJoined[0],
+        content: "",
+        color: "text-info",
+        show: () => {
           return true;
-        }
+        },
       },
       {
-        header:"Theory Tests Taken",
-        icon:"icon-pencil",
-        value:HomeInfo.theoryTests[0],
-        content:"",
-        color:"text-primary",
-        show:()=>{
+        header: "Theory Tests Taken",
+        icon: "icon-pencil",
+        value: HomeInfo.theoryTests[0],
+        content: "",
+        color: "text-primary",
+        show: () => {
           return true;
-        }
+        },
       },
       {
-        header:"Objective Tests Taken",
-        icon:"icon-th-list",
-        value:HomeInfo.objectiveTests[0],
-        content:"",
-        color:"text-warning",  
-        show:()=>{
+        header: "Theory Tests Missed",
+        icon: "icon-pencil",
+        value: HomeInfo.missedtheory,
+        content: "",
+        color: "text-primary",
+        show: () => {
           return true;
-        } 
+        },
       },
       {
-        header:"Classroom Students",
-        icon:"icon-mortar-board",
-        value:HomeInfo.classroomStudents,
-        content:"",
-        color:"text-info",
-        show:()=>{
-          return role_level===2
-        }
+        header: "Objective Tests Taken",
+        icon: "icon-th-list",
+        value: HomeInfo.objectiveTests[0],
+        content: "",
+        color: "text-warning",
+        show: () => {
+          return true;
+        },
       },
       {
-        header:"Classrooms Created",
-        icon:"icon-group",
-        value:HomeInfo.classroomsCreated[0],
-        content:"",
-        color:"text-warning",
-        show:()=>{
-          return role_level>1
-        }
+        header: "Objective Tests Missed",
+        icon: "icon-pencil",
+        value: HomeInfo.missedobjective,
+        content: "",
+        color: "text-primary",
+        show: () => {
+          return true;
+        },
       },
       {
-        header:"Classroom Tests",
-        icon:"icon-edit",
-        value:HomeInfo.classroomTests,
-        content:"",
-        color:"text-danger",
-        show:()=>{
-          return role_level>1
-        }
+        header: "Classroom Students",
+        icon: "icon-mortar-board",
+        value: HomeInfo.classroomStudents,
+        content: "",
+        color: "text-info",
+        show: () => {
+          return role_level === 2;
+        },
       },
       {
-        header:"Environs Created",
-        icon:"icon-group_work",
-        value:HomeInfo.environs[0],
-        content:"",
-        color:"text-danger",
-        show:()=>{
-          return role_level>2
-        }
+        header: "Classrooms Created",
+        icon: "icon-group",
+        value: HomeInfo.classroomsCreated[0],
+        content: "",
+        color: "text-warning",
+        show: () => {
+          return role_level > 1;
+        },
       },
       {
-        header:"Environ Educators",
-        icon:"icon-person_outline",
-        value:HomeInfo.environEducators,
-        content:"",
-        color:"text-primary",
-        show:()=>{
-          return role_level===3
-        }
+        header: "Classroom Tests",
+        icon: "icon-edit",
+        value: HomeInfo.classroomTests,
+        content: "",
+        color: "text-danger",
+        show: () => {
+          return role_level > 1;
+        },
       },
       {
-        header:"Environ Students",
-        icon:"icon-mortar-board",
-        value:HomeInfo.environStudents,
-        content:"",
-        color:"text-info",
-        show:()=>{
-          return role_level===3
-        }
+        header: "Environs Created",
+        icon: "icon-group_work",
+        value: HomeInfo.environs[0],
+        content: "",
+        color: "text-danger",
+        show: () => {
+          return role_level > 2;
+        },
       },
       {
-        header:"Organizations",
-        icon:"icon-institution",
-        value:HomeInfo.organizations[0],
-        content:"",
-        color:"text-warning",
-        show:()=>{
-          return role_level>3
-        }
+        header: "Environ Educators",
+        icon: "icon-person_outline",
+        value: HomeInfo.environEducators,
+        content: "",
+        color: "text-primary",
+        show: () => {
+          return role_level === 3;
+        },
       },
       {
-        header:"Organization Students",
-        icon:"icon-mortar-board",
-        value:HomeInfo.organizationStudents,
-        content:"",
-        color:"text-info",
-        show:()=>{
-          return role_level===4
-        }
+        header: "Environ Students",
+        icon: "icon-mortar-board",
+        value: HomeInfo.environStudents,
+        content: "",
+        color: "text-info",
+        show: () => {
+          return role_level === 3;
+        },
       },
       {
-        header:"Organization Educators",
-        icon:"icon-person",
-        value:HomeInfo.organizationEducators,
-        content:"",
-        color:"text-warning",
-        show:()=>{
-          return role_level===4
-        }
+        header: "Organizations",
+        icon: "icon-institution",
+        value: HomeInfo.organizations[0],
+        content: "",
+        color: "text-warning",
+        show: () => {
+          return role_level > 3;
+        },
       },
-    ]
+      {
+        header: "Organization Students",
+        icon: "icon-mortar-board",
+        value: HomeInfo.organizationStudents,
+        content: "",
+        color: "text-info",
+        show: () => {
+          return role_level === 4;
+        },
+      },
+      {
+        header: "Organization Educators",
+        icon: "icon-person",
+        value: HomeInfo.organizationEducators,
+        content: "",
+        color: "text-warning",
+        show: () => {
+          return role_level === 4;
+        },
+      },
+    ];
     const updateHomeInfo = ()=>{
       UserService
           .gethomeinfo()
@@ -314,7 +334,7 @@ const Home = ({user}) => {
 
             {cards.filter(card=>{return card.show()&&card.value>0}).map(((card, key)=>{
               return (
-                <Col lg="4" key={key}>
+                <Col sm="4" key={key}>
                 <Card className="card-chart">
                   <CardHeader>
                     <h5 className="card-category">{card.header}</h5>

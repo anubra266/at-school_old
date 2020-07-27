@@ -46,8 +46,8 @@ const Questiona = ({ match, history }) => {
   const [togo, settogo] = useState(0);
   const changepage = (index) => {
     if (index === test.objectivequestions.length - 1) {
-      questioneditor.setData(initialdata);
-      solutioneditor.setData(initialsolution);
+      questioneditor && questioneditor.setData(initialdata);
+      solutioneditor && solutioneditor.setData(initialsolution);
       setsolution("");
       setquestion("");
       setoption1("");
@@ -55,17 +55,19 @@ const Questiona = ({ match, history }) => {
       setoption3("");
       setoption4("");
     } else {
-      questioneditor.setData(test.objectivequestions[index].question);
+      questioneditor &&
+        questioneditor.setData(test.objectivequestions[index].question);
       if (solutioneditor) {
         if (test.objectivequestions[index].objectivesolutions.length > 0) {
-          solutioneditor.setData(
-            test.objectivequestions[index].objectivesolutions[0].solution
-          );
+          solutioneditor &&
+            solutioneditor.setData(
+              test.objectivequestions[index].objectivesolutions[0].solution
+            );
           setsolution(
             test.objectivequestions[index].objectivesolutions[0].solution
           );
         } else {
-          solutioneditor.setData(initialsolution);
+          solutioneditor && solutioneditor.setData(initialsolution);
           setsolution("");
         }
       }
@@ -107,7 +109,7 @@ const Questiona = ({ match, history }) => {
   };
   var initialdata =
     '<h2><span style="color:rgb(0,0,0);">Insert your question here</span><span style=' +
-    '"color:rgb(224,175,104);">😄</span><span style="color:rgb(169,177,214);">.</span' +
+    '"color:rgb(224,175,104);">😁</span><span style="color:rgb(169,177,214);">.</span' +
     "></h2>";
   const [test, settest] = useState(null);
   const [loading, setloading] = useState(null);
@@ -288,14 +290,16 @@ const Questiona = ({ match, history }) => {
       !(
         fileObj.type === "application/vnd.ms-excel" ||
         fileObj.type ===
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+        fileObj.type === "application/wps-office.xlsx"
       )
     ) {
       notify.user(
         "Upload Excel File",
-        "Unknown file format. Only Excel files are uploaded!",
+        "Unknown file format. Only Excel and WPS Spreadsheet files are uploaded!",
         "danger"
       );
+      console.log(fileObj.type);
       setwait(false);
       return false;
     }
@@ -470,7 +474,11 @@ const Questiona = ({ match, history }) => {
                     >
                       <BreadcrumbItem>
                         <Link
-                          to={"/in/classroom/" + match.params.slug + "/tests"}
+                          to={
+                            "/in/classroom/" +
+                            match.params.slug +
+                            "/assessments"
+                          }
                         >
                           Tests {CurrentQuestion}
                         </Link>
@@ -505,7 +513,7 @@ const Questiona = ({ match, history }) => {
                       className={className + ""}
                     >
                       <ModalHeader toggle={togglesolution}>
-                        Solution for {test.title}
+                        Solution for {test.title + " "}
                         No. {CurrentQuestion + 1}
                         <br />
                         <span className="text-danger">
@@ -829,7 +837,11 @@ const Questiona = ({ match, history }) => {
                         data-toggle="buttons"
                       >
                         <Link
-                          to={"/in/classroom/" + match.params.slug + "/tests/"}
+                          to={
+                            "/in/classroom/" +
+                            match.params.slug +
+                            "/assessments"
+                          }
                         >
                           <Button color="info" size="sm">
                             Finish

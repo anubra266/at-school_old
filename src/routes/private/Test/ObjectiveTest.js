@@ -42,13 +42,15 @@ const ObjectiveTest = ({user, match, history, className}) => {
                         question
                             .objectiveoptions
                             .sort((a, b) => 0.5 - Math.random());
-                    });
+                    }); 
                 response
                     .data
                     .objectivequestions
                     .sort((a, b) => 0.5 - Math.random());
 
                 settest(response.data);
+                // var timetodeadline = new Date(response.data.deadline).getSeconds() - new Date().getSeconds();
+                // console.log(new Date().setSeconds(new Date().getSeconds() + (timetodeadline * 60)))
                 setsecs(new Date().setSeconds(new Date().getSeconds() + (response.data.duration * 60)))
                 const init_result = response
                     .data
@@ -80,7 +82,7 @@ const ObjectiveTest = ({user, match, history, className}) => {
         history.push('/in/test/' + slug + "/objective/" + match.params.test + "/review");
     }
     const goback = () => {
-        history.push('/in/classroom/' + slug + "/tests");
+        history.push('/in/classroom/' + slug + "/assessments");
     }
     const pat = match.path;
     const patharr = pat.split('/');

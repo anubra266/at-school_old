@@ -79,14 +79,26 @@ const EducatorResults = ({ slug, history }) => {
     setcurrentObjectivePage(index);
   };
 
-  const editobjectivetest = (id) => {
-    history.push("/in/classroom/" + slug + "/tests/questionso/" + id);
+  const editobjectivetest = (id, marked) => {
+    marked
+      ? notify.user(
+          "Edit Test",
+          "You can't edit tests that have been taken.",
+          "info"
+        )
+      : history.push("/in/classroom/" + slug + "/tests/questionso/" + id);
   };
   const testsubmissions = (id) => {
     history.push("/in/classroom/" + slug + "/submissions/" + id);
   };
-  const edittheorytest = (id) => {
-    history.push("/in/classroom/" + slug + "/tests/questionst/" + id);
+  const edittheorytest = (id, marked) => {
+    marked
+      ? notify.user(
+          "Edit Test",
+          "You can't edit test after Marking starts.",
+          "info"
+        )
+      : history.push("/in/classroom/" + slug + "/tests/questionst/" + id);
   };
   return (
     <div>
@@ -148,7 +160,9 @@ const EducatorResults = ({ slug, history }) => {
                               <Button
                                 tag="label"
                                 color="Warning"
-                                onClick={() => edittheorytest(test.id)}
+                                onClick={() =>
+                                  edittheorytest(test.id, test.marked)
+                                }
                                 style={{ width: "100%" }}
                                 size="sm"
                               >
@@ -254,7 +268,9 @@ const EducatorResults = ({ slug, history }) => {
                           <Button
                             tag="label"
                             color="info"
-                            onClick={() => editobjectivetest(test.id)}
+                            onClick={() =>
+                              editobjectivetest(test.id, test.marked)
+                            }
                             size="sm"
                           >
                             Edit
@@ -273,7 +289,9 @@ const EducatorResults = ({ slug, history }) => {
               {noobjective ? (
                 <Col md="12">
                   <div>
-                    <span className="text-info">No Objective Assessments! </span>
+                    <span className="text-info">
+                      No Objective Assessments!{" "}
+                    </span>
                     Create one and check again.
                   </div>
                 </Col>
@@ -328,4 +346,3 @@ const EducatorResults = ({ slug, history }) => {
   );
 };
 export default withRouter(EducatorResults);
- 

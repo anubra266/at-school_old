@@ -56,7 +56,7 @@ const TheoryTest = ({user, match, history}) => {
                     .submittheorytest(question_id, answer)
                     .then(response => {
                         notify.user('Submit Test', 'Test Submitted Successfully', 'success');
-                        history.push('/in/classroom/' + slug + "/tests");
+                        history.push('/in/classroom/' + slug + "/assessments");
                     }, error => {
                         const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                         notify.user('Submit Test', errMsg, 'danger');
@@ -67,7 +67,7 @@ const TheoryTest = ({user, match, history}) => {
                     .updatetheorytest(test.theoryquestion.theoryanswer[0].id, answer)
                     .then(response => {
                         notify.user('Submit Test', 'Test Modified Successfully', 'success');
-                        history.push('/in/classroom/' + slug + "/tests");
+                        history.push('/in/classroom/' + slug + "/assessments");
                     }, error => {
                         const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
                         notify.user('Submit Test', errMsg, 'danger');
