@@ -4,8 +4,8 @@ import loadable from "@loadable/component";
 
 import Home from "./private/In/Home.js";
 
-import Questionst from "./private/Classroom/Questionst.js";
-import Questionso from "./private/Classroom/Questionso.js";
+const Questionst = loadable(() => import("./private/Classroom/Questionst.js"));
+const Questionso = loadable(() => import("./private/Classroom/Questionso.js"));
 
 const Classrooms = loadable(() => import("./private/In/Classrooms.js"));
 const Classes = loadable(() => import("./private/In/Classes.js"));

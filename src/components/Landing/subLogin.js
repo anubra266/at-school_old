@@ -55,7 +55,7 @@ const Login = (props) => {
                         placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                    <button disabled={loading} className="formbt">Log In</button>
+                    <button disabled={loading} className="formbt">{loading?"wait...":"Log In"}</button>
                 </div>
             </form>
 
