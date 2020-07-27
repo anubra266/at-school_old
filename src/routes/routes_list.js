@@ -1,51 +1,59 @@
+import loadable from "@loadable/component";
 
+//import Classes from "./private/In/Classes.js"
 
-import Home from "./private/In/Home.js"
-import Settings from "./private/In/Settings.js"
-import Classrooms from "./private/In/Classrooms.js"
-import Classes from "./private/In/Classes.js"
-import Environs from "./private/In/Environs.js"
-import Organizations from "./private/In/Organizations.js"
- 
-import Assessments from "./private/Classroom/Assessments.js"
-import Solutions from "./private/Classroom/Solutions.js"
-import Members from "./private/Classroom/Members.js"
+import Home from "./private/In/Home.js";
 
-import Questionst from "./private/Classroom/Questionst.js"
-import Questionso from "./private/Classroom/Questionso.js"
+import Questionst from "./private/Classroom/Questionst.js";
+import Questionso from "./private/Classroom/Questionso.js";
 
-import MarkAssessment from "./private/Classroom/MarkAssessment.js"
-import Submissions from "./private/Classroom/Submissions.js"
-import Results from "./private/Classroom/Results.js"
-import Viewtresult from "./private/Classroom/Viewtresult.js"
-import Vieworesult from "./private/Classroom/Vieworesult.js"
+const Classrooms = loadable(() => import("./private/In/Classrooms.js"));
+const Classes = loadable(() => import("./private/In/Classes.js"));
+const Settings = loadable(() => import("./private/In/Settings.js"));
+const Environs = loadable(() => import("./private/In/Environs.js"));
+const Organizations = loadable(() => import("./private/In/Organizations.js"));
+const Assessments = loadable(() =>
+  import("./private/Classroom/Assessments.js")
+);
+const Solutions = loadable(() => import("./private/Classroom/Solutions.js"));
+const Members = loadable(() => import("./private/Classroom/Members.js"));
+const MarkAssessment = loadable(() =>
+  import("./private/Classroom/MarkAssessment.js")
+);
+const Submissions = loadable(() =>
+  import("./private/Classroom/Submissions.js")
+);
+const Results = loadable(() => import("./private/Classroom/Results.js"));
+const Viewtresult = loadable(() =>
+  import("./private/Classroom/Viewtresult.js")
+);
+const Vieworesult = loadable(() =>
+  import("./private/Classroom/Vieworesult.js")
+);
+const TheoryTest = loadable(() => import("./private/Test/TheoryTest.js"));
+const ObjectiveTest = loadable(() => import("./private/Test/ObjectiveTest.js"));
+const ObjectiveTestReview = loadable(() =>
+  import("./private/Test/ObjectiveTestReview.js")
+);
 
-
-import TheoryTest from "./private/Test/TheoryTest.js"
-import ObjectiveTest from "./private/Test/ObjectiveTest.js"
-import ObjectiveTestReview from "./private/Test/ObjectiveTestReview.js"
-
-
-  export {
-    Home, 
-    Settings,
-    Classrooms,
-    Classes,
-    Environs,
-    Organizations,
-
-    Assessments,
-    Solutions,
-    Members,
-    Questionst,
-    Questionso,
-    TheoryTest,
-    MarkAssessment,
-    Submissions,
-    Results,
-    Viewtresult,
-    Vieworesult,
-    ObjectiveTest,
-    ObjectiveTestReview,
-  }
-   
+export {
+  Home,
+  Settings,
+  Classrooms,
+  Classes,
+  Environs,
+  Organizations,
+  Assessments,
+  Solutions,
+  Members,
+  Questionst,
+  Questionso,
+  TheoryTest,
+  MarkAssessment,
+  Submissions,
+  Results,
+  Viewtresult,
+  Vieworesult,
+  ObjectiveTest,
+  ObjectiveTestReview,
+};

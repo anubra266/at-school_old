@@ -25,7 +25,6 @@
     "node-sass": "^4.14.1",
     "perfect-scrollbar": "1.5.0",
     "prop-types": "15.7.2",
-    "quill-table-ui": "^1.0.6",
     "react": "16.13.0",
     "react-avatar-editor": "^11.0.9",
     "react-chartjs-2": "2.9.0",
@@ -33,20 +32,17 @@
     "react-datepicker": "^2.16.0",
     "react-dom": "16.13.0",
     "react-excel-renderer": "^1.1.0",
-    "react-google-maps": "9.4.5",
     "react-input-calendar": "^0.5.4",
     "react-loading-skeleton": "^2.0.1",
     "react-notification-alert": "0.0.12",
     "react-notifications-component": "^2.4.0",
     "react-phone-input-2": "^2.13.5",
-    "react-quill": "^1.3.5",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.0.0",
     "react-widgets": "^4.5.0",
     "react-widgets-globalize": "^5.0.21",
     "react-widgets-moment": "^4.0.28",
-    "reactstrap": "8.4.1",
-    "serve": "^11.3.2"
+    "reactstrap": "8.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -74,6 +70,7 @@
     "typescript": "3.8.3"
   },
   "devDependencies": {
+    "@loadable/component": "^5.13.1",
     "@progress/kendo-drawing": "^1.8.1",
     "@progress/kendo-react-pdf": "^3.15.0",
     "gulp": "4.0.2",

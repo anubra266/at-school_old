@@ -3,10 +3,14 @@ import { Route, Switch } from "react-router-dom";
 import Loading from "../components/Loading.js";
 import Dashboard from "./Dashboard.js";
 import Loadable from "react-loadable";
+import loadable from "@loadable/component";
 
 import ClassroomRoute from "../routes/HOC/ClassroomRoute.js";
 
-const Classroom = Loadable({
+const Classroom = loadable(() => import("./Classroom.js"), {
+  fallback: <Loading></Loading>,
+});
+const Classroomm = Loadable({
   loader: () => import("./Classroom.js"),
   loading() {
     return <Loading></Loading>;
