@@ -4,9 +4,9 @@ import {createBrowserHistory} from "history";
 import {Router, Switch} from "react-router-dom";
 import ReactNotifications from 'react-notifications-component';
 
-import "assets/scss/black-dashboard-react.scss";
-import "assets/demo/demo.css";
-import "assets/css/nucleo-icons.css";
+// import "assets/scss/black-dashboard-react.scss";
+// import "assets/demo/demo.css";
+// import "assets/css/nucleo-icons.css";
 
 import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
@@ -41,5 +41,5 @@ ReactDOM.render(
             <PrivateRoute path="/in" component={PrivateRoutes}/>
             <NoAuthRoute path="/" component={PublicRoutes}/>
         </Switch>
-    </Router>
+    </Router> 
 </div>, document.getElementById("root"));
