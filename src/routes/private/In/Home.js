@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState} from "react";
 
 // import classNames from "classnames";
 
@@ -12,7 +12,7 @@ import {
     CardTitle,
     Row,
     Col,
-    Jumbotron, Container
+    Jumbotron
   } from "reactstrap";
 
 import { Line, Bar } from "react-chartjs-2";

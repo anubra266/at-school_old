@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
 
-import { Row, Col } from "reactstrap";
 
 const ForgotPassword = ({ location, history }, props) => {
   const [email, setemail] = useState("");

@@ -64,7 +64,7 @@ class TheNavbar extends React.Component {
     };
     
     render() {
-        const {user, thislayout, logout} = this.props;
+        const {user, logout} = this.props;
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
@@ -121,8 +121,8 @@ class TheNavbar extends React.Component {
                                         <b className="caret d-lg-block d-xl-block"/>
                                     </DropdownToggle>
                                     <DropdownMenu className="dropdown-navbar" right tag="ul">
-                                        <NavLink tag="li">
-                                            <Link to={thislayout + "/profile-settings"}>
+                                        <NavLink tag="li"> 
+                                            <Link to={"/profile-settings"}>
                                                 <DropdownItem className="nav-item">Settings</DropdownItem>
                                             </Link>
                                         </NavLink>

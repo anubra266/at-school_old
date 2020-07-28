@@ -55,10 +55,7 @@ const Register = ({ location, history }, props) => {
           }
           break;
         case 4:
-          if (
-            school.trim() !== "" &&
-            school_town !== ""
-          ) {
+          if (school.trim() !== "" && school_town !== "") {
             setpage(topage);
           } else {
             notify.user("Register", "All fields are required", "warning");
@@ -453,6 +450,10 @@ const Register = ({ location, history }, props) => {
                       <CardBody>
                         <CardText />
                         <div className="author">
+                          <div className="block block-one" />
+                          <div className="block block-two" />
+                          <div className="block block-three" />
+                          <div className="block block-four" />
                           <div
                             className="upload-butn-wrapper"
                             style={{

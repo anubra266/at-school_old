@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import Loading from "../components/Loading.js";
 import Dashboard from "./Dashboard.js";
-import Loadable from "react-loadable";
 import loadable from "@loadable/component";
 
 import ClassroomRoute from "../routes/HOC/ClassroomRoute.js";
@@ -10,30 +9,14 @@ import ClassroomRoute from "../routes/HOC/ClassroomRoute.js";
 const Classroom = loadable(() => import("./Classroom.js"), {
   fallback: <Loading></Loading>,
 });
-const Classroomm = Loadable({
-  loader: () => import("./Classroom.js"),
-  loading() {
-    return <Loading></Loading>;
-  },
+const Test = loadable(() => import("./Test.js"), {
+  fallback: <Loading></Loading>,
 });
-const Test = Loadable({
-  loader: () => import("./Test.js"),
-  loading() {
-    return <Loading></Loading>;
-  },
+const Welcome = loadable(() => import("../components/Welcome/Welcome.js"), {
+  fallback: <Loading></Loading>,
 });
-const Welcome = Loadable({
-  loader: () => import("../components/Welcome/Welcome.js"),
-  loading() {
-    return <Loading></Loading>;
-  },
-});
-
-const error404 = Loadable({
-  loader: () => import("./error404.js"),
-  loading() {
-    return <Loading></Loading>;
-  },
+const error404 = loadable(() => import("./error404.js"), {
+  fallback: <Loading></Loading>,
 });
 
 const PrivateRoutes = ({ user }) => {

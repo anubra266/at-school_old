@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import notify from "../../services/notify";
 import AuthService from "../../services/auth.service";
 
-import { Row, Col } from "reactstrap";
 
 const Login = ({ location, history }, props) => {
   const [email, setemail] = useState("");

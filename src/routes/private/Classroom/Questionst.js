@@ -18,8 +18,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Label,
-  Input,
 } from "reactstrap";
 import className from "classnames";
 import notify from "../../../services/notify.js";
