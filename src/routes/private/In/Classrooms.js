@@ -61,12 +61,12 @@ const Classrooms = ({user}) => {
         useEffect(()=>{
             updateclassrooms();
         },[]);
-        window
-        .Echo
-        .channel('at_school_database_classrooms')
-        .listen('UpdateClassrooms', e => {
+        window.Echo.channel("at_school_database_classes").listen(
+          "UpdateClassrooms",
+          (e) => {
             updateclassrooms();
-        })
+          }
+        );
     const [modal,
         setModal] = useState(false);
     const toggle = () => setModal(!modal);

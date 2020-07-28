@@ -56,12 +56,12 @@ const Viewtresult = ({match, slug}) => {
                 }
             });
     }
-    window
-    .Echo
-    .channel('at_school_database_objectivetests')
-    .listen('UpdateObjectiveTests', e => {
+    window.Echo.channel("at_school_database_classes").listen(
+      "UpdateObjectiveTests",
+      (e) => {
         updateresults();
-    })
+      }
+    );
     
     useEffect(() => {
         updateresults();

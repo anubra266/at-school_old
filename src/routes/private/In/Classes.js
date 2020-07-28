@@ -59,12 +59,12 @@ const Classes = ({user}) => {
     useEffect(()=>{
         updateclasses();
     },[]);
-    window
-        .Echo
-        .channel('at_school_database_classes')
-        .listen('UpdateClasses', e => {
-            updateclasses();
-        })
+    window.Echo.channel("at_school_database_classes").listen(
+      "UpdateClasses",
+      (e) => {
+        updateclasses();
+      }
+    );
     const [modal,
         setModal] = useState(false);
 

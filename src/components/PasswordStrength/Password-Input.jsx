@@ -14,7 +14,7 @@ export default function PasswordInput(props) {
   const [showPassword, setshowPassword] = useState(false);
   useEffect(() => {});
   return (
-    <div>
+    <React.Fragment>
       {settings ? (
         <Input
           style={{ color: "black" }}
@@ -69,6 +69,6 @@ export default function PasswordInput(props) {
       ) : (
         ""
       )}
-    </div>
+    </React.Fragment>
   );
 }

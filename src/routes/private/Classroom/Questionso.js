@@ -126,7 +126,7 @@ const Questiona = ({ match, history }) => {
   useEffect(() => {
     updatetest();
   }, []);
-  window.Echo.channel("at_school_database_tests").listen(
+  window.Echo.channel("at_school_database_classes").listen(
     "UpdateTestQuestions",
     (e) => {
       updatetest();

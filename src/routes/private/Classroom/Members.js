@@ -44,7 +44,7 @@ const Members = ({user, slug}) => {
     }, []);
     window
         .Echo
-        .channel('at_school_database_members')
+        .channel('at_school_database_classes')
         .listen('UpdateMembers', e => {
             updatemembers()
         })

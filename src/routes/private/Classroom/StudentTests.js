@@ -73,7 +73,7 @@ const StudentTests = ({ history, educator, slug }) => {
     updatetheorytests();
     return () => clearInterval(updateobj);
   }, []);
-  window.Echo.channel("at_school_database_theorytests").listen(
+  window.Echo.channel("at_school_database_classes").listen(
     "UpdateTheoryTests",
     (e) => {
       updatetheorytests();
@@ -92,7 +92,7 @@ const StudentTests = ({ history, educator, slug }) => {
   const toggletype = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-  window.Echo.channel("at_school_database_tests").listen(
+  window.Echo.channel("at_school_database_classes").listen(
     "UpdateTheoryTests",
     (e) => {
       updatetheorytests();

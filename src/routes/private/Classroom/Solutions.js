@@ -99,7 +99,7 @@ const Solutions = ({ history, educator, slug }) => {
       setmounted(false);
     };
   }, []);
-  window.Echo.channel("at_school_database_tests").listen(
+  window.Echo.channel("at_school_database_classes").listen(
     "UpdateTheoryTests",
     (e) => {
       updatetheorytests();
@@ -112,7 +112,7 @@ const Solutions = ({ history, educator, slug }) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
 
-  window.Echo.channel("at_school_database_solutions").listen(
+  window.Echo.channel("at_school_database_classes").listen(
     "UpdateSolutions",
     (e) => {
       updatetheorytests();

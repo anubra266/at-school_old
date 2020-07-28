@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom"
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import UserService from "../../services/user.service";
 
 // reactstrap components
 import {
@@ -27,7 +28,8 @@ class TheNavbar extends React.Component {
         this.state = {
             collapseOpen: false,
             modalSearch: false,
-            color: "navbar-transparent"
+            color: "navbar-transparent",
+            user: this.props.user
         };
     }
     componentDidMount() {
@@ -64,7 +66,18 @@ class TheNavbar extends React.Component {
     };
     
     render() {
-        const {user, logout} = this.props;
+        const {logout} = this.props;
+        const updateuser = () => {
+          UserService.getUser().then((response) => {
+            this.setState({user:response.data});
+          });
+        };
+        window.Echo.channel("at_school_database_classes").listen(
+          "UpdateUser",
+          (e) => {
+            updateuser();
+          }
+        );
         return (
             <div>
                 <Navbar className={classNames("navbar-absolute", this.state.color)} expand="lg">
@@ -104,7 +117,7 @@ class TheNavbar extends React.Component {
                                 <InputGroup className="search-bar">
                                     <Button color="link" id="search-button">
 
-                                        {user.firstName + " " + (user.lastName)}
+                                        {this.state.user.firstName + " " + (this.state.user.lastName)}
                                     </Button>
                                 </InputGroup>
                                 <UncontrolledDropdown nav>
@@ -116,7 +129,7 @@ class TheNavbar extends React.Component {
                                         <div className="photo">
                                             <img
                                                 alt="..."
-                                                src={notify.APP_URL() + 'storage/images/' + user.profile_image || require("assets/img/default-avatar.png")}/>
+                                                src={notify.APP_URL() + 'storage/images/' + this.state.user.profile_image || require("assets/img/default-avatar.png")}/>
                                         </div>
                                         <b className="caret d-lg-block d-xl-block"/>
                                     </DropdownToggle>

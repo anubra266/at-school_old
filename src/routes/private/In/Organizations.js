@@ -59,12 +59,12 @@ const Organizations = ({user, history}) => {
     useEffect(()=>{
         updateorganizations();
     },[]);
-    window
-        .Echo
-        .channel('at_school_database_organizations')
-        .listen('UpdateOrganizations', e => {
-            updateorganizations()
-        })
+    window.Echo.channel("at_school_database_classes").listen(
+      "UpdateOrganizations",
+      (e) => {
+        updateorganizations();
+      }
+    );
     const [modal,
         setModal] = useState(false);
 

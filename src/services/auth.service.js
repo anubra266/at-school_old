@@ -74,6 +74,28 @@ class AuthService {
       headers: authHeader(),
     });
   }
+  update_password(oldpassword, password) {
+    return axios({
+      method: "POST",
+      url: API_URL + "update_password",
+      data: {
+        oldpassword,
+        password,
+      },
+      headers: authHeader(),
+    });
+  }
+
+  update_profile_image(profile_image) {
+    return axios({
+      method: "POST",
+      url: API_URL + "update_profile_image",
+      data: {
+        profile_image
+      },
+      headers: authHeader(),
+    });
+  }
 
   getCurrentUser() {
     return JSON.parse(localStorage.getItem("classrooms-app"));

@@ -200,27 +200,28 @@ const Home = ({user}) => {
     // useEffect(()=>{
     //   updateHomeInfo();
     // },[])
-    window
-        .Echo
-        .channel('at_school_database_classes')
-        .listen('UpdateClasses', e => {
-            updateHomeInfo();
-        })
-        .listen('UpdateClassrooms', e => {
-          updateHomeInfo();
-        })
-        .listen('UpdateClasses', e => {
-            updateHomeInfo();
-        })
-        .listen('UpdateEnvirons', e => {
-          updateHomeInfo();
-        })
-        .listen('UpdateMembers', e => {
+    window.Echo.channel("at_school_database_classes")
+      .listen("UpdateClasses", (e) => {
         updateHomeInfo();
-        })
-        .listen('UpdateOrganizations', e => {
-            updateHomeInfo();
-        })
+      })
+      .listen("UpdateClassrooms", (e) => {
+        updateHomeInfo();
+      })
+      .listen("UpdateClasses", (e) => {
+        updateHomeInfo();
+      })
+      .listen("UpdateEnvirons", (e) => {
+        updateHomeInfo();
+      })
+      .listen("UpdateMembers", (e) => {
+        updateHomeInfo();
+      })
+      .listen("UpdateOrganizations", (e) => {
+        updateHomeInfo();
+      })
+      .listen("UpdateUser", (e) => {
+        updateHomeInfo();
+      });
 
     return (
         <>

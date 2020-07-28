@@ -54,12 +54,12 @@ const Submissions = ({slug, history, match}) => {
         updatesubmissions();
 
     }, []);
-    window
-        .Echo
-        .channel('at_school_database_submissions')
-        .listen('UpdateSubmissions', e => {
-            updatesubmissions()
-        })
+    window.Echo.channel("at_school_database_classes").listen(
+      "UpdateSubmissions",
+      (e) => {
+        updatesubmissions();
+      }
+    );
 
         const marktest = (test, user) => {
             history.push("/in/classroom/" + slug + "/mark-assessment/" + test +"/"+ user);

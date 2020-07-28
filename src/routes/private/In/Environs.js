@@ -61,12 +61,12 @@ const Environs = ({user, history}) => {
     useEffect(()=>{
         updateenvirons();
     },[]);
-    window
-        .Echo
-        .channel('at_school_database_environs')
-        .listen('UpdateEnvirons', e => {
-            updateenvirons();
-        })
+    window.Echo.channel("at_school_database_classes").listen(
+      "UpdateEnvirons",
+      (e) => {
+        updateenvirons();
+      }
+    );
 
     const [modal,
         setModal] = useState(false);
