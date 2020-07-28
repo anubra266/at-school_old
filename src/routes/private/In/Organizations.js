@@ -128,7 +128,7 @@ const Organizations = ({user, history}) => {
                                                         value={name}
                                                         required
                                                         onChange={(e) => setname(e.target.value)}
-                                                        placeholder="Birtong University"/>
+                                                        placeholder="Birtong University"/> 
                                                 </FormGroup>
 
                                                 <FormGroup>
