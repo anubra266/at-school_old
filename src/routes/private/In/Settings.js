@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import notify from "../../../services/notify.js";
 import className from "classnames";
 import AuthService from "../../../services/auth.service.js";
-
+import ReactPhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/bootstrap.css";
 // reactstrap components
 import {
   Button,
@@ -189,19 +190,17 @@ const Settings = ({ user }) => {
                     </FormGroup>
                   </Col>
                   <Col className="pl-md-1" md="6">
-                    <FormGroup>
                       <label>Telephone</label>
-                      <Input
-                        required
-                        value={telephone}
-                        placeholder="Telephone"
-                        type="tel"
-                        onChange={(e) => {
-                          settelephone(e.target.value);
+                      <ReactPhoneInput
+                        country={"ng"}
+                        defaultCountry={"ngn"}
+                        inputProps={{
+                          name: "telephone",
+                          required: true,
                         }}
-                        onFocus={focusinput}
+                        value={telephone}
+                        onChange={(phone) => settelephone(phone)}
                       />
-                    </FormGroup>
                   </Col>
                 </Row>
                 <Row>
