@@ -376,8 +376,41 @@ const Register = ({ location, history }, props) => {
                   ) : (
                     ""
                   )}
-
                   {page === 3 ? (
+                    <span>
+                      <div className="wrap-input100  m-b-16">
+                        <Input
+                          className="input100"
+                          required
+                          type="text"
+                          name="school"
+                          value={school}
+                          onChange={(e) => {
+                            setschool(e.target.value);
+                          }}
+                          placeholder="School e.g. Birtong University"
+                        />
+                        <span className="focus-input100"></span>
+                      </div>
+                      <div className="wrap-input100  m-b-16">
+                        <Input
+                          className="input100"
+                          required
+                          type="text"
+                          name="school_town"
+                          value={school_town}
+                          onChange={(e) => {
+                            setschool_town(e.target.value);
+                          }}
+                          placeholder="Town e.g. New York"
+                        />
+                        <span className="focus-input100"></span>
+                      </div>
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                  {page === 4 ? (
                     <span>
                       <label>Must be more than 6 Characters*</label>
                       <PasswordInput
@@ -414,41 +447,7 @@ const Register = ({ location, history }, props) => {
                   ) : (
                     ""
                   )}
-                  {page === 4 ? (
-                    <span>
-                      <div className="wrap-input100  m-b-16">
-                        <Input
-                          className="input100"
-                          required
-                          type="text"
-                          name="school"
-                          value={school}
-                          onChange={(e) => {
-                            setschool(e.target.value);
-                          }}
-                          placeholder="School e.g. Birtong University"
-                        />
-                        <span className="focus-input100"></span>
-                      </div>
-                      <div className="wrap-input100  m-b-16">
-                        <Input
-                          className="input100"
-                          required
-                          type="text"
-                          name="school_town"
-                          value={school_town}
-                          onChange={(e) => {
-                            setschool_town(e.target.value);
-                          }}
-                          placeholder="Town e.g. New York"
-                        />
-                        <span className="focus-input100"></span>
-                      </div>
-                      
-                    </span>
-                  ) : (
-                    ""
-                  )}
+
                   {page === 5 ? (
                     <Card className="card-user">
                       <CardBody>
