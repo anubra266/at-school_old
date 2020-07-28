@@ -4,7 +4,6 @@ import notify from "../../../services/notify.js";
 import className from "classnames";
 import AuthService from "../../../services/auth.service.js";
 
-
 // reactstrap components
 import {
   Button,
@@ -40,7 +39,7 @@ const Settings = ({ user }) => {
 
   const [school, setschool] = useState(user.school);
   const [school_town, setschool_town] = useState(user.school_town);
-
+  const focusinput = (e) => e.target.select();
   const saveprofile = (e) => {
     e.preventDefault();
     setloading(true);
@@ -54,7 +53,7 @@ const Settings = ({ user }) => {
       telephone,
       dateOfBirth,
       school,
-      school_town,
+      school_town
     ).then(
       (response) => {
         notify.user("Update Profile", response.data, "success");
@@ -99,6 +98,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setfirstName(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -113,6 +113,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setmiddleName(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -127,6 +128,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setlastName(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -182,6 +184,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setemail(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -196,6 +199,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           settelephone(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -212,6 +216,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setschool(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -228,6 +233,7 @@ const Settings = ({ user }) => {
                         onChange={(e) => {
                           setschool_town(e.target.value);
                         }}
+                        onFocus={focusinput}
                       />
                     </FormGroup>
                   </Col>
@@ -303,10 +309,7 @@ const Settings = ({ user }) => {
               Change Password
             </ModalHeader>
             <ModalBody>
-
-
-            
-              <form>
+              <Form>
                 <Row>
                   <Col md="12">
                     <FormGroup>
@@ -352,10 +355,7 @@ const Settings = ({ user }) => {
                     Cancel
                   </Button>
                 </ModalFooter>
-              </form>
-
-
-
+              </Form>
             </ModalBody>
           </Modal>
         </Col>
