@@ -6,7 +6,7 @@ import ReactNotifications from 'react-notifications-component';
 
 // import "assets/scss/black-dashboard-react.scss";
 // import "assets/demo/demo.css";
-// import "assets/css/nucleo-icons.css";
+import "assets/css/nucleo-icons.css";
 
 import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";

@@ -20,6 +20,7 @@ import {
 
 import UserService from "../../../services/user.service";
 import className from "classnames";
+import notify from "services/notify";
 
 
 import { PDFExport } from '@progress/kendo-react-pdf';
@@ -37,6 +38,8 @@ const Viewtresult = ({match, slug}) => {
 
     const [name, setname] = useState(true);
     const [email, setemail] = useState(false);
+  const [school, setschool] = useState(false);
+  const [school_town, setschool_town] = useState(false);
     const [telephone, settelephone] = useState(false);
     const [dateofbirth, setdateofbirth] = useState(false);
     const updateresults = () => {
@@ -48,7 +51,7 @@ const Viewtresult = ({match, slug}) => {
                     setnoresults(true);
                 } else {
                     setresults(response.data[0]);
-                    setnoresults(false);
+                    setnoresults(false); 
                     settest(response.data[1]);
                 }
             });
@@ -67,31 +70,7 @@ const Viewtresult = ({match, slug}) => {
         setsearch] = useState('');
 
     const searchresult = (student) => {
-        var fname = student
-            .firstName
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) > -1;
-        var mname = student
-            .middleName
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) > -1;
-        var lname = student
-            .lastName
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) > -1;
-        var email = student
-            .email
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) > -1;
-        var telephone = student
-            .telephone
-            .toLowerCase()
-            .indexOf(search.toLowerCase()) > -1;
-        var dob = (new Date(student.dateOfBirth))
-            .toLocaleDateString()
-            .indexOf(search.toLowerCase()) > -1;
-        var result = fname || mname || lname || email || telephone || dob;
-        return result;
+        return notify.searchresult(student, search);
     }
 
     
@@ -124,7 +103,9 @@ const Viewtresult = ({match, slug}) => {
         {show:name, label:"Full Name", value:"name"},
         {show:email, label:"Email", value:"email"},
         {show:telephone, label:"Telephone", value:"telephone"},
-        {show:dateofbirth, label:"Date Of Birth", value:"dateofbirth"}
+        {show:dateofbirth, label:"Date Of Birth", value:"dateofbirth"},
+    { show: school, label: "School", value: "school" },
+    { show: school_town, label: "Town", value: "school_town" },
     ];
     return (
         <div className="content">
@@ -223,6 +204,22 @@ const Viewtresult = ({match, slug}) => {
                                                               <CustomInput id="email" type="checkbox" checked={email} onChange={(e)=> setemail(!email)} label="Email" inline />
                                                               <CustomInput id="telephone" type="checkbox" checked={telephone} onChange={(e)=> settelephone(!telephone)} label="Telephone" inline />
                                                              <CustomInput id="dateofbirth" type="checkbox" checked={dateofbirth} onChange={(e)=> setdateofbirth(!dateofbirth)} label="Date of Birth" inline />
+                                                             <CustomInput
+                                id="school"
+                                type="checkbox"
+                                checked={school}
+                                onChange={(e) => setschool(!school)}
+                                label="School"
+                                inline
+                              />
+                              <CustomInput
+                                id="school_town"
+                                type="checkbox"
+                                checked={school_town}
+                                onChange={(e) => setschool_town(!school_town)}
+                                label="Town"
+                                inline
+                              />
                                                             </div>
                                                           </FormGroup>
                                                           <PDFExport paperSize={'Letter'}
@@ -241,6 +238,8 @@ const Viewtresult = ({match, slug}) => {
                                                                   {email?<th>Email</th>:''}
                                                                   {telephone?<th>Telephone</th>:''}
                                                                   {dateofbirth?<th>Date Of Birth</th>:''}
+                                    {school ? <th>School</th> : ""}
+                                    {school_town ? <th>Town</th> : ""}
                                                                   <th>Score</th>
                                                               </tr>
                                                           </thead>
@@ -249,21 +248,105 @@ const Viewtresult = ({match, slug}) => {
                                                                   .filter(result => searchresult(result.user))
                                                                   .map((result, key) => {
                                                                       return (
-                                                                          <tr key={result.id}>
-                                                                              <th scope="row">{key + 1}</th>
-                                                                              {name?<td>
-                                                                                  {(result.user.firstName) + " " + (result.user.middleName).charAt(0) + ". " + result.user.lastName}
-                                                                              </td>:''}
+                                                                        <tr
+                                                                          key={
+                                                                            result.id
+                                                                          }
+                                                                        >
+                                                                          <th scope="row">
+                                                                            {key +
+                                                                              1}
+                                                                          </th>
+                                                                          {name ? (
+                                                                            <td>
+                                                                              {result
+                                                                                .user
+                                                                                .firstName +
+                                                                                " " +
+                                                                                result.user.middleName.charAt(
+                                                                                  0
+                                                                                ) +
+                                                                                ". " +
+                                                                                result
+                                                                                  .user
+                                                                                  .lastName}
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
 
-                                                                              {email?<td>{result.user.email}</td>:''}
+                                                                          {email ? (
+                                                                            <td>
+                                                                              {
+                                                                                result
+                                                                                  .user
+                                                                                  .email
+                                                                              }
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
 
-                                                                              {telephone?<td>+{result.user.telephone}</td>:''}
+                                                                          {telephone ? (
+                                                                            <td>
+                                                                              +
+                                                                              {
+                                                                                result
+                                                                                  .user
+                                                                                  .telephone
+                                                                              }
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
 
-                                                                              {dateofbirth?<td>{result.user.dateOfBirth}</td>:''}
-
-                                                                              <td>{result.score+"/"+result.total} ({Math.round(result.score/result.total*100)})%</td>
-                                                                          </tr>
-                                                                      )
+                                                                          {dateofbirth ? (
+                                                                            <td>
+                                                                              {
+                                                                                result
+                                                                                  .user
+                                                                                  .dateOfBirth
+                                                                              }
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
+                                                                          {school ? (
+                                                                            <td>
+                                                                              {
+                                                                                result
+                                                                                  .user
+                                                                                  .school
+                                                                              }
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
+                                                                          {school_town ? (
+                                                                            <td>
+                                                                              {
+                                                                                result
+                                                                                  .user
+                                                                                  .school_town
+                                                                              }
+                                                                            </td>
+                                                                          ) : (
+                                                                            ""
+                                                                          )}
+                                                                          <td>
+                                                                            {result.score +
+                                                                              "/" +
+                                                                              result.total}{" "}
+                                                                            (
+                                                                            {Math.round(
+                                                                              (result.score /
+                                                                                result.total) *
+                                                                                100
+                                                                            )}
+                                                                            )%
+                                                                          </td>
+                                                                        </tr>
+                                                                      );
                                                                   })}
                                                           </tbody>
                                                       </Table>
