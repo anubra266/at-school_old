@@ -38,6 +38,9 @@ class notify {
       },
     });
   }
+  capf = (word) => {
+    return word[0].toUpperCase() + word.slice(1);
+  };
   searchresult(student, search) {
     var fname =
       student.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1;

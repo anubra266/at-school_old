@@ -164,6 +164,7 @@ const Register = ({ location, history }, props) => {
   const passwordchange = (e) => {
     setpassword(e.target.value);
   };
+  
   const handleRegister = (e) => {
     e.preventDefault();
     setloading(true);
@@ -172,9 +173,9 @@ const Register = ({ location, history }, props) => {
       setloading(false);
     } else {
       AuthService.register(
-        firstName,
-        middleName,
-        lastName,
+        notify.capf(firstName),
+        notify.capf(middleName),
+        notify.capf(lastName),
         gender,
         email,
         telephone,
