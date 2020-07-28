@@ -5,6 +5,7 @@ import className from "classnames";
 import AuthService from "../../../services/auth.service.js";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import PasswordInput from "../../../components/PasswordStrength/Password-Input";
 // reactstrap components
 import {
   Button,
@@ -73,7 +74,9 @@ const Settings = ({ user }) => {
 
     setloading(false);
   };
-
+ const passwordchange = (e) => {
+   setpassword(e.target.value);
+ };
   const [password, setpassword] = useState("");
   const [confirmpassword, setconfirmpassword] = useState("");
 
@@ -190,17 +193,17 @@ const Settings = ({ user }) => {
                     </FormGroup>
                   </Col>
                   <Col className="pl-md-1" md="6">
-                      <label>Telephone</label>
-                      <ReactPhoneInput
-                        country={"ng"}
-                        defaultCountry={"ngn"}
-                        inputProps={{
-                          name: "telephone",
-                          required: true,
-                        }}
-                        value={telephone}
-                        onChange={(phone) => settelephone(phone)}
-                      />
+                    <label>Telephone</label>
+                    <ReactPhoneInput
+                      country={"ng"}
+                      defaultCountry={"ngn"}
+                      inputProps={{
+                        name: "telephone",
+                        required: true,
+                      }}
+                      value={telephone}
+                      onChange={(phone) => settelephone(phone)}
+                    />
                   </Col>
                 </Row>
                 <Row>
@@ -252,38 +255,17 @@ const Settings = ({ user }) => {
                   </Col>
                 </Row>
                 <Row>
-                  <Col md="4">
+                  <Col md="2">
                     <FormGroup>
                       <input
-                        defaultValue="Change"
+                        defaultValue="Change password"
                         type="button"
-                        className="btn btn-secondary mt-4"
+                        className="btn btn-sm btn-secondary mt-4"
                         onClick={togglechangepassword}
                       />
                     </FormGroup>
                   </Col>
-                  <Col md="4">
-                    <FormGroup>
-                      <label>Password</label>
-                      <Input
-                        disabled
-                        defaultValue="passwordhere"
-                        placeholder="Password"
-                        type="password"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col md="4">
-                    <FormGroup>
-                      <label>Confirm Password</label>
-                      <Input
-                        disabled
-                        defaultValue="passwordhere"
-                        placeholder="Password"
-                        type="password"
-                      />
-                    </FormGroup>
-                  </Col>
+                  
                 </Row>
               </CardBody>
               <CardFooter>
@@ -325,10 +307,11 @@ const Settings = ({ user }) => {
                   <Col md="12">
                     <FormGroup>
                       <label>New Password</label>
-                      <Input
-                        style={{ color: "black" }}
-                        placeholder="New Password"
-                        type="password"
+                      <PasswordInput
+                        value={password}
+                        placeholder="Password"
+                        handleChanges={passwordchange}
+                        settings={true}
                       />
                     </FormGroup>
                   </Col>
