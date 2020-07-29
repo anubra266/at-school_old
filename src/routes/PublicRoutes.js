@@ -1,18 +1,17 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Loadable from "react-loadable";
+import loadable from "@loadable/component";
+import Loading from "../components/Loading.js";
+
+
 
 import Landing from "../components/Landing/Landing.js";
 import Login from "../components/Landing/Login.js";
 import ForgotPassword from "../components/Landing/ForgotPassword.js";
 
-import Register from "../components/Landing/Register.js";
-
-const error404 = Loadable({
-  loader: () => import("./error404.js"),
-  loading() {
-    return <div></div>;
-  },
+import Register from "../components/Landing/Register.js"; 
+const error404 = loadable(() => import("./error404.js"), {
+  fallback: <Loading></Loading>,
 });
 
 const PublicRoutes = ({ match }) => (
