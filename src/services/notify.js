@@ -41,6 +41,31 @@ class notify {
   capf = (word) => {
     return word[0].toUpperCase() + word.slice(1);
   };
+  convert_excel = (dresult) => {
+    var data = [];
+    for (var i = 0; i < dresult.length; i++) {
+      var result = dresult[i];
+      var obj = {};
+      obj.name =
+        result.user.firstName + 
+        " " +
+        result.user.middleName.charAt(0) +
+        ". " +
+        result.user.lastName;
+      obj.gender = result.user.gender;
+      obj.email = result.user.email;
+      obj.telephone = result.user.telephone;
+      obj.dateofbirth = result.user.dateOfBirth;
+      obj.school = result.user.school;
+      obj.school_town = result.user.school_town;
+      obj.score = result.score;
+      obj.total = result.total;
+      obj.percentage = Math.round((result.score / result.total) * 100) + "%";
+      data.push(obj);
+    }
+    return data;
+  };
+  
   searchresult(student, search) {
     var fname =
       student.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1;
@@ -48,6 +73,7 @@ class notify {
       student.middleName.toLowerCase().indexOf(search.toLowerCase()) > -1;
     var lname =
       student.lastName.toLowerCase().indexOf(search.toLowerCase()) > -1;
+    var gender = student.email.toLowerCase().indexOf(search.toLowerCase()) > -1;
     var email = student.email.toLowerCase().indexOf(search.toLowerCase()) > -1;
     var telephone =
       student.telephone.toLowerCase().indexOf(search.toLowerCase()) > -1;
@@ -63,6 +89,7 @@ class notify {
       fname ||
       mname ||
       lname ||
+      gender ||
       email ||
       telephone ||
       dob ||

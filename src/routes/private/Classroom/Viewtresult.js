@@ -31,6 +31,7 @@ const Viewtresult = ({ match, slug }) => {
   const [noresults, setnoresults] = useState(null);
 
   const [name, setname] = useState(true);
+  const [gender, setgender] = useState(true);
   const [email, setemail] = useState(false);
   const [school, setschool] = useState(false);
   const [school_town, setschool_town] = useState(false);
@@ -65,29 +66,12 @@ const Viewtresult = ({ match, slug }) => {
   };
 
   const exceldata = (dresult) => {
-    var data = [];
-    for (var i = 0; i < dresult.length; i++) {
-      var result = dresult[i];
-      var obj = {};
-      obj.name =
-        result.user.firstName +
-        " " +
-        result.user.middleName.charAt(0) +
-        ". " +
-        result.user.lastName;
-      obj.email = result.user.email;
-      obj.telephone = result.user.telephone;
-      obj.dateofbirth = result.user.dateOfBirth;
-      obj.score = result.score;
-      obj.total = result.total;
-      obj.percentage = Math.round((result.score / result.total) * 100) + "%";
-      data.push(obj);
-    }
-    return data;
+    return notify.convert_excel(dresult);
   };
   const excelfields = [
     { show: name, label: "Full Name", value: "name" },
     { show: email, label: "Email", value: "email" },
+    { show: gender, label: "Gender", value: "gender" },
     { show: telephone, label: "Telephone", value: "telephone" },
     { show: dateofbirth, label: "Date Of Birth", value: "dateofbirth" },
     { show: school, label: "School", value: "school" },
@@ -219,7 +203,7 @@ const Viewtresult = ({ match, slug }) => {
                       value={search}
                       onChange={(e) => setsearch(e.target.value)}
                       type="text"
-                      placeholder="Search Results by Student's Name, Email, Tel or Birthday"
+                      placeholder="Search Results by Student's Name, Email, Tel or Birthday, etc."
                     />
                   </FormGroup>
                 </Col>
@@ -249,6 +233,14 @@ const Viewtresult = ({ match, slug }) => {
                                 checked={email}
                                 onChange={(e) => setemail(!email)}
                                 label="Email"
+                                inline
+                              />
+                              <CustomInput
+                                id="gender"
+                                type="checkbox"
+                                checked={gender}
+                                onChange={(e) => setgender(!gender)}
+                                label="Gender"
                                 inline
                               />
                               <CustomInput
@@ -308,6 +300,7 @@ const Viewtresult = ({ match, slug }) => {
                                     <th>#</th>
                                     {name ? <th>Name</th> : ""}
                                     {email ? <th>Email</th> : ""}
+                                    {gender ? <th>Gender</th> : ""}
                                     {telephone ? <th>Telephone</th> : ""}
                                     {dateofbirth ? <th>Date Of Birth</th> : ""}
                                     {school ? <th>School</th> : ""}
@@ -339,6 +332,16 @@ const Viewtresult = ({ match, slug }) => {
                                           )}
                                           {email ? (
                                             <td>{result.user.email}</td>
+                                          ) : (
+                                            ""
+                                          )}
+                                          {gender ? (
+                                            <td>
+                                              {result.user.gender
+                                                .charAt(0)
+                                                .toUpperCase() +
+                                                result.user.gender.slice(1)}
+                                            </td>
                                           ) : (
                                             ""
                                           )}

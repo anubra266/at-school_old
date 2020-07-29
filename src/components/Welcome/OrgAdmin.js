@@ -96,7 +96,7 @@ const OrgAdmin = (props) => {
                         </FormGroup>
 
                         <ModalFooter>
-                            <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                            <Button color="info" disabled={loading} type="submit">Create</Button>{' '}
                             <Button color="secondary" onClick={toggle}>Cancel</Button>
                         </ModalFooter>
 

@@ -19,69 +19,63 @@ const EduHead = () => {
         setModal] = useState(false);
     const toggle = () => setModal(!modal);
     return (
-        <Card className="welct">
-            <CardHeader onClick={toggle}>
-                <h5 className="title ee">Join an Organization</h5>
-            </CardHeader>
-            <Modal isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Join an Organization</ModalHeader>
-                <ModalBody>
-                    <Row>
-                        <Col md="6">
-                            <Educator/>
-                        </Col>
-                        <Col md="6">
-                            <DepHead/>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="6">
-                            <Card className="card-user">
-                                <CardBody>
-                                    <div className="author">
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-two"/>
-                                        <div className="block block-three"/>
-                                        <div className="block block-four"/>
+      <Card className="welct">
+        <CardHeader onClick={toggle}>
+          <h5 className="title ee">Join an Organization</h5>
+        </CardHeader>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Join an Organization</ModalHeader>
+          <ModalBody>
+            <Row>
+              <Col md="6">
+                <Educator />
+                <Card className="card-user">
+                  <CardBody>
+                    <div className="author">
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-two" />
+                      <div className="block block-three" />
+                      <div className="block block-four" />
 
-                                        <h3>You're an Educator</h3><hr/>
-                                        <h4>You only need an Environment Code</h4>
-                                    </div>
-                                </CardBody>
+                      <h3>You're an Educator</h3>
+                      <hr />
+                      <h4>You only need an Environment Code</h4>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+              <Col md="6">
+                <DepHead />
+                <Card className="card-user">
+                  <CardBody>
+                    <div className="author">
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-one" />
+                      <div className="block block-two" />
+                      <div className="block block-three" />
+                      <div className="block block-four" />
 
-                            </Card>
-                        </Col>
-                        <Col md="6">
-                            <Card className="card-user">
-                                <CardBody>
-
-                                    <div className="author">
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-one"/>
-                                        <div className="block block-two"/>
-                                        <div className="block block-three"/>
-                                        <div className="block block-four"/>
-
-                                        <h3>Departmental Head</h3><hr/>
-                                        <h4>You only need an organization Code</h4>
-                                    </div>
-                                </CardBody>
-
-                            </Card>
-                        </Col>
-                    </Row>
-
-                </ModalBody>
-                <ModalFooter>
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
-                </ModalFooter>
-            </Modal>
-        </Card>
+                      <h3>Departmental Head</h3>
+                      <hr />
+                      <h4>You only need an organization Code</h4>
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Card>
     );
 }
 export default withRouter(EduHead);

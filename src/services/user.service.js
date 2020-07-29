@@ -91,6 +91,16 @@ class UserService {
       headers: authHeader(),
     });
   }
+  checkclassroom(slug) {
+    return axios({
+      method: "POST",
+      url: API_URL + "checkclassroom",
+      data: {
+        slug
+      },
+      headers: authHeader(),
+    });
+  }
   createtheorytest(slug, title, deadline, total) {
     return axios({
       method: "POST",

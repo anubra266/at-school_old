@@ -93,7 +93,7 @@ const DepHead = (props) => {
                                 placeholder="17633-2673-383"/>
                         </FormGroup>
                         <ModalFooter>
-                            <Button color="primary" disabled={loading} type="submit">Create</Button>{' '}
+                            <Button color="info" disabled={loading} type="submit">Create</Button>{' '}
                             <Button color="secondary" onClick={toggle}>Cancel</Button>
                         </ModalFooter>
 
