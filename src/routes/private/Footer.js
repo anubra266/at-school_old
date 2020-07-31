@@ -12,17 +12,21 @@ class InFooter extends React.Component {
     return (
       <footer className="footer">
         <Container fluid>
-          
+          <Nav>
+            <NavItem>
+              <NavLink href="https://www.anubra.tech">Anubra</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="https://blog.anubra.tech">Blog</NavLink>
+            </NavItem>
+          </Nav>
           <div className="copyright">
-            © {new Date().getFullYear()} made with{" "}
-            <i className="icon-heart" /> by{" "}
-            <a
-              href="https://www.linkedin.com/in/anuoluwapo-abraham-91a311194/"
-              target="_blank"
-            >
-              Abraham A. Aremu
+            © {new Date().getFullYear()} made with <i className="icon-heart" />{" "}
+            by{" "}
+            <a href="https://www.linkedin.com/in/anubra266" target="_blank">
+              Anubra
             </a>{" "}
-            to ease lockdown learning.
+            for a better learning flow.
           </div>
         </Container>
       </footer>

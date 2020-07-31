@@ -15,7 +15,7 @@ class Footer extends React.Component {
       
       <footer className="footer">
         <Container fluid>
-          <Nav>
+          <Nav> 
             <NavItem>
               <NavLink href="https://www.anubra.tech">Anubra</NavLink>
             </NavItem>
