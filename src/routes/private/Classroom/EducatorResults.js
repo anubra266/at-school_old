@@ -143,9 +143,9 @@ const EducatorResults = ({slug, history}) => {
                         ? theoryTests.slice(
                             currentTheoryPage * pageSize,
                             (currentTheoryPage + 1) * pageSize
-                          ).map((test) => {
+                          ).map((test, key) => {
                             return (
-                                <Col md="4">
+                                <Col key={key} md="4">
                                     <Card body>
                                         <CardTitle>
                                             <strong>{test.title}</strong>

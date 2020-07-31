@@ -24,7 +24,7 @@ import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js";
 import className from "classnames";
 
-const Members = ({ user, slug }) => {
+const Members = ({ user, slug, educator }) => {
   const [members, setmembers] = useState(null);
   const [nomembers, setnomembers] = useState(null);
   const [name, setname] = useState(true);
@@ -116,7 +116,7 @@ const Members = ({ user, slug }) => {
               <Row>
                 <Col md="10">Members</Col>
 
-                {members && (
+                {members && educator && (
                   <Col md="2">
                     <ButtonGroup
                       className="btn-group-toggle float-right"
@@ -172,7 +172,9 @@ const Members = ({ user, slug }) => {
                             style={{ textAlign: "center", cursor: "pointer" }}
                           >
                             <Workbook
-                              filename={classroom.name + "-members.xlsx"}
+                              filename={
+                                classroom && classroom.name + "-members.xlsx"
+                              }
                               element={
                                 <span>
                                   <i
@@ -192,13 +194,14 @@ const Members = ({ user, slug }) => {
                             >
                               <Workbook.Sheet
                                 data={exceldata(members)}
-                                name={classroom.name + "-members"}
+                                name={classroom && classroom.name + "-members"}
                               >
                                 {excelfields
                                   .filter((field) => field.show)
-                                  .map((field) => {
+                                  .map((field, key) => {
                                     return (
                                       <Workbook.Column
+                                        key={key + "excel"}
                                         label={field.label}
                                         value={field.value}
                                       />
@@ -225,7 +228,7 @@ const Members = ({ user, slug }) => {
                       value={search}
                       onChange={(e) => setsearch(e.target.value)}
                       type="text"
-                      placeholder="Search Members by Name, Email, Gender, Tel, Birthday, etc."
+                      placeholder={`Search Members by Name'${educator?', Email, Gender, Tel, Birthday, etc.':''}`}
                     />
                   </FormGroup>
                 </Col>
@@ -237,7 +240,7 @@ const Members = ({ user, slug }) => {
                       {members.filter((member) => searchmember(member)).length >
                       0 ? (
                         <React.Fragment>
-                          <FormGroup>
+                          {educator&&<FormGroup>
                             <Label>Filter Table</Label>
                             <div>
                               <CustomInput
@@ -297,10 +300,12 @@ const Members = ({ user, slug }) => {
                                 inline
                               />
                             </div>
-                          </FormGroup>
+                          </FormGroup>}
                           <PDFExport
                             paperSize={"Letter"}
-                            fileName={classroom.name + "-members.pdf"}
+                            fileName={
+                              classroom && classroom.name + "-members.pdf"
+                            }
                             title={"Members  "}
                             subject=""
                             keywords=""
@@ -392,7 +397,7 @@ const Members = ({ user, slug }) => {
                                     })}
                                 </tbody>
                                 <Modal
-                                  isOpen={showmember}
+                                  isOpen={showmember&&educator}
                                   toggle={toggle}
                                   className={className + ""}
                                 >

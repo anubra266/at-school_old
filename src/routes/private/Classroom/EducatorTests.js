@@ -140,9 +140,9 @@ const EducatorResults = ({ slug, history }) => {
                     currentTheoryPage * pageSize,
                     (currentTheoryPage + 1) * pageSize
                   )
-                  .map((test) => {
+                  .map((test, key) => {
                     return (
-                      <Col md="4">
+                      <Col key={key+'col'} md="4">
                         <Card body>
                           <CardTitle>
                             <strong>{test.title}</strong>
@@ -250,9 +250,9 @@ const EducatorResults = ({ slug, history }) => {
                     currentObjectivePage * pageSize,
                     (currentObjectivePage + 1) * pageSize
                   )
-                  .map((test) => {
+                  .map((test, key) => {
                     return (
-                      <Col md="4">
+                      <Col key={key+'obj'} md="4">
                         <Card body>
                           <CardTitle>
                             <strong>{test.title}</strong>
