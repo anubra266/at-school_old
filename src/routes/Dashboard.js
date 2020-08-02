@@ -138,13 +138,13 @@ class Dashboard extends React.Component {
 
         // user roles
         var roles = [...user_roles_arr];
-        const order = ['student','educator','dephead','orgadmin'];
+        const order = ['student','educator','dephead','orgadmin']; 
         roles.sort((a,b)=>{
             if(order.indexOf(a)>order.indexOf(b)){
                 return 1;
             }else{
                 return -1;
-            }
+            } 
         });
         let allowedRoutes = roles.reduce((acc, role) => {
             return [

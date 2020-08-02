@@ -2,14 +2,15 @@ import React from "react";
 
 const Loading = () => {
     return (
-        <div>
-            <div className="wrapper">
-                <div className="loadpage">
-                    <div className="pageloader loadstyle"></div>
-                </div>
-            </div>
-        </div>
-    )
+			<div id="preloader">
+				<div id="status">
+					<div class="spinner">
+						<div class="double-bounce1"></div>
+						<div class="double-bounce2"></div>
+					</div>
+				</div>
+			</div>
+		);
 }
 
 export default Loading;

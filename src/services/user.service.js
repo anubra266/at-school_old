@@ -81,6 +81,16 @@ class UserService {
       headers: authHeader(),
     });
   }
+  getclassroomname(slug) {
+    return axios({
+      method: "POST",
+      url: API_URL + "classroomname",
+      data: {
+        slug,
+      },
+      headers: authHeader(),
+    });
+  }
   checkclassroomstatus(slug) {
     return axios({
       method: "POST",
