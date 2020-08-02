@@ -228,7 +228,9 @@ const Members = ({ user, slug, educator }) => {
                       value={search}
                       onChange={(e) => setsearch(e.target.value)}
                       type="text"
-                      placeholder={`Search Members by Name'${educator?', Email, Gender, Tel, Birthday, etc.':''}`}
+                      placeholder={`Search Members by Name'${
+                        educator ? ", Email, Gender, Tel, Birthday, etc." : ""
+                      }`}
                     />
                   </FormGroup>
                 </Col>
@@ -240,67 +242,69 @@ const Members = ({ user, slug, educator }) => {
                       {members.filter((member) => searchmember(member)).length >
                       0 ? (
                         <React.Fragment>
-                          {educator&&<FormGroup>
-                            <Label>Filter Table</Label>
-                            <div>
-                              <CustomInput
-                                id="name"
-                                type="checkbox"
-                                checked={name}
-                                onChange={(e) => setname(!name)}
-                                label="Name"
-                                inline
-                              />
-                              <CustomInput
-                                id="email"
-                                type="checkbox"
-                                checked={email}
-                                onChange={(e) => setemail(!email)}
-                                label="Email"
-                                inline
-                              />
-                              <CustomInput
-                                id="gender"
-                                type="checkbox"
-                                checked={gender}
-                                onChange={(e) => setgender(!gender)}
-                                label="Gender"
-                                inline
-                              />
-                              <CustomInput
-                                id="telephone"
-                                type="checkbox"
-                                checked={telephone}
-                                onChange={(e) => settelephone(!telephone)}
-                                label="Telephone"
-                                inline
-                              />
-                              <CustomInput
-                                id="dateofbirth"
-                                type="checkbox"
-                                checked={dateofbirth}
-                                onChange={(e) => setdateofbirth(!dateofbirth)}
-                                label="Date of Birth"
-                                inline
-                              />
-                              <CustomInput
-                                id="school"
-                                type="checkbox"
-                                checked={school}
-                                onChange={(e) => setschool(!school)}
-                                label="School"
-                                inline
-                              />
-                              <CustomInput
-                                id="school_town"
-                                type="checkbox"
-                                checked={school_town}
-                                onChange={(e) => setschool_town(!school_town)}
-                                label="Town"
-                                inline
-                              />
-                            </div>
-                          </FormGroup>}
+                          {educator && (
+                            <FormGroup>
+                              <Label>Filter Table</Label>
+                              <div>
+                                <CustomInput
+                                  id="name"
+                                  type="checkbox"
+                                  checked={name}
+                                  onChange={(e) => setname(!name)}
+                                  label="Name"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="email"
+                                  type="checkbox"
+                                  checked={email}
+                                  onChange={(e) => setemail(!email)}
+                                  label="Email"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="gender"
+                                  type="checkbox"
+                                  checked={gender}
+                                  onChange={(e) => setgender(!gender)}
+                                  label="Gender"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="telephone"
+                                  type="checkbox"
+                                  checked={telephone}
+                                  onChange={(e) => settelephone(!telephone)}
+                                  label="Telephone"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="dateofbirth"
+                                  type="checkbox"
+                                  checked={dateofbirth}
+                                  onChange={(e) => setdateofbirth(!dateofbirth)}
+                                  label="Date of Birth"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="school"
+                                  type="checkbox"
+                                  checked={school}
+                                  onChange={(e) => setschool(!school)}
+                                  label="School"
+                                  inline
+                                />
+                                <CustomInput
+                                  id="school_town"
+                                  type="checkbox"
+                                  checked={school_town}
+                                  onChange={(e) => setschool_town(!school_town)}
+                                  label="Town"
+                                  inline
+                                />
+                              </div>
+                            </FormGroup>
+                          )}
                           <PDFExport
                             paperSize={"Letter"}
                             fileName={
@@ -397,7 +401,7 @@ const Members = ({ user, slug, educator }) => {
                                     })}
                                 </tbody>
                                 <Modal
-                                  isOpen={showmember&&educator}
+                                  isOpen={showmember && educator}
                                   toggle={toggle}
                                   className={className + ""}
                                 >

@@ -101,13 +101,14 @@ class UserService {
       headers: authHeader(),
     });
   }
-  createtheorytest(slug, title, deadline, total) {
+  createtheorytest(slug, title, starttime, deadline, total) {
     return axios({
       method: "POST",
       url: API_URL + "storetheorytest",
       data: {
         slug,
         title,
+        starttime,
         deadline,
         total,
       },

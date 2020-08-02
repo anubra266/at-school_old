@@ -25,7 +25,7 @@ const ForgotPassword = ({ location, history }, props) => {
             </div>
           </header>
           <div className="row ceent">
-            <div className="col-lg-4 col-md-6 col-sm-4">
+            <div className="col-sm-7 col-lg-4">
               <div className="wrap-login100 p-t-50 p-b-90">
                 <form className="login100-form validate-form flex-sb flex-w">
                   <span className="login100-form-title p-b-51">

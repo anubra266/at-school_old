@@ -237,7 +237,7 @@ const Register = ({ location, history }, props) => {
             </div>
           </header>
           <div className="row ceent">
-            <div className="col-lg-4 col-md-6 col-sm-4">
+            <div className="col-sm-7 col-lg-4">
               <div className="wrap-login100 p-t-50 p-b-90">
                 <form
                   onSubmit={handleRegister}
