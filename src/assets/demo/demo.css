@@ -247,9 +247,10 @@
 	background: rgb(255, 255, 255);
 	padding: 1em 3em;
 	border-radius: 10px;
+}
+.login-mg{
 	margin: 2em 0;
 }
-
 .ceent {
 	display: flex;
 	justify-content: center;

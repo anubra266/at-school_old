@@ -106,7 +106,7 @@ class LandingNavbar extends React.Component {
                                         {user.id?(user.firstName + " " + (user.lastName)):''}
                                     </Button>
                                 </InputGroup>
-                                <UncontrolledDropdown nav>
+                                <UncontrolledDropdown nav> 
                                     <DropdownToggle
                                         caret
                                         color="default"

@@ -30,7 +30,7 @@ const Welcome = (props) => {
 						</Row>
 						<PracticeStud />
 						<Row>
-							<Col md="3">
+							{/*<Col md="3">
 								<Student />
 								<Card className="card-user">
 									<CardBody>
@@ -49,7 +49,7 @@ const Welcome = (props) => {
 										</div>
 									</CardBody>
 								</Card>
-							</Col>
+	</Col>*/}
 							<Col md="3">
 								<EduHead />
 								<Card className="card-user">

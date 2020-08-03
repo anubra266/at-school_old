@@ -1,91 +1,30 @@
-import React, {useState} from "react";
-import {withRouter} from "react-router-dom";
-import {
-    Card,
-    CardHeader,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Input,
-    Label,
-    FormGroup,
-    Button
-} from "reactstrap";
-import className from "classnames";
-import notify from "../../services/notify.js"
-import UserService from "../../services/user.service";
-
-const Student = (props) => {
-    const [modal,
-        setModal] = useState(false);
-
-    const toggle = () => setModal(!modal);
-    const [code,
-        setcode] = useState('');
-    const [loading,
-        setloading] = useState(false);
-    const joinclassroom = (e) => {
-        e.preventDefault();
-        setloading(true);
-        UserService
-            .joinclassroom(code, true)
-            .then(response => {
-                notify.user('Join a Classroom', response.data, 'success');
-                notify.user('Join a Classroom', 'Redirecting you...!', 'info');
-                setTimeout(() => {
-                    props
-                        .history
-                        .push("/in/dashboard/classes");
-                    window
-                        .location
-                        .reload();
-                }, 3000);
-            }, error => {
-                const errMsg = (error.response && error.response.data && error.response.data.message) || error.message || error.toString();
-                notify.user('Join a Classroom', errMsg, 'danger');
-                setloading(false);
-
-            })
-    }
-    return (
-        <Card className="welct">
-            <CardHeader onClick={toggle}>
-                <h5 className="title ee">Join a Classroom</h5>
-            </CardHeader>
-            <Modal
-                unmountOnClose={false}
-                isOpen={modal}
-                toggle={toggle}
-                className={className + ""}>
-                <ModalHeader toggle={toggle}>Join a Classroom</ModalHeader>
-                <ModalBody>
-
-                    <form onSubmit={joinclassroom}>
-                        <FormGroup>
-                            <Label for="code">Classroom Code</Label>
-                            <Input
-                                style={{
-                                color: "black"
-                            }}
-                                type="text"
-                                name="code"
-                                id="code"
-                                value={code}
-                                onChange={(e)=>setcode(e.target.value)}
-                                required
-                                placeholder="17633-2673-383"/>
-                        </FormGroup>
-                        <ModalFooter>
-                        <Button color="info" disabled={loading} type="submit">Join</Button>{' '}
-                        <Button color="secondary" onClick={toggle}>Cancel</Button>
-                    </ModalFooter>
-
-                    </form>
-
-                </ModalBody>
-            </Modal>
-        </Card>
-    );
-}
-export default withRouter(Student);
+import React from "react";
+import { Card, CardHeader } from "reactstrap";
+import PracticeStud from "../Welcome/PracticeStud.js";
+import JoinClassroom from "../Welcome/JoinClassroom.js";
+const Student = () => {
+	return (
+		<React.Fragment>
+			<div className="container">
+				<div className="row justify-content-md-center">
+					<div className="col-md-10">
+						<Card className="welct">
+							<CardHeader>
+								<h5 className="title">What would you like to do?</h5>
+							</CardHeader>
+						</Card>
+					</div>
+				</div>
+				<div className="row justify-content-md-center">
+					<div className="col-md-5">
+						<PracticeStud />
+					</div>
+					<div className="col-md-5">
+						<JoinClassroom />
+					</div>
+				</div>
+			</div>
+		</React.Fragment>
+	);
+};
+export default Student;

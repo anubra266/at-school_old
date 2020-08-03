@@ -1,14 +1,20 @@
 import React from "react";
+import loadable from "@loadable/component";
+import Loading from "../Loading.js";
+
 import Footer from "../Footer.js";
 
-// reactstrap components
-import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 import NavBar from "./Navbar.js";
 
-import OrgAdmin from "./OrgAdmin.js";
-import EduHead from "./EduHead.js";
-import Student from "./Student.js";
-import PracticeStud from "./PracticeStud.js";
+const Student = loadable(() => import("./Student.js"), {
+	fallback: <Loading></Loading>,
+});
+const EduHead = loadable(() => import("./EduHead.js"), {
+	fallback: <Loading></Loading>,
+});
+const OrgAdmin = loadable(() => import("./OrgAdmin.js"), {
+	fallback: <Loading></Loading>,
+});
 //import UserService from "../../services/user.service.js"
 const Welcome = (props) => {
 	const user = props.user;
@@ -16,21 +22,12 @@ const Welcome = (props) => {
 	return (
 		<div>
 			<div className="wrapper">
-				<div className="main-panel">
+				<div className="main-panel" data={"blue"}>
 					<NavBar user={user} />
 					<div className="content enlarge">
-						<div className="container">
-							<div className="row justify-content-md-center">
-								<Col md="9">
-									<Card className="welct">
-										<CardHeader>
-											<h5 className="title">What would you like to do?</h5>
-										</CardHeader>
-									</Card>
-								</Col>
-							</div>
-							<PracticeStud />
-						</div>
+						{user.initialRole === "student" && <Student />}
+						{user.initialRole === "educator" && <EduHead />}
+						{user.initialRole === "orgadmin" && <OrgAdmin />}
 					</div>
 					<Footer fluid />
 				</div>

@@ -58,8 +58,8 @@ const Login = ({ location, history }, props) => {
             </div>
           </header>
           <div className="row ceent">
-            <div className="col-sm-7 col-lg-4">
-              <div className="wrap-login100 p-t-50 p-b-90">
+            <div className="col-sm-7 col-lg-5">
+              <div className="wrap-login100 login-mg p-t-50 p-b-90">
                 <form
                   className="login100-form validate-form flex-sb flex-w"
                   onSubmit={handleLogin}

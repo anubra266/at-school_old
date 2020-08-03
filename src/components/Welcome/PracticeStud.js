@@ -1,34 +1,20 @@
-import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import {
-	Card,
-	Row,
-	Col,
-	CardHeader,
-	Modal,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
-	Input,
-	Label,
-	FormGroup,
-	Button,
-} from "reactstrap";
-import className from "classnames";
-import notify from "../../services/notify.js";
-import UserService from "../../services/user.service";
+import React from "react";
 
-const PracticeStud = (props) => {
+const PracticeStud = () => {
 	return (
-		<div className="row justify-content-md-center">
-			<Col md="9">
-				<Card className="welct">
-					<CardHeader>
-						<h5 className="title ee">Personal Practice</h5>
-					</CardHeader>
-				</Card>
-			</Col>
+		<div className="wrap-login100 p-t-50 p-b-90">
+			<form className="login100-form validate-form flex-sb flex-w">
+				<h4 className="title text-center">Personal Practice</h4>
+
+				<div className="row justify-content-left">
+					<div className="col-sm-12">
+						<div className="container-login100-form-btn m-t-1 m-b-16">
+							<button className="login100-form-btn">Proceed</button>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
 	);
 };
-export default withRouter(PracticeStud);
+export default PracticeStud;

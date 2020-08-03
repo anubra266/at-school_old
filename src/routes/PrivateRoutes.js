@@ -15,9 +15,11 @@ const Test = loadable(() => import("./Test.js"), {
 const Welcome = loadable(() => import("../components/Welcome/Welcome.js"), {
   fallback: <Loading></Loading>,
 });
+
 const error404 = loadable(() => import("./error404.js"), {
-  fallback: <Loading></Loading>,
+	fallback: <Loading></Loading>,
 });
+
 
 const PrivateRoutes = ({ user }) => {
   const [newbie, setnewbie] = useState(null);

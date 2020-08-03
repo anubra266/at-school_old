@@ -1,81 +1,39 @@
-import React, {useState} from "react";
-import {withRouter} from "react-router-dom";
+import React from "react";
+import loadable from "@loadable/component";
+import Loading from "../Loading.js";
 import {
     Card,
-    CardBody,
     CardHeader,
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Row,
-    Col
 } from "reactstrap";
-import Educator from "./Educator.js";
-import DepHead from "./DepHead.js";
+const Educator = loadable(() => import("./Educator.js"), {
+	fallback: <Loading></Loading>,
+});
+const DepHead = loadable(() => import("./DepHead.js"), {
+	fallback: <Loading></Loading>,
+});
 const EduHead = () => {
-    const [modal,
-        setModal] = useState(false);
-    const toggle = () => setModal(!modal);
     return (
-      <Card className="welct">
-        <CardHeader onClick={toggle}>
-          <h5 className="title ee">Join an Organization</h5>
-        </CardHeader>
-        <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Join an Organization</ModalHeader>
-          <ModalBody>
-            <Row>
-              <Col md="6">
-                <Educator />
-                <Card className="card-user">
-                  <CardBody>
-                    <div className="author">
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-two" />
-                      <div className="block block-three" />
-                      <div className="block block-four" />
-
-                      <h3>You're an Educator</h3>
-                      <hr />
-                      <h4>You only need an Environment Code</h4>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col md="6">
-                <DepHead />
-                <Card className="card-user">
-                  <CardBody>
-                    <div className="author">
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-one" />
-                      <div className="block block-two" />
-                      <div className="block block-three" />
-                      <div className="block block-four" />
-
-                      <h3>Departmental Head</h3>
-                      <hr />
-                      <h4>You only need an organization Code</h4>
-                    </div>
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={toggle}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </Card>
-    );
+			<React.Fragment>
+				<div className="container">
+					<div className="row justify-content-md-center">
+						<div className="col-md-10">
+							<Card className="welct">
+								<CardHeader>
+									<h5 className="title">What would you like to do?</h5>
+								</CardHeader>
+							</Card>
+						</div>
+					</div>
+					<div className="row justify-content-md-center">
+						<div className="col-md-5">
+							<Educator />
+						</div>
+						<div className="col-md-5">
+							<DepHead />
+						</div>
+					</div>
+				</div>
+			</React.Fragment>
+		);
 }
-export default withRouter(EduHead);
+export default EduHead;
