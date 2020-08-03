@@ -6,6 +6,8 @@ import AvatarEditor from "react-avatar-editor";
 import ReactPhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 import PasswordInput from "../PasswordStrength/Password-Input";
+import * as registerServiceWorker from "../../registerServiceWorker.js";
+
 import {
 	Row,
 	Col,
@@ -18,6 +20,7 @@ import {
 } from "reactstrap";
 
 const Register = ({ location, history }, props) => {
+	
 	const [page, setpage] = useState(1);
 	const validateEmail = (testemail) => {
 		if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(testemail)) {

@@ -93,12 +93,6 @@ const StudentTests = ({ history, educator, slug }) => {
   const toggletype = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
   };
-  window.Echo.channel("at_school_database_classes").listen(
-    "UpdateTheoryTests",
-    (e) => {
-      updatetheorytests();
-    }
-  );
   return (
 		<CardBody className="all-icons">
 			<Nav tabs>
@@ -151,8 +145,8 @@ const StudentTests = ({ history, educator, slug }) => {
 													<strong>{test.title}</strong>
 												</CardTitle>
 												<CardTitle>
-													<strong>Created: </strong>
-													{notify.date(test.created_at)}
+													<strong>Start-Time: </strong>
+													{notify.date(test.starttime)}
 												</CardTitle>
 												<CardTitle>
 													<strong>Deadline: </strong>

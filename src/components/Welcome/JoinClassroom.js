@@ -46,10 +46,11 @@ const Student = (props) => {
 						id="code"
 						value={code}
 						onChange={(e) => setcode(e.target.value)}
-						placeholder="Classroom Code"
+						placeholder="CRM-15377-89044"
 					/>
 					<span className="focus-input100"></span>
 				</div>
+				<label>Classroom Code</label>
 
 				<div className="row justify-content-left">
 					<div className="col-sm-12">

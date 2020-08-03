@@ -27,7 +27,7 @@ const ClassroomRoute = ({
             <Route
                 {...rest}
                 render={(props) => (status!=='alien'
-                ? <Component {...props} user={user} />
+                ? <Component {...props} user={user} role={status} />
                 : <Redirect
                     to={{
                     pathname: '/in/dashboard',

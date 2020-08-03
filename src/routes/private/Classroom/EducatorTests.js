@@ -20,7 +20,7 @@ import {
 import notify from "../../../services/notify.js";
 import UserService from "../../../services/user.service";
 
-const EducatorResults = ({ slug, history }) => {
+const EducatorResults = ({ slug, history, boss }) => {
   const [activeTab, setActiveTab] = useState("1");
 
   const toggletype = (tab) => {
@@ -82,7 +82,7 @@ const EducatorResults = ({ slug, history }) => {
   const editobjectivetest = (id, marked) => {
     marked
       ? notify.user(
-          "Edit Test",
+          "Edit Test", 
           "You can't edit tests that have been taken.",
           "info"
         )
@@ -100,6 +100,15 @@ const EducatorResults = ({ slug, history }) => {
         )
       : history.push("/in/classroom/" + slug + "/tests/questionst/" + id);
   };
+
+  window.Echo.channel("at_school_database_classes")
+		.listen("UpdateTheoryTests", (e) => {
+			updatetheorytests();
+		})
+		.listen("UpdateObjectiveTests", (e) => {
+			updatetheorytests();
+		});
+
   return (
     <div>
       <CardBody className="all-icons">
@@ -148,14 +157,14 @@ const EducatorResults = ({ slug, history }) => {
                             <strong>{test.title}</strong>
                           </CardTitle>
                           <CardTitle>
-                            <strong>Created: </strong>
-                            {notify.date(test.created_at)}
+                            <strong>Start-Time: </strong>
+                            {notify.date(test.starttime)}
                           </CardTitle>
                           <CardTitle>
                             <strong>Deadline: </strong>
                             {notify.date(test.deadline)}
                           </CardTitle>
-                          <Row>
+                          {!boss&&<Row>
                             <Col>
                               <Button
                                 tag="label"
@@ -180,7 +189,7 @@ const EducatorResults = ({ slug, history }) => {
                                 Mark
                               </Button>
                             </Col>
-                          </Row>
+                          </Row>}
                         </Card>
                       </Col>
                     );
@@ -265,7 +274,8 @@ const EducatorResults = ({ slug, history }) => {
                             <strong>Deadline: </strong>
                             {notify.date(test.deadline)}
                           </CardTitle>
-                          <Button
+
+                          {!boss&&<Button
                             tag="label"
                             color="info"
                             onClick={() =>
@@ -274,7 +284,7 @@ const EducatorResults = ({ slug, history }) => {
                             size="sm"
                           >
                             Edit
-                          </Button>
+                          </Button>}
                         </Card>
                       </Col>
                     );

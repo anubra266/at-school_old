@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import SubClassrooms from "./SubClassrooms.js";
 
 // reactstrap components
 import {
@@ -61,12 +62,13 @@ const Environs = ({user, history}) => {
     useEffect(()=>{
         updateenvirons();
     },[]);
-    window.Echo.channel("at_school_database_classes").listen(
-      "UpdateEnvirons",
-      (e) => {
-        updateenvirons();
-      }
-    );
+    window.Echo.channel("at_school_database_classes")
+			.listen("UpdateEnvirons", (e) => {
+				updateenvirons();
+			})
+			.listen("UpdateClassrooms", (e) => {
+				updateenvirons();
+			});
 
     const [modal,
         setModal] = useState(false);
@@ -175,21 +177,24 @@ const Environs = ({user, history}) => {
                                                 <tbody>
                                                     {environs.map((environ, key) => {
                                                         return (
-                                                            <tr key={key}>
+                                                            <React.Fragment>
+                                                            <tr id={`env-${key}`} key={`env-${key}`}>
                                                                 <th scope="row">{key + 1}</th>
-                                                                <td>
-                                                                    {environ.name}
+                                                                <td><span className="theuser">
+                                                                    {environ.name} </span>
                                                                 </td>
                                                                 <td>{environ.code}</td>
                                                                 <td>{environ.classrooms.length}</td>
                                                             </tr>
+                                                            <SubClassrooms classrooms={environ.classrooms} envkey={`env-${key}`} />
+                                                            </React.Fragment>
                                                         )
                                                     })}
                                                 </tbody>
                                             </Table>
 
-                                        : <div>
-                                            <span className="text-info"></span>
+                                        : !noenvirons&&<div>
+                                            <span className="text-info">wait...</span>
                                         </div>}
 
                                     {noenvirons

@@ -167,8 +167,8 @@ const Classes = ({user}) => {
                                                 </tbody>
                                             </Table>
 
-                                        : <div>
-                                            <span className="text-info"></span>
+                                        : !noclassrooms&&<div>
+                                            <span className="text-info">wait...</span>
                                         </div>}
 
                                     {noclassrooms

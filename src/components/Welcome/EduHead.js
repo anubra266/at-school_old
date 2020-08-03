@@ -19,7 +19,7 @@ const EduHead = () => {
 						<div className="col-md-10">
 							<Card className="welct">
 								<CardHeader>
-									<h5 className="title">What would you like to do?</h5>
+									<h5 className="title">You're joining an Organization. What would you like to do?</h5>
 								</CardHeader>
 							</Card>
 						</div>

@@ -115,7 +115,9 @@
 	color: black !important;
 }
 .theuser {
-	color: blue !important;
+	color: rgba(35, 35, 220, 0.705) !important;
+	cursor: pointer;
+	font-weight: bold;
 }
 .formbt {
 	border-color: #7971ea;
@@ -591,7 +593,9 @@
 .m-b-16 {
 	margin-bottom: 16px;
 }
-
+.m-b-25 {
+	margin-bottom: 16px;
+}
 .p-b-51 {
 	padding-bottom: 51px;
 }

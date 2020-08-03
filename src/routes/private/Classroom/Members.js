@@ -24,7 +24,8 @@ import UserService from "../../../services/user.service";
 import notify from "../../../services/notify.js";
 import className from "classnames";
 
-const Members = ({ user, slug, educator }) => {
+const Members = ({ user, slug, educator ,status}) => {
+  const [boss] = useState(status==='boss');
   const [members, setmembers] = useState(null);
   const [nomembers, setnomembers] = useState(null);
   const [name, setname] = useState(true);
@@ -229,7 +230,7 @@ const Members = ({ user, slug, educator }) => {
                       onChange={(e) => setsearch(e.target.value)}
                       type="text"
                       placeholder={`Search Members by Name'${
-                        educator ? ", Email, Gender, Tel, Birthday, etc." : ""
+                        educator||boss ? ", Email, Gender, Tel, Birthday, etc." : ""
                       }`}
                     />
                   </FormGroup>
@@ -242,7 +243,7 @@ const Members = ({ user, slug, educator }) => {
                       {members.filter((member) => searchmember(member)).length >
                       0 ? (
                         <React.Fragment>
-                          {educator && (
+                          {(educator||boss) && (
                             <FormGroup>
                               <Label>Filter Table</Label>
                               <div>
@@ -401,7 +402,7 @@ const Members = ({ user, slug, educator }) => {
                                     })}
                                 </tbody>
                                 <Modal
-                                  isOpen={showmember && educator}
+                                  isOpen={showmember && (educator||boss)}
                                   toggle={toggle}
                                   className={className + ""}
                                 >
@@ -416,7 +417,8 @@ const Members = ({ user, slug, educator }) => {
                                           User Details
                                         </h3>
                                       </Col>
-                                      <Col md="8">
+
+                                      {educator&&<Col md="8">
                                         <span
                                           className="btn-group-toggle float-right"
                                           data-toggle="buttons"
@@ -430,7 +432,7 @@ const Members = ({ user, slug, educator }) => {
                                             Block Member
                                           </Button>
                                         </span>
-                                      </Col>
+                                      </Col>}
                                     </Row>
 
                                     <Row>

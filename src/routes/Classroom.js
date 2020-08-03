@@ -34,6 +34,7 @@ class Classroom extends React.Component {
 			layout: "/in/classroom",
 			educator: false,
 			classroomname: "",
+			status: "student",
 		};
 	}
 
@@ -48,7 +49,11 @@ class Classroom extends React.Component {
 				this.setState({ classroomname: response.data });
 			}
 		);
-
+		UserService.checkclassroomstatus(this.props.match.params.slug).then(
+			(response) => {
+				this.setState({ status: response.data });
+			}
+		);
 		if (navigator.platform.indexOf("Win") > -1) {
 			document.documentElement.className += " perfect-scrollbar-on";
 			document.documentElement.classList.remove("perfect-scrollbar-off");
@@ -149,6 +154,7 @@ class Classroom extends React.Component {
 						<Component
 							{...props}
 							educator={this.state.educator}
+							status={this.state.status}
 							slug={this.props.match.params.slug}
 							user={currentUser}
 						/>

@@ -1,33 +1,16 @@
 import React, {useState} from "react";
 import {withRouter} from "react-router-dom";
-import {
-    Card,
-    CardHeader,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Input,
-    Label,
-    FormGroup,
-    Button
-} from "reactstrap";
-import className from "classnames";
 import notify from "../../services/notify.js"
 import UserService from "../../services/user.service";
 
 const Educator = (props) => {
-    const [modal,
-        setModal] = useState(false);
-
-    const toggle = () => setModal(!modal);
     const [name,
         setname] = useState('');
     const [code,
         setcode] = useState('');
     const [loading,
         setloading] = useState(false);
-    const createclassroom = (e) => {
+    const createclassroom = (e) => { 
         e.preventDefault();
         setloading(true);
         UserService
@@ -52,57 +35,53 @@ const Educator = (props) => {
             })
     }
     return (
-        <Card className="welct">
-            <CardHeader onClick={toggle}>
-                <h5 className="title ee">Create a Classroom</h5>
-            </CardHeader>
-            <Modal
-                unmountOnClose={false}
-                isOpen={modal}
-                toggle={toggle}
-                className={className + ""}>
-                <ModalHeader toggle={toggle}>Create a Classroom</ModalHeader>
-                <ModalBody>
+			<div className="wrap-login100 m-b-25 p-t-50 p-b-90">
+				<form
+					className="login100-form validate-form flex-sb flex-w"
+					onSubmit={createclassroom}
+				>
+					<h4 className="title text-center">Create a Classroom</h4>
+					<div className="wrap-input100 m-b-16">
+						<input
+							className="input100"
+							required
+							type="text"
+							name="name"
+							id="name"
+							value={name}
+							onChange={(e) => setname(e.target.value)}
+							placeholder="MTH 101"
+						/>
+						<span className="focus-input100"></span>
+					</div>
+					<label>Classroom Name</label>
 
-                    <form onSubmit={createclassroom}>
-                        <FormGroup>
-                            <Label for="name">Classroom Name</Label>
-                            <Input
-                                style={{
-                                color: "black"
-                            }}
-                                type="text"
-                                name="name"
-                                id="name"
-                                required
-                                value={name}
-                                onChange={(e)=>setname(e.target.value)}
-                                placeholder="MTH 101"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="code">Environ Code</Label>
-                            <Input
-                                style={{
-                                color: "black"
-                            }}
-                                type="text"
-                                name="code"
-                                id="code"
-                                required
-                                value={code}
-                                onChange={(e)=>setcode(e.target.value)}
-                                placeholder="17633-2673-383"/>
-                        </FormGroup>
-                        <ModalFooter>
-                            <Button color="info" disabled={loading} type="submit">Create</Button>{' '}
-                            <Button color="secondary" onClick={toggle}>Cancel</Button>
-                        </ModalFooter>
+					<div className="wrap-input100 m-b-16">
+						<input
+							className="input100"
+							required
+							type="text"
+							name="code"
+							id="code"
+							value={code}
+							onChange={(e) => setcode(e.target.value)}
+							placeholder="ENV-28325-87343"
+						/>
+						<span className="focus-input100"></span>
+					</div>
+					<label>Environ Code</label>
 
-                    </form>
-
-                </ModalBody>
-            </Modal>
-        </Card>
-    );
+					<div className="row justify-content-left">
+						<div className="col-sm-12">
+							<div className="container-login100-form-btn m-t-1 m-b-16">
+								<button disabled={loading} className="login100-form-btn">
+									Create
+								</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		);
 }
 export default withRouter(Educator);
