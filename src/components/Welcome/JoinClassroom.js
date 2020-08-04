@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
 import notify from "../../services/notify.js";
 import UserService from "../../services/user.service";
 
-const Student = (props) => {
+const JoinClassroom = (props) => {
 	const [code, setcode] = useState("");
 	const [loading, setloading] = useState(false);
 	const joinclassroom = (e) => {
@@ -13,7 +14,7 @@ const Student = (props) => {
 				notify.user("Join a Classroom", response.data, "success");
 				notify.user("Join a Classroom", "Redirecting you...!", "info");
 				setTimeout(() => {
-					props.history.push("/in/dashboard/classes");
+					props.history.push("/in/dashboard/home");
 					window.location.reload();
 				}, 3000);
 			},
@@ -65,4 +66,4 @@ const Student = (props) => {
 		</div>
 	);
 };
-export default Student;
+export default withRouter(JoinClassroom);

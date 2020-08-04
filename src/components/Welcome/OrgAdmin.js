@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import notify from "../../services/notify.js";
 import UserService from "../../services/user.service";
-const OrgAdmin = (props) => {
+const OrgAdmin = (props) => { 
 	const [loading, setloading] = useState(false);
 	const [name, setname] = useState("");
 	const [address, setaddress] = useState("");

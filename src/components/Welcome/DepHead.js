@@ -11,8 +11,8 @@ const DepHead = (props) => {
         setcode] = useState('');
     const [loading,
         setloading] = useState(false);
-        const createenviron = (e)=>{
-            e.preventDefault();
+        const createenviron = (e)=>{ 
+            e.preventDefault(); 
             setloading(true);
             UserService.createenviron(name,code,true).then(response => {
 

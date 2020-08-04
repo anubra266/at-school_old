@@ -13,7 +13,7 @@ const Educator = (props) => {
     const createclassroom = (e) => { 
         e.preventDefault();
         setloading(true);
-        UserService
+        UserService 
             .createclassroom(name, code, true)
             .then(response => {
 
