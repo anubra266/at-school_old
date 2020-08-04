@@ -149,7 +149,7 @@ class TheNavbar extends React.Component {
 									</DropdownToggle>
 									<DropdownMenu className="dropdown-navbar" right tag="ul">
 										<NavLink tag="li">
-											<Link to={"/profile-settings"}>
+											<Link to={"/in/dashboard/profile-settings"}>
 												<DropdownItem className="nav-item">
 													Settings
 												</DropdownItem>

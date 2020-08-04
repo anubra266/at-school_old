@@ -102,6 +102,33 @@ class AuthService {
 	getCurrentUser() {
 		return JSON.parse(localStorage.getItem("classrooms-app"));
 	}
+
+	passwordcreate(email, red_link) {
+		return axios({
+			method: "POST",
+			url: API_URL + "password/create",
+			data: {
+				email,
+				red_link,
+			},
+		});
+	}
+	checkresettoken(token) {
+		return axios.get(API_URL + "password/find/" + token, {
+			headers: authHeader(),
+		});
+	}
+	resetpassword(token, email, password) {
+		return axios({
+			method: "POST",
+			url: API_URL + "password/reset",
+			data: {
+				token,
+				email,
+				password,
+			},
+		});
+	}
 }
 
 export default new AuthService();
