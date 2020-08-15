@@ -28,6 +28,7 @@ const Welcome = (props) => {
 						{user.initialRole === "student" && <Student />}
 						{user.initialRole === "educator" && <EduHead />}
 						{user.initialRole === "orgadmin" && <OrgAdmin />}
+						{user.initialRole === "" && <Student />}
 					</div>
 					<Footer fluid />
 				</div>

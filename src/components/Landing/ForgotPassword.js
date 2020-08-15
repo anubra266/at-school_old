@@ -57,7 +57,7 @@ const ForgotPassword = ({ location, history }, props) => {
 									</span>
 									{emailsent ? (
 										<h3 className="theuser text-center">
-											Check your Mail for Reset Link! It expires in 10 minutes
+											Check your Mail for Reset Link! It expires in 30 minutes
 											<span role="img" aria-label="smile">
 												😄
 											</span>

@@ -74,7 +74,7 @@ const ForgotPassword = ({ location, history, match }, props) => {
 						<div className="container-fluid">
 							<div className="d-flex align-items-center">
 								<div className="site-logo mr-auto w-30">
-									<a href="/">at-School</a>
+									<a href="/">at-School</a> 
 								</div>
 							</div>
 						</div>
