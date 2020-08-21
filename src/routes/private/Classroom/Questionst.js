@@ -169,10 +169,10 @@ const Questiona = ({ match, history }) => {
 														"/assessments"
 													}
 												>
-													Tests
+													Assessments
 												</Link>
 											</BreadcrumbItem>
-											<BreadcrumbItem active>Test</BreadcrumbItem>
+											<BreadcrumbItem active>Theory</BreadcrumbItem>
 											<BreadcrumbItem active>{test.title}</BreadcrumbItem>
 										</Breadcrumb>
 									</Col>

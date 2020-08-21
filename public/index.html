@@ -46,9 +46,26 @@
 		<title>at-School</title>
 	</head>
 	<body>
-		
+		<script>
+			window.intergramId = "-461715234";
+			window.intergramServer = "https://anubraintergram.herokuapp.com";
+			window.intergramCustomizations = {
+				titleOpen: "at-school Support ",
+				introMessage: "Hi there👋 If you need any assistance, I'm here to help.",
+				autoResponse: "You'll be attended to shortly.",
+				autoNoResponse: "Please hold on. " + "Someone will be with you soon",
+				mainColor: "#7971ea", // Can be any css supported color 'red', 'rgb(255,87,34)', etc
+				alwaysUseFloatingButton: true, // Use the mobile floating button also on large screens
+			};
+		</script>
+		<script
+			id="intergram"
+			type="text/javascript"
+			src="https://anubraintergram.herokuapp.com/js/widget.js"
+		></script>
 		<noscript>You need to enable JavaScript to run this app.</noscript>
 		<div id="root" class="white-content"></div>
+		<!-- <script id="TelegramLiveChatLoader" data-bot="32681228-E095-11EA-A02B-930623E822B5" src="//livechatbot.net/assets/chat/js/loader.js"></script> -->
 	</body>
 	<!-- <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/jquery-migrate-3.0.1.min.js"></script>

@@ -10,33 +10,31 @@ import { Container, Row, Nav, NavItem, NavLink } from "reactstrap";
 class Footer extends React.Component {
   render() {
     return (
-
-
-      
-      <footer className="footer">
-        <Container fluid>
-          <Nav> 
-            <NavItem>
-              <NavLink href="https://www.anubra.tech">Anubra</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://blog.anubra.tech">Blog</NavLink>
-            </NavItem>
-          </Nav>
-          <div className="copyright">
-            © {new Date().getFullYear()} made with{" "}
-            <i className="icon-heart" /> by{" "}
-            <a
-              href="https://www.linkedin.com/in/anubra266"
-              target="_blank"
-            >
-              Anubra
-            </a>{" "}
-            for a better learning flow.
-          </div>
-        </Container>
-      </footer>
-    );
+			<footer className="footer">
+				<Container fluid>
+					<Nav>
+						<NavItem>
+							<NavLink href="https://www.anubra.tech" target="_blank">
+								Anubra
+							</NavLink>
+						</NavItem>
+						<NavItem>
+							<NavLink href="https://blog.anubra.tech" target="_blank">
+								Blog
+							</NavLink>
+						</NavItem>
+					</Nav>
+					<div className="copyright">
+						© {new Date().getFullYear()} made with <i className="icon-heart" />{" "}
+						by{" "}
+						<a href="https://www.linkedin.com/in/anubra266" target="_blank">
+							Anubra
+						</a>{" "}
+						for a better learning flow.
+					</div>
+				</Container>
+			</footer>
+		);
   }
 }
 
